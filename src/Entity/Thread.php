@@ -5,9 +5,11 @@ namespace App\Entity;
 use App\Repository\ThreadRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ThreadRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Thread
 {
     #[ORM\Id]
@@ -20,6 +22,12 @@ class Thread
 
     #[ORM\OneToMany(mappedBy: 'thread', targetEntity: ThreadMessage::class, orphanRemoval: true)]
     private Collection $threadMessages;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $updated = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $created = null;
 
     public function __construct()
     {
@@ -69,6 +77,43 @@ class Thread
                 $threadMessage->setThread(null);
             }
         }
+
+        return $this;
+    }
+
+    #[ORM\PreUpdate]
+    public function preUpdated()
+    {
+        $this->updated = new \DateTime();
+    }
+
+    #[ORM\PrePersist]
+    public function preCreated()
+    {
+        $this->preUpdated();
+        $this->created = new \DateTime();
+    }
+
+    public function getUpdated(): ?\DateTimeInterface
+    {
+        return $this->updated;
+    }
+
+    public function setUpdated(\DateTimeInterface $updated): static
+    {
+        $this->updated = $updated;
+
+        return $this;
+    }
+
+    public function getCreated(): ?\DateTimeInterface
+    {
+        return $this->created;
+    }
+
+    public function setCreated(\DateTimeInterface $created): static
+    {
+        $this->created = $created;
 
         return $this;
     }

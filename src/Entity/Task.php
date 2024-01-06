@@ -7,6 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TaskRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Task
 {
     #[ORM\Id]
@@ -107,5 +108,18 @@ class Task
         $this->updated = $updated;
 
         return $this;
+    }
+
+    #[ORM\PreUpdate]
+    public function preUpdated()
+    {
+        $this->updated = new \DateTime();
+    }
+
+    #[ORM\PrePersist]
+    public function preCreated()
+    {
+        $this->preUpdated();
+        $this->created = new \DateTime();
     }
 }

@@ -3,10 +3,13 @@
 namespace App\Entity;
 
 use App\Repository\CourseRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CourseRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Course
 {
     #[ORM\Id]
@@ -40,6 +43,14 @@ class Course
 
     #[ORM\Column]
     private ?int $position = null;
+
+    #[ORM\OneToMany(mappedBy: 'course', targetEntity: UserProgress::class)]
+    private Collection $userProgress;
+
+    public function __construct()
+    {
+        $this->userProgress = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -150,6 +161,49 @@ class Course
     public function setPosition(int $position): static
     {
         $this->position = $position;
+
+        return $this;
+    }
+
+    #[ORM\PreUpdate]
+    public function preUpdated()
+    {
+        $this->updated = new \DateTime();
+    }
+
+    #[ORM\PrePersist]
+    public function preCreated()
+    {
+        $this->preUpdated();
+        $this->created = new \DateTime();
+    }
+
+    /**
+     * @return Collection<int, UserProgress>
+     */
+    public function getUserProgress(): Collection
+    {
+        return $this->userProgress;
+    }
+
+    public function addUserProgress(UserProgress $userProgress): static
+    {
+        if (!$this->userProgress->contains($userProgress)) {
+            $this->userProgress->add($userProgress);
+            $userProgress->setCourse($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserProgress(UserProgress $userProgress): static
+    {
+        if ($this->userProgress->removeElement($userProgress)) {
+            // set the owning side to null (unless already changed)
+            if ($userProgress->getCourse() === $this) {
+                $userProgress->setCourse(null);
+            }
+        }
 
         return $this;
     }

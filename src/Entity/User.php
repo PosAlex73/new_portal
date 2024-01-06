@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -10,6 +12,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
+#[ORM\HasLifecycleCallbacks]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -49,6 +52,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?Thread $thread = null;
+
+    #[ORM\OneToOne(mappedBy: 'owner', cascade: ['persist', 'remove'])]
+    private ?UserProfile $userProfile = null;
+
+    #[ORM\OneToMany(mappedBy: 'owner', targetEntity: UserProgress::class)]
+    private Collection $userProgress;
+
+    public function __construct()
+    {
+        $this->userProgress = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -200,6 +214,71 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setThread(?Thread $thread): static
     {
         $this->thread = $thread;
+
+        return $this;
+    }
+
+    #[ORM\PreUpdate]
+    public function preUpdated()
+    {
+        $this->updated = new \DateTime();
+    }
+
+    #[ORM\PrePersist]
+    public function preCreated()
+    {
+        $this->preUpdated();
+        $this->created = new \DateTime();
+    }
+
+    public function getUserProfile(): ?UserProfile
+    {
+        return $this->userProfile;
+    }
+
+    public function setUserProfile(?UserProfile $userProfile): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($userProfile === null && $this->userProfile !== null) {
+            $this->userProfile->setOwner(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($userProfile !== null && $userProfile->getOwner() !== $this) {
+            $userProfile->setOwner($this);
+        }
+
+        $this->userProfile = $userProfile;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, UserProgress>
+     */
+    public function getUserProgress(): Collection
+    {
+        return $this->userProgress;
+    }
+
+    public function addUserProgress(UserProgress $userProgress): static
+    {
+        if (!$this->userProgress->contains($userProgress)) {
+            $this->userProgress->add($userProgress);
+            $userProgress->setOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserProgress(UserProgress $userProgress): static
+    {
+        if ($this->userProgress->removeElement($userProgress)) {
+            // set the owning side to null (unless already changed)
+            if ($userProgress->getOwner() === $this) {
+                $userProgress->setOwner(null);
+            }
+        }
 
         return $this;
     }

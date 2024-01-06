@@ -9,6 +9,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Category
 {
     #[ORM\Id]
@@ -166,5 +167,18 @@ class Category
         }
 
         return $this;
+    }
+
+    #[ORM\PreUpdate]
+    public function preUpdated()
+    {
+        $this->updated = new \DateTime();
+    }
+
+    #[ORM\PrePersist]
+    public function preCreated()
+    {
+        $this->preUpdated();
+        $this->created = new \DateTime();
     }
 }

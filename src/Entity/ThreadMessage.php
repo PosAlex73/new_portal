@@ -7,6 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ThreadMessageRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class ThreadMessage
 {
     #[ORM\Id]
@@ -93,5 +94,18 @@ class ThreadMessage
         $this->status = $status;
 
         return $this;
+    }
+
+    #[ORM\PreUpdate]
+    public function preUpdated()
+    {
+        $this->updated = new \DateTime();
+    }
+
+    #[ORM\PrePersist]
+    public function preCreated()
+    {
+        $this->preUpdated();
+        $this->created = new \DateTime();
     }
 }

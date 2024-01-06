@@ -7,6 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: SettingRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Setting
 {
     #[ORM\Id]
@@ -25,6 +26,9 @@ class Setting
 
     #[ORM\Column(length: 1)]
     private ?string $type = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $tab = null;
 
     public function getId(): ?int
     {
@@ -75,6 +79,24 @@ class Setting
     public function setType(string $type): static
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    #[ORM\PreUpdate]
+    public function preUpdated()
+    {
+        $this->updated = new \DateTime();
+    }
+
+    public function getTab(): ?string
+    {
+        return $this->tab;
+    }
+
+    public function setTab(string $tab): static
+    {
+        $this->tab = $tab;
 
         return $this;
     }

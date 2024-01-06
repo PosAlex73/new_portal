@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Category;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -16,13 +17,15 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class CategoryRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(
+        ManagerRegistry $registry)
     {
         parent::__construct($registry, Category::class);
     }
 
-    public function getWithPaginate(int $offset = 0)
-    {
-        $qb = $this->createQueryBuilder('c');
-    }
+//    public function getWithPaginate(int $page)
+//    {
+//        $offset = $page *
+//
+//    }
 }

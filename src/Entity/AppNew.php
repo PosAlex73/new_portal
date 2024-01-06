@@ -7,6 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AppNewRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class AppNew
 {
     #[ORM\Id]
@@ -92,5 +93,18 @@ class AppNew
         $this->status = $status;
 
         return $this;
+    }
+
+    #[ORM\PreUpdate]
+    public function preUpdated()
+    {
+        $this->updated = new \DateTime();
+    }
+
+    #[ORM\PrePersist]
+    public function preCreated()
+    {
+        $this->preUpdated();
+        $this->created = new \DateTime();
     }
 }

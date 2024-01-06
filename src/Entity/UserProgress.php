@@ -2,24 +2,24 @@
 
 namespace App\Entity;
 
-use App\Repository\PageRepository;
+use App\Repository\UserProgressRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: PageRepository::class)]
+#[ORM\Entity(repositoryClass: UserProgressRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-class Page
+class UserProgress
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $title = null;
+    #[ORM\ManyToOne(inversedBy: 'userProgress')]
+    private ?User $owner = null;
 
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $text = null;
+    #[ORM\ManyToOne(inversedBy: 'userProgress')]
+    private ?Course $course = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $created = null;
@@ -27,37 +27,37 @@ class Page
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $updated = null;
 
-    #[ORM\Column(length: 1)]
-    private ?string $status = null;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $endDate = null;
 
-    #[ORM\ManyToOne(inversedBy: 'pages')]
-    private ?Category $category = null;
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $data = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getTitle(): ?string
+    public function getOwner(): ?User
     {
-        return $this->title;
+        return $this->owner;
     }
 
-    public function setTitle(string $title): static
+    public function setOwner(?User $owner): static
     {
-        $this->title = $title;
+        $this->owner = $owner;
 
         return $this;
     }
 
-    public function getText(): ?string
+    public function getCourse(): ?Course
     {
-        return $this->text;
+        return $this->course;
     }
 
-    public function setText(string $text): static
+    public function setCourse(?Course $course): static
     {
-        $this->text = $text;
+        $this->course = $course;
 
         return $this;
     }
@@ -86,26 +86,26 @@ class Page
         return $this;
     }
 
-    public function getStatus(): ?string
+    public function getEndDate(): ?\DateTimeInterface
     {
-        return $this->status;
+        return $this->endDate;
     }
 
-    public function setStatus(string $status): static
+    public function setEndDate(?\DateTimeInterface $endDate): static
     {
-        $this->status = $status;
+        $this->endDate = $endDate;
 
         return $this;
     }
 
-    public function getCategory(): ?Category
+    public function getData(): ?string
     {
-        return $this->category;
+        return $this->data;
     }
 
-    public function setCategory(?Category $category): static
+    public function setData(string $data): static
     {
-        $this->category = $category;
+        $this->data = $data;
 
         return $this;
     }
