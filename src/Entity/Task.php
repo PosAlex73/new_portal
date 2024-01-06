@@ -33,6 +33,9 @@ class Task
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $updated = null;
 
+    #[ORM\ManyToOne(inversedBy: 'tasks')]
+    private ?Course $course = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -121,5 +124,17 @@ class Task
     {
         $this->preUpdated();
         $this->created = new \DateTime();
+    }
+
+    public function getCourse(): ?Course
+    {
+        return $this->course;
+    }
+
+    public function setCourse(?Course $course): static
+    {
+        $this->course = $course;
+
+        return $this;
     }
 }

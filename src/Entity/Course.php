@@ -47,9 +47,16 @@ class Course
     #[ORM\OneToMany(mappedBy: 'course', targetEntity: UserProgress::class)]
     private Collection $userProgress;
 
+    #[ORM\Column(length: 255)]
+    private ?string $course_code = null;
+
+    #[ORM\OneToMany(mappedBy: 'course', targetEntity: Task::class)]
+    private Collection $tasks;
+
     public function __construct()
     {
         $this->userProgress = new ArrayCollection();
+        $this->tasks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -202,6 +209,48 @@ class Course
             // set the owning side to null (unless already changed)
             if ($userProgress->getCourse() === $this) {
                 $userProgress->setCourse(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getCourseCode(): ?string
+    {
+        return $this->course_code;
+    }
+
+    public function setCourseCode(string $course_code): static
+    {
+        $this->course_code = $course_code;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Task>
+     */
+    public function getTasks(): Collection
+    {
+        return $this->tasks;
+    }
+
+    public function addTask(Task $task): static
+    {
+        if (!$this->tasks->contains($task)) {
+            $this->tasks->add($task);
+            $task->setCourse($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTask(Task $task): static
+    {
+        if ($this->tasks->removeElement($task)) {
+            // set the owning side to null (unless already changed)
+            if ($task->getCourse() === $this) {
+                $task->setCourse(null);
             }
         }
 

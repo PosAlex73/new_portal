@@ -2,6 +2,8 @@
 
 namespace App\EventListeners;
 
+use App\Dto\Courses\InitialCourseDto;
+use App\Dto\Progress\UserProgressDataStartDto;
 use App\Entity\UserProgress;
 use Doctrine\Bundle\DoctrineBundle\Attribute\AsEntityListener;
 use Doctrine\ORM\Event\PrePersistEventArgs;
@@ -12,6 +14,6 @@ class UserProgressCreated
 {
     public function preCreated(UserProgress $progress, PrePersistEventArgs $args)
     {
-        $progress->setData();
+        $progress->setData(json_encode(UserProgressDataStartDto::getStartData()));
     }
 }

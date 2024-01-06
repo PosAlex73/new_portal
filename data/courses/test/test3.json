@@ -1,0 +1,55 @@
+{
+  "technology": "php",
+  "description": "base course",
+  "level": "1",
+  "tasks": {
+    "task_1": {
+      "type": "theory",
+      "title": "test"
+    },
+    "task_2": {
+      "type": "test",
+      "title": "test"
+    },
+    "task_3": {
+      "type": "practice",
+      "title": "test"
+    },
+    "task_4": {
+      "type": "theory",
+      "title": "test"
+    },
+    "task_5": {
+      "type": "theory",
+      "title": "test"
+    },
+    "task_6": {
+      "type": "theory",
+      "title": "test"
+    },
+    "task_7": {
+      "type": "theory",
+      "title": "test"
+    },
+    "task_8": {
+      "type": "theory",
+      "title": "test"
+    },
+    "task_9": {
+      "type": "theory",
+      "title": "test"
+    },
+    "task_10": {
+      "type": "theory",
+      "title": "test"
+    },
+    "task_11": {
+      "type": "theory",
+      "title": "test"
+    },
+    "task_12": {
+      "type": "theory",
+      "title": "test"
+    }
+  }
+}
