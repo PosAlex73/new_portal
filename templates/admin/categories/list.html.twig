@@ -1,5 +1,40 @@
 {% extends 'admin/layout/base.html.twig' %}
 
 {% block content %}
-
+    <div class="row">
+        <form action="{{ path('categories_delete') }}" method="post">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table mb-0">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Название</th>
+                                <th>Статус</th>
+                                <th>Дата создания</th>
+                                <th>Дата обновления</th>
+                                <th>Выделить</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for category in categories %}
+                                <tr>
+                                    <th scope="row">{{ category.id }}</th>
+                                    <td><a href="{{ path('categories_update', {id: category.id}) }}">{{ category.title }}</a></td>
+                                    <td>{{ category.statusStr }}</td>
+                                    <td>{{ category.createdStr }}</td>
+                                    <td>{{ category.updatedStr }}</td>
+                                    <td class="text-center">
+                                        <input type="checkbox" name="category[{{ category.id }}]" value="Y">
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
 {% endblock %}

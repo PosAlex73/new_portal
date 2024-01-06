@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Admin;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class NewsController extends AbstractController
+class TaskController extends AbstractController
 {
-    #[Route('/admin/news', name: 'news_list')]
+    #[Route('/admin/task', name: 'tasks_list')]
     public function index(): Response
     {
-        return $this->render('news/index.html.twig', [
-            'controller_name' => 'NewsController',
+        return $this->render('task/index.html.twig', [
+            'controller_name' => 'TaskController',
         ]);
     }
 }

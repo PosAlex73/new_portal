@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Admin;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class TaskController extends AbstractController
+class BlogController extends AbstractController
 {
-    #[Route('/admin/task', name: 'tasks_list')]
+    #[Route('/admin/blog', name: 'blog_list')]
     public function index(): Response
     {
-        return $this->render('task/index.html.twig', [
-            'controller_name' => 'TaskController',
+        return $this->render('blog/index.html.twig', [
+            'controller_name' => 'BlogController',
         ]);
     }
 }

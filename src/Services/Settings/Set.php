@@ -2,6 +2,7 @@
 
 namespace App\Services\Settings;
 
+use App\Entity\Setting;
 use App\Enums\Settings\SettingEnum;
 use App\Repository\SettingRepository;
 
@@ -17,6 +18,10 @@ class Set
         }
     }
 
+    /**
+     * @param SettingEnum $settingEnum
+     * @return Setting
+     */
     public function get(SettingEnum $settingEnum)
     {
         return $this->settings[$settingEnum->value];

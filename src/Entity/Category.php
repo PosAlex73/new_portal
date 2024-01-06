@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\DatetimeStr;
+use App\Enums\CommonStatus;
 use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -12,6 +14,8 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\HasLifecycleCallbacks]
 class Category
 {
+    use DatetimeStr;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -180,5 +184,13 @@ class Category
     {
         $this->preUpdated();
         $this->created = new \DateTime();
+    }
+
+    public function statusStr()
+    {
+        return match ($this->getStatus()) {
+            CommonStatus::ACTIVE->value => 'Активно',
+            CommonStatus::DISABLED->value => 'Отключено',
+        };
     }
 }
