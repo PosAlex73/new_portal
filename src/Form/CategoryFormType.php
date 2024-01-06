@@ -26,7 +26,10 @@ class CategoryFormType extends AbstractType
                 'label' => 'Статус',
                 'choices' => [
                     'Активно' => CommonStatus::ACTIVE->value,
-                    'ВЫключено' => CommonStatus::DISABLED->value
+                    'Выключено' => CommonStatus::DISABLED->value
+                ],
+                'attr' => [
+                    'class' => 'form-select'
                 ]
             ])
             ->add('text', TextareaType::class, [

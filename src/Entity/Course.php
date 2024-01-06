@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use App\Enums\Courses\CourseStatuses;
+use App\Enums\Courses\CourseTypes;
 use App\Repository\CourseRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -255,5 +257,28 @@ class Course
         }
 
         return $this;
+    }
+
+    public function getStatusStr()
+    {
+        return match ($this->getStatus()) {
+            CourseStatuses::DISABLED->value => 'Отключен',
+            CourseStatuses::ACTIVE->value => 'Активно',
+            CourseStatuses::ARCHIVED->value => 'В архиве',
+            CourseStatuses::IN_DEVELOPMENT->value => 'В разработке',
+        };
+    }
+
+    public function getTypeStr()
+    {
+        return match ($this->getType()) {
+            CourseTypes::FREE->value => 'Бепсплатно',
+            CourseTypes::PAY->value => 'Платно'
+        };
+    }
+
+    public function __toString(): string
+    {
+        return $this->title;
     }
 }

@@ -193,4 +193,9 @@ class Category
             CommonStatus::DISABLED->value => 'Отключено',
         };
     }
+
+    public function __toString(): string
+    {
+        return $this->title;
+    }
 }
