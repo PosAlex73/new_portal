@@ -71,11 +71,15 @@ class UserCrudController extends AbstractCrudController
                 });
 
         $profileAction = Action::new('showProfile', 'Показать профиль', null)
-            ->linkToRoute('show_profile')
+            ->linkToRoute('show_profile', fn (User $user) => [
+                'id' => $user->getId()
+            ])
             ->displayIf(fn ($entity) => !empty($entity));
 
         $actions->add(Crud::PAGE_INDEX, $profileAction);
+        $actions->add(Crud::PAGE_EDIT, $profileAction);
         $actions->add(Crud::PAGE_INDEX, $chatAction);
+        $actions->add(Crud::PAGE_EDIT, $chatAction);
 
         return $actions;
     }

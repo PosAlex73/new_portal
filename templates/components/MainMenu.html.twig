@@ -1,10 +1,8 @@
 {% for element in mainMenu %}
-<li>
-    <a href="index.html">
-        {% if element.number != null %}
-            <span class="badge bg-success rounded-pill float-end">{{ element.number }}</span>
-        {% endif %}
-        <span><a href="{{ element.route }}">{{ element.title }}</a></span>
-    </a>
-</li>
+    <li class="nav-item dropdown">
+        <a class="nav-link arrow-none" href="{{ element.route }}" id="topnav-dashboard" role="button" aria-haspopup="true" aria-expanded="false">
+            <i class="mdi mdi-view-dashboard me-1"></i> {{ element.title }}
+        </a>
+
+    </li>
 {% endfor %}

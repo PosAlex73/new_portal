@@ -1,0 +1,28 @@
+{% extends 'layout/base.html.twig' %}
+
+{% block page_title %}Популярные курсы{% endblock %}
+
+{% block content %}
+    <div class="row">
+        {% if courses is defined and courses|length > 0 %}
+            {% for course in courses %}
+                <div class="col-md-6 col-xl-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">{{ course.title  }}</h4>
+                            <p class="card-text">{{ course.shortDescription }}</p>
+                            <a href="{{ path('courses_detail', {id: course.id}) }}" class="btn btn-primary">Посмотреть курс</a>
+                        </div>
+                    </div>
+
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="card">
+                <div class="card-body">
+                    <p class="card-text">В данный момент курсов не опубликовано</p>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
