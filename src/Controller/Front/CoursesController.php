@@ -30,7 +30,7 @@ class CoursesController extends AbstractController
         ]);
     }
 
-    #[Route('/courses/details/{id}', name: 'courses_detail')]
+    #[Route('/courses/details/{id}', name: 'course_details')]
     public function details(Course $course, Request $request)
     {
         if ($course->getStatus() !== CourseStatuses::ACTIVE->value) {

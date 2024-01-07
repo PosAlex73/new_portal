@@ -4,7 +4,6 @@ namespace App\DataFixtures;
 
 use App\Entity\Category;
 use App\Entity\Course;
-use App\Entity\Setting;
 use App\Entity\Task;
 use App\Entity\User;
 use App\Entity\UserProgress;
@@ -18,16 +17,15 @@ use App\Enums\Users\UserTypes;
 use App\Repository\CategoryRepository;
 use App\Repository\CourseRepository;
 use App\Services\Courses\CourseLoader;
-use App\Services\Settings\SettingsCreator;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-class CommonFixture extends Fixture
+class CommonFixture extends Fixture implements FixtureGroupInterface
 {
     public function __construct(
-        protected SettingsCreator $settingsCreator,
         protected UserPasswordHasherInterface $passwordHasher,
         protected CourseLoader $courseLoader,
         protected CategoryRepository $categoryRepository,
@@ -35,7 +33,6 @@ class CommonFixture extends Fixture
     )
     {
     }
-
 
     public function load(ObjectManager $manager): void
     {
@@ -49,21 +46,6 @@ class CommonFixture extends Fixture
 
             $manager->persist($category);
             $manager->flush();
-        }
-
-        $initialSettings = $this->settingsCreator->getInitialSettings();
-        foreach ($initialSettings as $tab => $tabContent) {
-            foreach ($tabContent as $title => $setting) {
-                $newSetting = new Setting();
-                $newSetting->setTitle($title);
-                $newSetting->setValue($setting['value']);
-                $newSetting->setTab($tab);
-                $newSetting->setType('');
-                $newSetting->setUpdated(new \DateTime());
-
-                $manager->persist($newSetting);
-                $manager->flush();
-            }
         }
 
         $admin = new User();
@@ -141,5 +123,17 @@ class CommonFixture extends Fixture
             'test' => TaskTypes::TEST->value,
             'practice' => TaskTypes::PRACTICE->value,
         };
+    }
+
+    public function getDependencies()
+    {
+        return [
+            SettingsFixture::class,
+        ];
+    }
+
+    public static function getGroups(): array
+    {
+        return ['g2'];
     }
 }

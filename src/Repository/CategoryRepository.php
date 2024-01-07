@@ -22,10 +22,10 @@ class CategoryRepository extends ServiceEntityRepository
     protected int $elementsPerPage;
 
     public function __construct(
-        protected Set $set, ManagerRegistry $registry)
+        ManagerRegistry $registry)
     {
         parent::__construct($registry, Category::class);
-        $this->elementsPerPage = $this->set->get(SettingEnum::ADMIN_PAGINATION)->getValue();
+        $this->elementsPerPage = 20; //fixme добавить через настройки
     }
 
     public function getWithPaginate(int $page)

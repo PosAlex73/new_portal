@@ -8,7 +8,7 @@ use App\Repository\SettingRepository;
 
 class Set
 {
-    private array $settings;
+    private array $settings = [];
 
     public function __construct(protected SettingRepository $settingRepository)
     {
