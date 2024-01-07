@@ -281,4 +281,9 @@ class Course
     {
         return $this->title;
     }
+
+    public function taskCount()
+    {
+        return $this->getTasks()->count();
+    }
 }

@@ -122,4 +122,10 @@ class UserProgress
         $this->preUpdated();
         $this->created = new \DateTime();
     }
+
+    public function getDoneTasksCount()
+    {
+        $data = json_decode($this->getData(), true)['tasks'];
+        return count($data);
+    }
 }

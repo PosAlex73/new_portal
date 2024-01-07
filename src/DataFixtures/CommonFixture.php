@@ -61,7 +61,7 @@ class CommonFixture extends Fixture implements FixtureGroupInterface
         $manager->flush();
 
         $user = new User();
-        $user->setRoles(['ROLE_SIMPLE']);
+        $user->setRoles(['ROLE_USER']);
         $user->setEmail('u@u.ru');
         $user->setPassword($this->passwordHasher->hashPassword($user, 'user'));
         $user->setType(UserTypes::SIMPLE->value);

@@ -3,8 +3,12 @@
 namespace App\Controller\Front;
 
 use App\Controller\Front\Traits\BackUrl;
+use App\Entity\User;
 use App\Enums\Flash\FlashTypes;
 use App\Form\UserFormType;
+use App\Form\UserProfileFormType;
+use App\Repository\UserProgressRepository;
+use App\Services\UserProgress\CourseCounter;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,7 +17,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ProfileController extends AbstractController
 {
-    public function __construct(protected EntityManagerInterface $entityManager)
+    public function __construct(
+        protected EntityManagerInterface $entityManager,
+        protected UserProgressRepository $userProgressRepository,
+        protected CourseCounter $courseCounter
+    )
     {
     }
 
@@ -23,7 +31,7 @@ class ProfileController extends AbstractController
     public function index(Request $request): Response
     {
         $user = $this->getUser();
-        $userForm = $this->createForm(UserFormType::class);
+        $userForm = $this->createForm(UserFormType::class, $user);
 
         $userForm->handleRequest($request);
 
@@ -43,12 +51,33 @@ class ProfileController extends AbstractController
     #[Route('/profile/progress', name: 'user_progress')]
     public function userProgress()
     {
+        /** @var User $user */
+        $user = $this->getUser();
+        $userProgress = $user->getUserProgress();
+        $calculatedData = $this->courseCounter->calculateUserProgress($userProgress);
 
+        return $this->render('front/profile/user_progress.html.twig', [
+            'userProgress' => $userProgress,
+            'progressData' => $calculatedData
+        ]);
     }
 
     #[Route('/profile/settings', name: 'user_settings')]
-    public function userProfile()
+    public function userProfile(Request $request)
     {
+        $userProfile = $this->getUser()->getUserProfile();
+        $profileForm = $this->createForm(UserProfileFormType::class, $userProfile);
 
+        $profileForm->handleRequest($request);
+
+        if ($profileForm->isSubmitted() && $profileForm->isValid()) {
+            $this->entityManager->flush();
+
+            $this->addFlash('success', 'Профиль успешно обновлен!');
+        }
+
+        return $this->render('front/profile/user_settings.html.twig', [
+            'profileForm' => $profileForm
+        ]);
     }
 }

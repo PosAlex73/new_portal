@@ -30,7 +30,8 @@ class UserProfileFormType extends AbstractType
             ->add('submit', SubmitType::class, [
                 'attr' => [
                     'class' => 'btn btn-primary mt-3'
-                ]
+                ],
+                'label' => 'Сохранить настройки'
             ])
         ;
     }

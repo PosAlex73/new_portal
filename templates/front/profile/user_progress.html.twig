@@ -1,0 +1,63 @@
+{% extends 'layout/base.html.twig' %}
+
+{% block page_title %} Здравствуйте, {{ app.user.fullName }} {% endblock %}
+
+{% block content %}
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="header-title mb-4">Tabs Justified</h4>
+
+                <ul class="nav nav-pills navtab-bg nav-justified">
+                    <li class="nav-item">
+                        <a href="{{ path('profile') }}" class="nav-link">
+                            Общая информация
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ path('user_progress') }}" class="nav-link active">
+                            Обучение
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ path('user_settings') }}" class="nav-link">
+                            Настройки
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane show active" id="home1">
+                        <div class="table-responsive">
+                            <table class="table mb-0">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Название курса</th>
+                                    <th>Количество задач в курсе</th>
+                                    <th>Выполнено задач</th>
+                                    <th>Дата начала</th>
+                                    <th>Дата окончания</th>
+                                    <th>Начать обучение</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for data in progressData %}
+                                    <tr>
+                                        <th scope="row"></th>
+                                        <td>{{ data.title }}</td>
+                                        <td>{{ data.taskNumberInCourse }}</td>
+                                        <td>{{ data.doneTasks }}</td>
+                                        <td>{{ data.startDate }}</td>
+                                        <td>{{ data.endDate }}</td>
+                                        <td>Начать обучение</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- end card-->
+    </div>
+{% endblock %}
