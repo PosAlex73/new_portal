@@ -128,4 +128,9 @@ class UserProgress
         $data = json_decode($this->getData(), true)['tasks'];
         return count($data);
     }
+
+    public function getTasksArray()
+    {
+        return json_decode($this->getData(), true)['tasks'];
+    }
 }

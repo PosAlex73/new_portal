@@ -10,6 +10,7 @@ class UserProgressForProfileDto
         protected int $doneTasks,
         protected $startDate,
         protected $endDate,
+        protected $progressID
     )
     {
     }
@@ -94,5 +95,20 @@ class UserProgressForProfileDto
         $this->doneTasks = $doneTasks;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getProgressID()
+    {
+        return $this->progressID;
+    }
+
+    /**
+     * @param mixed $progressID
+     */
+    public function setProgressID($progressID): void
+    {
+        $this->progressID = $progressID;
+    }
 
 }

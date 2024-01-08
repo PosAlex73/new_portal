@@ -1,0 +1,53 @@
+{% extends 'layout/base.html.twig' %}
+
+{% block page_title %}Обучение{% endblock %}
+
+{% block content %}
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <ul class="nav nav-pills navtab-bg nav-justified">
+                    <li class="nav-item">
+                        <a href="#general" data-bs-toggle="tab" aria-expanded="false" class="nav-link active">
+                            Информация о курсе
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#tasks" data-bs-toggle="tab" aria-expanded="true" class="nav-link">
+                            Задачи
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="general">
+                        <p>{{ course.text }}</p>
+                    </div>
+                    <div class="tab-pane show" id="tasks">
+                            <div class="table-responsive">
+                                <table class="table mb-0">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Название</th>
+                                        <th>Тип задачи</th>
+                                        <th>Выполнение</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for task in course.tasks %}
+                                        <tr>
+                                            <th scope="row">{{ task.id }}</th>
+                                            <td>{{ task.title }}</td>
+                                            <td>{{ task.getTypeStr() }}</td>
+                                            <td></td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- end card-->
+    </div>
+{% endblock %}

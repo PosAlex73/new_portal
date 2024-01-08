@@ -31,6 +31,6 @@ class UserProgressRepository extends ServiceEntityRepository
                 'course' => $courseId
             ])
             ->getQuery()
-            ->getSQL();
+            ->getResult();
     }
 }

@@ -49,9 +49,14 @@ class CoursesController extends AbstractController
 
         /** @var User $user */
         $user = $this->getUser();
-        $hasCourse = $this->userProgressRepository->getByUserProgress($user->getId(), $course->getId());
 
-        return $this->render('front/courses/detail.html.twig', [
+        if ($user) {
+            $hasCourse = (bool) $this->userProgressRepository->getByUserProgress($user->getId(), $course->getId());
+        } else {
+            $hasCourse = false;
+        }
+
+        return $this->render('front/courses/details.html.twig', [
             'course' => $course,
             'hasCourse' => $hasCourse
         ]);

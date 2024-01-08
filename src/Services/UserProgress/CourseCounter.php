@@ -32,7 +32,8 @@ class CourseCounter
                 $value->getCourse()->taskCount(),
                 $value->getDoneTasksCount(),
                 $value->getCreated()->format('Y-m-d'),
-                $value->getEndDate()?->format('Y-m-d')
+                $value->getEndDate()?->format('Y-m-d'),
+                $value->getId()
             );
 
             $calculatedProgress[] = $calcProgress;

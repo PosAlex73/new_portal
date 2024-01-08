@@ -49,7 +49,7 @@
                                         <td>{{ data.doneTasks }}</td>
                                         <td>{{ data.startDate }}</td>
                                         <td>{{ data.endDate }}</td>
-                                        <td>Начать обучение</td>
+                                        <td><a href="{{ path('front_learn', {id: data.progressId}) }}">Начать обучение</a></td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>

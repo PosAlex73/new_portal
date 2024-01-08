@@ -286,4 +286,14 @@ class Course
     {
         return $this->getTasks()->count();
     }
+
+    public function getCreatedStr()
+    {
+        return $this->getCreated()->format('Y-m-d H:i:s');
+    }
+
+    public function getUpdatedStr()
+    {
+        return $this->getUpdated()->format('Y-m-d H:i:s');
+    }
 }

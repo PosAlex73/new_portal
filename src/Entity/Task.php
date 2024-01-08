@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Enums\Task\TaskTypes;
 use App\Repository\TaskRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -136,5 +137,19 @@ class Task
         $this->course = $course;
 
         return $this;
+    }
+
+    public function getShortText()
+    {
+        return substr($this->getText(), 0, 100) . '...';
+    }
+
+    public function getTypeStr()
+    {
+        return match($this->getType()) {
+            TaskTypes::TEST->value => 'Тест',
+            TaskTypes::THEORY->value => 'Теория',
+            TaskTypes::PRACTICE->value => 'Практика',
+        };
     }
 }
