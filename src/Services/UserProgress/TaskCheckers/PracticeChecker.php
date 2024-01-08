@@ -2,12 +2,13 @@
 
 namespace App\Services\UserProgress\TaskCheckers;
 
+use App\Dto\Progress\TaskDoneDto;
 use App\Entity\Task;
 
-class PracticeChecker
+class PracticeChecker implements TaskCheckerInterface
 {
-    public function check(Task $task)
+    public function check(Task $task): TaskDoneDto
     {
-        return false; //fixme
+        return new TaskDoneDto(false, 'test'); //fixme
     }
 }

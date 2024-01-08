@@ -37,7 +37,7 @@
                                     {% for task in course.tasks %}
                                         <tr>
                                             <th scope="row">{{ task.id }}</th>
-                                            <td>{{ task.title }}</td>
+                                            <td><a href="{{ path('learn_task', {id: task.id}) }}">{{ task.title }}</a></td>
                                             <td>{{ task.getTypeStr() }}</td>
                                             <td></td>
                                         </tr>

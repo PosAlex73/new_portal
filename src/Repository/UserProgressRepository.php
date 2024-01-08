@@ -21,16 +21,21 @@ class UserProgressRepository extends ServiceEntityRepository
         parent::__construct($registry, UserProgress::class);
     }
 
-    public function getByUserProgress(int $userId, int $courseId)
+    public function getByUserProgress(int $userId, int $courseId, bool $singleResult = false)
     {
-        return $this->createQueryBuilder('up')
+        $qb = $this->createQueryBuilder('up')
             ->where('up.owner = :owner')
             ->andWhere('up.course = :course')
             ->setParameters([
                 'owner' => $userId,
                 'course' => $courseId
             ])
-            ->getQuery()
-            ->getResult();
+            ->getQuery();
+
+        if ($singleResult) {
+            return $qb->getSingleResult();
+        } else {
+            return $qb->getResult();
+        }
     }
 }

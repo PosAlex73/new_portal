@@ -4,6 +4,7 @@ namespace App\Services\UserProgress;
 
 use App\Dto\Progress\CourseAddResultDto;
 use App\Entity\Course;
+use App\Entity\Task;
 use App\Entity\User;
 use App\Entity\UserProgress;
 use App\Repository\UserProgressRepository;
@@ -34,5 +35,11 @@ class ProgressCreator
         $this->entityManager->flush();
 
         return new CourseAddResultDto(true);
+    }
+
+    public function addTaskToProgress(Task $task, UserProgress $userProgress)
+    {
+        $taskData = $userProgress->getTasksArray();
+
     }
 }
