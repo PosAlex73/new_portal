@@ -39,7 +39,12 @@
                                             <th scope="row">{{ task.id }}</th>
                                             <td><a href="{{ path('learn_task', {id: task.id}) }}">{{ task.title }}</a></td>
                                             <td>{{ task.getTypeStr() }}</td>
-                                            <td></td>
+                                            <td>
+                                                {% if task.id in taskData|keys %}
+                                                    {% set taskId = task.id %}
+                                                    {{ taskData[taskId].endDate.date }}
+                                                {% endif %}
+                                            </td>
                                         </tr>
                                     {% endfor %}
                                     </tbody>

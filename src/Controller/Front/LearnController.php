@@ -8,6 +8,7 @@ use App\Entity\User;
 use App\Entity\UserProgress;
 use App\Enums\Flash\FlashTypes;
 use App\Repository\UserProgressRepository;
+use App\Services\UserProgress\ProgressCreator;
 use App\Services\UserProgress\TaskDoneChecker;
 use App\Services\UserProgress\TemplateGetter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,7 +22,8 @@ class LearnController extends AbstractController
     public function __construct(
         protected UserProgressRepository $userProgressRepository,
         protected TaskDoneChecker $taskDoneChecker,
-        protected TemplateGetter $templateGetter
+        protected TemplateGetter $templateGetter,
+        protected ProgressCreator $progressCreator
     )
     {
     }
@@ -34,10 +36,12 @@ class LearnController extends AbstractController
         $user = $this->getUser(); //fixme проверка на статус и существование
         /** @var Course $course */
         $course = $userProgress->getCourse();
+        $taskData = $userProgress->getTasksArray();
 
         return $this->render('front/learn/index.html.twig', [
             'userProgress' => $userProgress,
-            'course' => $course
+            'course' => $course,
+            'taskData' => $taskData
         ]);
     }
 
@@ -64,7 +68,7 @@ class LearnController extends AbstractController
         if ($result->isResult()) {
             $this->addFlash(FlashTypes::NOTICE->value, 'Задача успешно пройдена');
 
-
+            $this->progressCreator->addTaskToProgress($task, $userProgress);
 
             return $this->redirectToRoute('front_learn', ['id' => $userProgress->getId()]);
         }

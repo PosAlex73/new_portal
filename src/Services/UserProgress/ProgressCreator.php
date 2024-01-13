@@ -40,6 +40,18 @@ class ProgressCreator
     public function addTaskToProgress(Task $task, UserProgress $userProgress)
     {
         $taskData = $userProgress->getTasksArray();
+        if (array_key_exists($task->getId(), $taskData)) {
+            $doneTask = $taskData[$task->getId()];
+        } else {
+            $doneTask = [];
+        }
 
+        $doneTask['endDate'] = new \DateTime();
+        $taskData[$task->getId()] = $doneTask;
+        $data = [
+            'tasks' => $taskData
+        ];
+        $userProgress->setData(json_encode($data));
+        $this->entityManager->flush();
     }
 }
