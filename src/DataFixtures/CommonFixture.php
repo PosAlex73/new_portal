@@ -7,6 +7,8 @@ use App\Entity\Article;
 use App\Entity\Category;
 use App\Entity\Course;
 use App\Entity\Task;
+use App\Entity\TestText;
+use App\Entity\TestVariant;
 use App\Entity\User;
 use App\Entity\UserProgress;
 use App\Enums\CommonStatus;
@@ -101,9 +103,24 @@ class CommonFixture extends Fixture implements FixtureGroupInterface
                 $newTask->setText($faker->realText(500));
                 $newTask->setStatus(CommonStatus::ACTIVE->value);
                 $manager->persist($newTask);
+                $manager->flush();
+
+                if ($task['type'] === 'test' && !empty($task['tests'])) {
+                    foreach ($task['tests'] as $testText) {
+                        $newTestText = new TestText();
+                        $newTestText->setText($testText['text']);
+                        $newTestText->setTask($newTask);
+                        $newTestText->setVariantOne($testText['variants']['variant_1']);
+                        $newTestText->setVariantTwo($testText['variants']['variant_2']);
+                        $newTestText->setVariantThree($testText['variants']['variant_3']);
+                        $newTestText->setVariantFour($testText['variants']['variant_4']);
+                        $newTestText->setRightVariant($testText['right_variant']);
+                        $manager->persist($newTestText);
+                        $manager->flush();
+                    }
+                }
             }
 
-            $manager->flush();
         }
 
         foreach (range(0, 30) as $_) {

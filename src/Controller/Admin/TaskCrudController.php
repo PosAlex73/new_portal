@@ -8,6 +8,7 @@ use App\Enums\Task\TaskTypes;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
@@ -15,9 +16,20 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\ChoiceFilter;
+use EasyCorp\Bundle\EasyAdminBundle\Provider\AdminContextProvider;
+use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 
 class TaskCrudController extends AbstractCrudController
 {
+    public function __construct(
+        protected AdminUrlGenerator $adminUrlGenerator,
+        protected AdminContextProvider $adminContextProvider
+    )
+    {
+
+    }
+
     public static function getEntityFqcn(): string
     {
         return Task::class;
@@ -54,6 +66,26 @@ class TaskCrudController extends AbstractCrudController
         $actions->remove(Crud::PAGE_INDEX, Action::NEW);
         $actions->remove(Crud::PAGE_INDEX, Action::DELETE);
 
+
+        $editTests = Action::new('editTest', 'Редактировать тесты', null)
+            ->linkToRoute('edit_test_text', fn (Task $task) => [
+                'id' => $task->getId()
+            ]);
+
+        $actions->add(Crud::PAGE_INDEX, $editTests);
+
         return $actions;
+    }
+
+    public function configureFilters(Filters $filters): Filters
+    {
+        return parent::configureFilters($filters)
+            ->add(ChoiceFilter::new('type')
+                ->setChoices([
+                    'Тест' => TaskTypes::TEST->value,
+                    'Практика' => TaskTypes::PRACTICE->value,
+                    'Теория' => TaskTypes::THEORY->value,
+                ])
+            );
     }
 }

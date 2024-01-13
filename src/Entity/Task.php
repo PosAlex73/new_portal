@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Enums\Task\TaskTypes;
 use App\Repository\TaskRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -36,6 +38,14 @@ class Task
 
     #[ORM\ManyToOne(inversedBy: 'tasks')]
     private ?Course $course = null;
+
+    #[ORM\OneToMany(mappedBy: 'task', targetEntity: TestText::class)]
+    private Collection $testTexts;
+
+    public function __construct()
+    {
+        $this->testTexts = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -151,5 +161,35 @@ class Task
             TaskTypes::THEORY->value => 'Теория',
             TaskTypes::PRACTICE->value => 'Практика',
         };
+    }
+
+    /**
+     * @return Collection<int, TestText>
+     */
+    public function getTestTexts(): Collection
+    {
+        return $this->testTexts;
+    }
+
+    public function addTestText(TestText $testText): static
+    {
+        if (!$this->testTexts->contains($testText)) {
+            $this->testTexts->add($testText);
+            $testText->setTask($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTestText(TestText $testText): static
+    {
+        if ($this->testTexts->removeElement($testText)) {
+            // set the owning side to null (unless already changed)
+            if ($testText->getTask() === $this) {
+                $testText->setTask(null);
+            }
+        }
+
+        return $this;
     }
 }

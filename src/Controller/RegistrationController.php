@@ -4,10 +4,12 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Enums\Flash\FlashTypes;
+use App\Enums\Users\UserTypes;
 use App\EventListeners\UserCreated;
 use App\Form\RegistrationFormType;
 use App\Security\AppCustomAuthenticator;
 use App\Security\EmailVerifier;
+use App\Services\User\RolesGetter;
 use App\Services\User\UserRegistrator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -26,7 +28,10 @@ class RegistrationController extends AbstractController
 {
     public function __construct(
         protected EmailVerifier $emailVerifier,
-        protected UserRegistrator $userRegistrator
+        protected UserRegistrator $userRegistrator,
+        protected RolesGetter $rolesGetter,
+        protected EntityManagerInterface $entityManager
+
     ){}
 
     #[Route('/register', name: 'app_register')]
@@ -35,7 +40,6 @@ class RegistrationController extends AbstractController
         UserPasswordHasherInterface $userPasswordHasher,
         UserAuthenticatorInterface $userAuthenticator,
         AppCustomAuthenticator $authenticator,
-        EntityManagerInterface $entityManager,
     ): Response
     {
         $user = new User();
@@ -86,6 +90,11 @@ class RegistrationController extends AbstractController
         // validate email confirmation link, sets User::isVerified=true and persists
         try {
             $this->emailVerifier->handleEmailConfirmation($request, $this->getUser());
+
+            $user = $this->getUser();
+            $user->setRoles($this->rolesGetter->getRolesForUser(UserTypes::SIMPLE));
+            $this->entityManager->flush();
+
         } catch (VerifyEmailExceptionInterface $exception) {
             $this->addFlash(FlashTypes::ERROR->value, $translator->trans($exception->getReason(), [], 'VerifyEmailBundle'));
 

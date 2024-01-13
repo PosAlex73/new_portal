@@ -17,9 +17,8 @@ class UserRegistrator
 
     public function registerUser(Request $request, User $newUser)
     {
-        $newUser->setStatus(CommonStatus::DISABLED->value);
+        $newUser->setStatus(CommonStatus::ACTIVE->value);
         $newUser->setType(UserTypes::SIMPLE->value);
-        $newUser->setRoles($this->rolesGetter->getRolesForUser(UserTypes::SIMPLE));
 
         $this->entityManager->persist($newUser);
         $this->entityManager->flush();

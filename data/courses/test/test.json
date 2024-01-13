@@ -9,7 +9,39 @@
     },
     "task_2": {
       "type": "test",
-      "title": "test"
+      "title": "test",
+      "tests": [
+        {
+          "text": "change me test text #1",
+          "right_variant": "1",
+          "variants": {
+            "variant_1": "change me variant text #1",
+            "variant_2": "change me variant text #2",
+            "variant_3": "change me variant text #3",
+            "variant_4": "change me variant text #4"
+          }
+        },
+        {
+          "text": "change me test text #2",
+          "right_variant": "2",
+          "variants": {
+            "variant_1": "change me variant text #1",
+            "variant_2": "change me variant text #2",
+            "variant_3": "change me variant text #3",
+            "variant_4": "change me variant text #4"
+          }
+        },
+        {
+          "text": "change me test text #3",
+          "right_variant": "3",
+          "variants": {
+            "variant_1": "change me variant text #1",
+            "variant_2": "change me variant text #2",
+            "variant_3": "change me variant text #3",
+            "variant_4": "change me variant text #4"
+          }
+        }
+      ]
     },
     "task_3": {
       "type": "practice",
