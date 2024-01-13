@@ -3,7 +3,7 @@
 {% block page_title %}{{ task.title }}{% endblock %}
 
 {% block content %}
-    <form action="{{ path('check_task', {id: task.id}) }}">
+    <form action="{{ path('check_task', {id: task.id}) }}" method="post">
         {% include taskTemplate with {task: task} %}
     </form>
 {% endblock %}

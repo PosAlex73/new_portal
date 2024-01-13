@@ -10,13 +10,14 @@ use App\Services\UserProgress\TaskCheckers\TaskCheckerInterface;
 use App\Services\UserProgress\TaskCheckers\TestChecker;
 use App\Services\UserProgress\TaskCheckers\TheoryChecker;
 use Exception;
+use Symfony\Component\HttpFoundation\Request;
 
 class TaskDoneChecker
 {
-    public function checkTask(Task $task):  TaskDoneDto
+    public function checkTask(Task $task, Request $request): TaskDoneDto
     {
         $checker = $this->resolveChecker($task->getType());
-        return $checker->check($task);
+        return $checker->check($task, $request);
     }
 
     /**

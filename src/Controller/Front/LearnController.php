@@ -59,7 +59,7 @@ class LearnController extends AbstractController
     #[Route('/profile/task-check/{id}/', name: 'check_task')]
     public function checkTask(Task $task, Request $request): Response
     {
-        $result = $this->taskDoneChecker->checkTask($task);
+        $result = $this->taskDoneChecker->checkTask($task, $request);
 
         /** @var User $user */
         $user = $this->getUser();
@@ -73,10 +73,10 @@ class LearnController extends AbstractController
             return $this->redirectToRoute('front_learn', ['id' => $userProgress->getId()]);
         }
 
-        $this->addFlash(FlashTypes::ERROR->value, 'Задача не пройдена. Проверьте ошибки');
+        $this->addFlash(FlashTypes::ERROR->value, 'Задача не пройдена.');
 
-        return $this->redirectToRoute('front_learn', [
-            'progress_id' => $userProgress->getId()
+        return $this->redirectToRoute('learn_task', [
+            'id' => $task->getId()
         ]);
     }
 }
