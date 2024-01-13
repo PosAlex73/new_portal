@@ -4,7 +4,7 @@
 
 {% block content %}
     <div class="row">
-        {% if courses is defined %}
+        {% if courses|length > 0 %}
         {% for course in courses %}
             <div class="col-xl-4">
                 <div class="card">
@@ -46,6 +46,5 @@
                 </div>
             </div>
         {% endif %}
-
     </div>
 {% endblock %}

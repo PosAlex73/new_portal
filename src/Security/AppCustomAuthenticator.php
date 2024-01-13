@@ -22,7 +22,9 @@ class AppCustomAuthenticator extends AbstractLoginFormAuthenticator
 
     public const LOGIN_ROUTE = 'app_login';
 
-    public function __construct(private UrlGeneratorInterface $urlGenerator)
+    public function __construct(
+        private UrlGeneratorInterface $urlGenerator
+    )
     {
     }
 
@@ -48,7 +50,7 @@ class AppCustomAuthenticator extends AbstractLoginFormAuthenticator
             return new RedirectResponse($targetPath);
         }
 
-         return new RedirectResponse($this->urlGenerator->generate('admin'));
+         return new RedirectResponse($this->urlGenerator->generate('front_index'));
     }
 
     protected function getLoginUrl(Request $request): string

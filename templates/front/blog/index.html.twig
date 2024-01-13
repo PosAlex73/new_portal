@@ -3,5 +3,33 @@
 {% block page_title %} Статьи {% endblock %}
 
 {% block content %}
+    {% if articles|length > 0 %}
+        {% for article in articles %}
+            <div class="col-xl-12">
+                <div class="card">
+                    <div class="card-body project-box">
+                        <h4 class="mt-0"><a href="" class="text-dark">{{ article.title }}</a></h4>
+                        <p class="text-muted font-13">{{ article.getTextShort() }}
+                        </p>
 
+                        <div>
+                            <a href="{{ path('blog_details', {id: article.id}) }}" class="btn btn-primary">Посмотреть статью</a>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div><!-- end col-->
+        {% endfor %}
+    {% else %}
+        <div class="row">
+            <div class="card">
+                <div class="card-body">
+                    <p class="card-text">
+                        Статьи пока что не опубликованы
+                    </p>
+                </div>
+            </div>
+        </div>
+    {% endif %}
 {% endblock %}

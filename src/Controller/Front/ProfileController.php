@@ -73,7 +73,7 @@ class ProfileController extends AbstractController
         if ($profileForm->isSubmitted() && $profileForm->isValid()) {
             $this->entityManager->flush();
 
-            $this->addFlash('success', 'Профиль успешно обновлен!');
+            $this->addFlash(FlashTypes::NOTICE->value, 'Профиль успешно обновлен!');
         }
 
         return $this->render('front/profile/user_settings.html.twig', [

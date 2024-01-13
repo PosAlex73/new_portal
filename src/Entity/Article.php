@@ -107,4 +107,9 @@ class Article
         $this->preUpdated();
         $this->created = new \DateTime();
     }
+
+    public function getTextShort()
+    {
+        return substr($this->getText(), 0, 200) . '...';
+    }
 }

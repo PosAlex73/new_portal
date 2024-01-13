@@ -8,9 +8,10 @@
 
 <!-- Begin page -->
 <div id="wrapper">
-
-    {% include "common/topbar.html.twig" %}
-    {% include "common/sidebar.html.twig" %}
+    {% block header %}
+        {% include "common/topbar.html.twig" %}
+        {% include "common/sidebar.html.twig" %}
+    {% endblock %}
 
 
     <!-- ============================================================== -->
@@ -28,18 +29,20 @@
                     <div class="col-12">
                         <div class="page-title-box">
                             <div class="page-title-right">
-                                <ol class="breadcrumb m-0">
-                                    <li class="breadcrumb-item"><a href="javascript: void(0);">Adminto</a></li>
-                                    <li class="breadcrumb-item"><a href="javascript: void(0);">Layouts</a></li>
-                                    <li class="breadcrumb-item active">Horizontal Layout</li>
-                                </ol>
+                                {% block breadcrumbs %}
+                                    <ol class="breadcrumb m-0">
+                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Adminto</a></li>
+                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Layouts</a></li>
+                                        <li class="breadcrumb-item active">Horizontal Layout</li>
+                                    </ol>
+                                {% endblock %}
                             </div>
                             <h4 class="page-title">{% block page_title %}Главная страница{% endblock %}</h4>
                         </div>
                     </div>
                 </div>
                 <!-- end page title -->
-
+                {% include 'common/flash.html.twig' %}
                 {% block content %}
 
                 {% endblock %}

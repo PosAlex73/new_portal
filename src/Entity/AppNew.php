@@ -107,4 +107,9 @@ class AppNew
         $this->preUpdated();
         $this->created = new \DateTime();
     }
+
+    public function getShortText()
+    {
+        return substr($this->getText(), 0, 100) . '...';
+    }
 }

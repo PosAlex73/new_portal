@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use App\Enums\Flash\FlashTypes;
 use App\Messages\UserRegistered;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,8 +21,11 @@ class SecurityController extends AbstractController
     #[Route(path: '/login', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        $this->bus->dispatch(new UserRegistered('fsdfsfs'));
-         if ($this->getUser()) {
+        /** @var User $user */
+        $user = $this->getUser();
+
+         if ($user && !$user->isVerified()) {
+             $this->addFlash(FlashTypes::NOTICE->value, 'Необходимо подтвердить почту, чтобы продолжить работу с профилем!');
              return $this->redirectToRoute('front_index');
          }
 

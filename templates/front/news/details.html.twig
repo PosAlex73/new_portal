@@ -1,0 +1,14 @@
+{% extends 'layout/base.html.twig' %}
+
+{% block page_title %} {{ new.title }} {% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="card">
+            <div class="card-body">
+                <p class="card-title">{{ new.title }}</p>
+                <p class="card-text">{{ new.text }}</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

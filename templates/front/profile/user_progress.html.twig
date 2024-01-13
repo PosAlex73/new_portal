@@ -6,7 +6,7 @@
     <div class="col-xl-12">
         <div class="card">
             <div class="card-body">
-                <h4 class="header-title mb-4">Tabs Justified</h4>
+                <h4 class="header-title mb-4">Курсы для обучения</h4>
 
                 <ul class="nav nav-pills navtab-bg nav-justified">
                     <li class="nav-item">
@@ -27,6 +27,7 @@
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane show active" id="home1">
+                        {% if progressData|length > 0 %}
                         <div class="table-responsive">
                             <table class="table mb-0">
                                 <thead>
@@ -55,6 +56,9 @@
                                 </tbody>
                             </table>
                         </div>
+                        {% else %}
+                            <p class="card-te">У вас пока что нет добавленных курсов. <a href="{{ path('courses_list') }}">Добавить новые курсы можно здесь</a></p>
+                        {% endif %}
                     </div>
                 </div>
             </div>

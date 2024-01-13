@@ -2,6 +2,8 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\AppNew;
+use App\Entity\Article;
 use App\Entity\Category;
 use App\Entity\Course;
 use App\Entity\Task;
@@ -104,6 +106,25 @@ class CommonFixture extends Fixture implements FixtureGroupInterface
             $manager->flush();
         }
 
+        foreach (range(0, 30) as $_) {
+            $article = new Article();
+            $article->setText($faker->realText(2000));
+            $article->setTitle($faker->realText(20));
+            $article->setStatus(CommonStatus::ACTIVE->value);
+
+            $manager->persist($article);
+            $manager->flush();
+        }
+
+        foreach (range(0, 30) as $_) {
+            $new = new AppNew();
+            $new->setStatus(CommonStatus::ACTIVE->value);
+            $new->setTitle($faker->realText(20));
+            $new->setText($faker->realText(2000));
+
+            $manager->persist($new);
+            $manager->flush();
+        }
 
         $courses = $this->courseRepository->findAll();
         foreach ($courses as $course) {

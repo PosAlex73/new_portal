@@ -1,0 +1,19 @@
+{% set notices = app.flashes('notice') %}
+{% set errors = app.flashes('error') %}
+
+{% for notice in notices %}
+    <div class="card">
+        <div class="card-body text-success">
+            <p class="card-text">{{ notice }}</p>
+        </div>
+    </div>
+
+{% endfor %}
+
+{% for error in errors %}
+    <div class="card">
+        <div class="card-body text-danger">
+            <p class="card-text">{{ error }}</p>
+        </div>
+    </div>
+{% endfor %}

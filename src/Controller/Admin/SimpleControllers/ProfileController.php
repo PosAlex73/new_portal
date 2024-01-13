@@ -3,6 +3,7 @@
 namespace App\Controller\Admin\SimpleControllers;
 
 use App\Entity\User;
+use App\Enums\Flash\FlashTypes;
 use App\Form\UserProfileFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -27,7 +28,7 @@ class ProfileController extends AbstractController
         if ($profileForm->isSubmitted() && $profileForm->isValid()) {
             $this->entityManager->flush();
 
-            $this->addFlash('success', 'Профиль успешно обновлен!');
+            $this->addFlash(FlashTypes::NOTICE->value, 'Профиль успешно обновлен!');
         }
 
         return $this->render('admin/profile/index.html.twig', [
