@@ -1,4 +1,4 @@
-
+./.idea
 ###> symfony/framework-bundle ###
 /.env.local
 /.env.local.php
@@ -20,6 +20,5 @@
 ###< symfony/phpunit-bridge ###
 
 ###> symfony/asset-mapper ###
-/public/assets/
-/assets/vendor
+/assets/vendor/
 ###< symfony/asset-mapper ###
