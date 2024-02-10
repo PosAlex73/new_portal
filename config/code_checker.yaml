@@ -1,0 +1,3 @@
+parameters:
+  checker_url: "%env(CODE_CHECKER_URL)%"
+  secret: "%env(CODE_CHECKER_SECRET)%"
