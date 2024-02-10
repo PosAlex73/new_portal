@@ -34,6 +34,7 @@ class CourseCrudController extends AbstractCrudController
                 'Бесплатно' => CourseTypes::FREE->value,
                 'Платно' => CourseTypes::PAY->value,
             ]),
+            TextField::new('lang')->setDisabled(),
             NumberField::new('position'),
             ChoiceField::new('status')->setChoices([
                 'Активно' => CourseStatuses::ACTIVE->value,

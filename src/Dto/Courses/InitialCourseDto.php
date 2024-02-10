@@ -8,7 +8,8 @@ class InitialCourseDto
         protected string $title,
         protected string $description,
         protected string $level,
-        protected array $tasks
+        protected array $tasks,
+        protected string $lang
     )
     {
     }
@@ -77,5 +78,19 @@ class InitialCourseDto
         $this->tasks = $tasks;
     }
 
+    /**
+     * @return string
+     */
+    public function getLang(): string
+    {
+        return $this->lang;
+    }
 
+    /**
+     * @param string $lang
+     */
+    public function setLang(string $lang): void
+    {
+        $this->lang = $lang;
+    }
 }

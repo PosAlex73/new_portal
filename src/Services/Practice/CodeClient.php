@@ -4,6 +4,7 @@ namespace App\Services\Practice;
 
 use App\Dto\Practice\PracticeCodeDto;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class CodeClient
 {
@@ -13,7 +14,10 @@ class CodeClient
 
     protected string $checkerUrl;
 
-    public function __construct(protected ParameterBagInterface $parameterBag)
+    public function __construct(
+        protected ParameterBagInterface $parameterBag,
+        protected HttpClientInterface $httpClient
+    )
     {
         $this->secret = $this->parameterBag->get('lalalala');
         $this->checkerUrl = $this->parameterBag->get('checker_url');
@@ -26,6 +30,12 @@ class CodeClient
 
     public function sendCode()
     {
-        return true;
+        $response = $this->httpClient->request('POST', [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Secret' => $this->secret
+            ],
+            'body' => $this->practiceCodeDto->toJson()
+        ]);
     }
 }

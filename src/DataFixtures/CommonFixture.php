@@ -92,6 +92,7 @@ class CommonFixture extends Fixture implements FixtureGroupInterface
             $newCourse->setCategory($category);
             $newCourse->setCourseCode('test/' . $course);
             $newCourse->setType(CourseTypes::FREE->value);
+            $newCourse->setLang($initialCourseDto->getLang());
             $manager->persist($newCourse);
             $manager->flush();
 

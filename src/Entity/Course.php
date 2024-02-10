@@ -55,6 +55,9 @@ class Course
     #[ORM\OneToMany(mappedBy: 'course', targetEntity: Task::class)]
     private Collection $tasks;
 
+    #[ORM\Column(length: 255)]
+    private ?string $lang = null;
+
     public function __construct()
     {
         $this->userProgress = new ArrayCollection();
@@ -295,5 +298,17 @@ class Course
     public function getUpdatedStr()
     {
         return $this->getUpdated()->format('Y-m-d H:i:s');
+    }
+
+    public function getLang(): ?string
+    {
+        return $this->lang;
+    }
+
+    public function setLang(string $lang): static
+    {
+        $this->lang = $lang;
+
+        return $this;
     }
 }

@@ -23,6 +23,7 @@ class CourseLoader
             $courseArray['description'],
             $courseArray['level'],
             $courseArray['tasks'],
+            $courseArray['lang']
         );
     }
 }
