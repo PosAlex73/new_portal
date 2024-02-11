@@ -1,0 +1,16 @@
+{% extends 'layout/base.html.twig' %}
+
+{% block page_title %} {{ article.title }} {% endblock %}
+
+{% block content %}
+    <div class="row">
+        <a href="{{ path('blog_list') }}" class="btn btn-secondary my-2">Назад к списку статей</a>
+        <div class="card p-2">
+            <div>
+            </div>
+            <div class="card-text">
+                {{ article.text }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

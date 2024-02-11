@@ -39,4 +39,15 @@ class CourseRepository extends ServiceEntityRepository
 
         return $this->getForIndexPage();
     }
+
+    public function getBySearch(string $text)
+    {
+        $qb = $this->createQueryBuilder('c');
+        return  $qb
+        ->where($qb->expr()->like('c.title', ':text'))
+        ->orWhere($qb->expr()->like('c.text', ':text'))
+            ->setParameter('text', $text)
+            ->getQuery()
+            ->getResult();
+    }
 }

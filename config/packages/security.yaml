@@ -13,9 +13,7 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            form_login:
-                login_path: app_login
-                check_path: app_login
+            custom_authenticator: App\Security\AppCustomAuthenticator
             lazy: true
             provider: app_user_provider
             remember_me:
