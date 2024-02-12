@@ -7,7 +7,8 @@ class PracticeCodeDto
     public function __construct(
         protected string $code,
         protected int $courseId,
-        protected int $taskId
+        protected int $taskId,
+        protected string $lang,
     ){}
 
     /**
@@ -58,12 +59,29 @@ class PracticeCodeDto
         $this->taskId = $taskId;
     }
 
+    /**
+     * @return string
+     */
+    public function getLang(): string
+    {
+        return $this->lang;
+    }
+
+    /**
+     * @param string $lang
+     */
+    public function setLang(string $lang): void
+    {
+        $this->lang = $lang;
+    }
+
     public function toArray()
     {
         return [
             'course_id' => $this->getCourseId(),
             'code' => $this->getCode(),
-            'task_id' => $this->getTaskId()
+            'task_id' => $this->getTaskId(),
+            'lang' => $this->getLang()
         ];
     }
 

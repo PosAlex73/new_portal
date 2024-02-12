@@ -5,6 +5,7 @@ namespace App\Services\UserProgress;
 use App\Dto\Progress\TaskDoneDto;
 use App\Entity\Task;
 use App\Enums\Task\TaskTypes;
+use App\Services\Practice\CodeClient;
 use App\Services\UserProgress\TaskCheckers\PracticeChecker;
 use App\Services\UserProgress\TaskCheckers\TaskCheckerInterface;
 use App\Services\UserProgress\TaskCheckers\TestChecker;
@@ -14,6 +15,10 @@ use Symfony\Component\HttpFoundation\Request;
 
 class TaskDoneChecker
 {
+    public function __construct(protected CodeClient $client)
+    {
+    }
+
     public function checkTask(Task $task, Request $request): TaskDoneDto
     {
         $checker = $this->resolveChecker($task->getType());
@@ -30,7 +35,7 @@ class TaskDoneChecker
         return match ($type) {
             TaskTypes::THEORY->value => new TheoryChecker(),
             TaskTypes::TEST->value => new TestChecker(),
-            TaskTypes::PRACTICE->value => new PracticeChecker(),
+            TaskTypes::PRACTICE->value => new PracticeChecker($this->client),
             default => throw new Exception()
         };
     }

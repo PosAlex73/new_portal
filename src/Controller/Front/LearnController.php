@@ -59,6 +59,7 @@ class LearnController extends AbstractController
     #[Route('/profile/task-check/{id}/', name: 'check_task')]
     public function checkTask(Task $task, Request $request): Response
     {
+
         $result = $this->taskDoneChecker->checkTask($task, $request);
 
         /** @var User $user */

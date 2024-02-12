@@ -22,8 +22,10 @@ class PracticeChecker implements TaskCheckerInterface
             return new TaskDoneDto(false, 'Пустое поле для кода');
         }
 
-        $codeDto = new PracticeCodeDto($task->getCourse()->getId(), $code, $task->getId());
-        $result = $this->client->sendCode($codeDto);
+        $codeDto = new PracticeCodeDto($code, $task->getCourse()->getId(), $task->getId(), $task->getCourse()->getLang());
+
+        $this->client->setCodeDto($codeDto);
+        $result = $this->client->sendCode();
 
         if ($result) {
 

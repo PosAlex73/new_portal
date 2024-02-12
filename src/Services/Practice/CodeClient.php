@@ -19,7 +19,7 @@ class CodeClient
         protected HttpClientInterface $httpClient
     )
     {
-        $this->secret = $this->parameterBag->get('lalalala');
+        $this->secret = $this->parameterBag->get('secret');
         $this->checkerUrl = $this->parameterBag->get('checker_url');
     }
 
@@ -30,12 +30,16 @@ class CodeClient
 
     public function sendCode()
     {
-        $response = $this->httpClient->request('POST', [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Secret' => $this->secret
-            ],
-            'body' => $this->practiceCodeDto->toJson()
-        ]);
+        $response = $this->httpClient->request('POST', $this->checkerUrl,
+            [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'auth' => $this->secret
+                ],
+                'body' => $this->practiceCodeDto->toJson()
+            ]
+        );
+
+        dd($response);
     }
 }
