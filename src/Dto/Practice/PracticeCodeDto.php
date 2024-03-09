@@ -78,9 +78,9 @@ class PracticeCodeDto
     public function toArray()
     {
         return [
-            'course_id' => $this->getCourseId(),
+            'course' => $this->getCourseId(),
             'code' => $this->getCode(),
-            'task_id' => $this->getTaskId(),
+            'task' => $this->getTaskId(),
             'lang' => $this->getLang()
         ];
     }

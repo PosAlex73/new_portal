@@ -38,8 +38,6 @@ class CodeClient
                 ],
                 'body' => $this->practiceCodeDto->toJson()
             ]
-        );
-
-        dd($response);
+        )->getContent();
     }
 }
