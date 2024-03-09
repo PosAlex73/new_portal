@@ -101,6 +101,9 @@
     },
     "require-dev": {
         "codeception/codeception": "^5.1",
+        "codeception/module-asserts": "*",
+        "codeception/module-doctrine": "^3.1",
+        "codeception/module-phpbrowser": "*",
         "codeception/module-symfony": "^3.3",
         "doctrine/doctrine-fixtures-bundle": "^3.5",
         "phpunit/phpunit": "^9.5",
@@ -110,8 +113,6 @@
         "symfony/maker-bundle": "^1.0",
         "symfony/phpunit-bridge": "^7.0",
         "symfony/stopwatch": "6.4.*",
-        "symfony/web-profiler-bundle": "6.4.*",
-        "codeception/module-phpbrowser": "*",
-        "codeception/module-asserts": "*"
+        "symfony/web-profiler-bundle": "6.4.*"
     }
 }

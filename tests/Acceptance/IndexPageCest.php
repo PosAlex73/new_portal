@@ -38,5 +38,10 @@ class IndexPageCest
         $I->see('Новости');
         $I->see('Посмотреть новость');
         $I->dontSee('Посмотреть курсы');
+
+        $blogUrl = $router->generate('blog_list');
+        $I->amOnPage($blogUrl);
+        $I->see('Статьи');
+        $I->see('Посмотреть статью');
     }
 }
