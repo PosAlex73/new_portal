@@ -56,6 +56,6 @@ class CoursesCest
 
         $coursesUrl = $router->generate('course_details', ['id' => $course->getId()]);
 
-        $I->amOnPage();
+        $I->amOnPage($coursesUrl);
     }
 }
