@@ -64,9 +64,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
 
+    #[ORM\OneToMany(mappedBy: 'reporter', targetEntity: CourseBugReport::class)]
+    private Collection $courseBugReports;
+
     public function __construct()
     {
         $this->userProgress = new ArrayCollection();
+        $this->courseBugReports = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -301,6 +305,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsVerified(bool $isVerified): static
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CourseBugReport>
+     */
+    public function getCourseBugReports(): Collection
+    {
+        return $this->courseBugReports;
+    }
+
+    public function addCourseBugReport(CourseBugReport $courseBugReport): static
+    {
+        if (!$this->courseBugReports->contains($courseBugReport)) {
+            $this->courseBugReports->add($courseBugReport);
+            $courseBugReport->setReporter($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCourseBugReport(CourseBugReport $courseBugReport): static
+    {
+        if ($this->courseBugReports->removeElement($courseBugReport)) {
+            // set the owning side to null (unless already changed)
+            if ($courseBugReport->getReporter() === $this) {
+                $courseBugReport->setReporter(null);
+            }
+        }
 
         return $this;
     }

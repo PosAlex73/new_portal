@@ -29,6 +29,7 @@ class CourseCrudController extends AbstractCrudController
         $fields = [
             IdField::new('id')->setDisabled(),
             TextField::new('title'),
+            TextEditorField::new('short_description'),
             TextEditorField::new('text'),
             ChoiceField::new('type')->setChoices([
                 'Бесплатно' => CourseTypes::FREE->value,

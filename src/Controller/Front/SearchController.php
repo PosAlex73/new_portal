@@ -18,7 +18,6 @@ class SearchController extends AbstractController
     #[Route('/search', name: 'search')]
     public function index(Request $request): Response
     {
-        dd($request);
         $form = $this->createForm(SearchFormType::class);
         $form->handleRequest($request);
 

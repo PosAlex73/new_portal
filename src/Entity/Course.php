@@ -58,10 +58,14 @@ class Course
     #[ORM\Column(length: 255)]
     private ?string $lang = null;
 
+    #[ORM\OneToMany(mappedBy: 'course', targetEntity: CourseBugReport::class, orphanRemoval: true)]
+    private Collection $courseBugReports;
+
     public function __construct()
     {
         $this->userProgress = new ArrayCollection();
         $this->tasks = new ArrayCollection();
+        $this->courseBugReports = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -308,6 +312,36 @@ class Course
     public function setLang(string $lang): static
     {
         $this->lang = $lang;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CourseBugReport>
+     */
+    public function getCourseBugReports(): Collection
+    {
+        return $this->courseBugReports;
+    }
+
+    public function addCourseBugReport(CourseBugReport $courseBugReport): static
+    {
+        if (!$this->courseBugReports->contains($courseBugReport)) {
+            $this->courseBugReports->add($courseBugReport);
+            $courseBugReport->setCourse($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCourseBugReport(CourseBugReport $courseBugReport): static
+    {
+        if ($this->courseBugReports->removeElement($courseBugReport)) {
+            // set the owning side to null (unless already changed)
+            if ($courseBugReport->getCourse() === $this) {
+                $courseBugReport->setCourse(null);
+            }
+        }
 
         return $this;
     }
