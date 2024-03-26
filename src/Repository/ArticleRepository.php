@@ -39,7 +39,7 @@ class ArticleRepository extends ServiceEntityRepository
         return  $qb
             ->where($qb->expr()->like('c.title', ':text'))
             ->orWhere($qb->expr()->like('c.text', ':text'))
-            ->setParameter('text', $text)
+            ->setParameter('text', "%$text%")
             ->getQuery()
             ->getResult();
     }

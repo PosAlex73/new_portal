@@ -3,5 +3,49 @@
 {% block page_title %} Результаты поиска {% endblock %}
 
 {% block content %}
-    123
+        <div class="card">
+            <div class="card-body">
+                <h4 class="header-title mb-4">Результаты поиска</h4>
+                <ul class="nav nav-pills navtab-bg nav-justified">
+                    <li class="nav-item">
+                        <a href="#courses" data-bs-toggle="tab" aria-expanded="false" class="nav-link active">
+                            Курсы
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#articles" data-bs-toggle="tab" aria-expanded="true" class="nav-link">
+                            Статьи
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#app_news" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
+                            Новости
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="courses">
+                        {% if search.courses|length != 0 %}
+                            {% include 'front/search/search_tab.html.twig' with {'result': search.courses} %}
+                        {% else %}
+                            <p>По вашему запросу курсы не найдены.</p>
+                        {% endif %}
+                    </div>
+                    <div class="tab-pane show" id="articles">
+                        {% if search.courses|length != 0 %}
+                            {% include 'front/search/search_tab.html.twig' with {'result': search.articles} %}
+                        {% else %}
+                            <p>По вашему запросу статьи не найденыю</p>
+                        {% endif %}
+                    </div>
+                    <div class="tab-pane" id="app_news">
+                        {% if search.courses|length != 0 %}
+                            {% include 'front/search/search_tab.html.twig' with {'result': search.news} %}
+                        {% else %}
+                            <p>По вашему запросу новости не найдены.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
 {% endblock %}

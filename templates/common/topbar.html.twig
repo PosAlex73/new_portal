@@ -2,15 +2,13 @@
     <ul class="list-unstyled topnav-menu float-end mb-0">
 
         <li class="d-none d-lg-block">
-            <form class="app-search">
+            <form class="app-search" action="{{ path('search') }}" method="post" id="search_form">
                 <div class="app-search-box">
                     <div class="input-group">
-                        <form action="{{ path('search') }}" method="post">
-                            <input type="text" name="search" class="form-control" placeholder="Поиск..." id="top-search">
-                            <button id="search_button" class="btn input-group-text" type="submit">
-                                <i class="fe-search"></i>
-                            </button>
-                        </form>
+                        <input type="text" name="search" class="form-control" required placeholder="Поиск..." id="top-search">
+                        <button id="search_button" class="btn input-group-text" type="submit">
+                            <i class="fe-search"></i>
+                        </button>
                     </div>
                 </div>
             </form>
@@ -99,18 +97,10 @@
                 <i class="fe-menu"></i>
             </button>
         </li>
-
         <li>
             <h4 class="page-title-main">Portal</h4>
         </li>
-
     </ul>
-
     <div class="clearfix"></div>
 
 </div>
-
-<script>
-    const searchButton = document.getElementById('search_button')
-
-</script>
