@@ -5,6 +5,7 @@ namespace App\Controller\Front;
 use App\Controller\Front\Traits\BackUrl;
 use App\Entity\User;
 use App\Enums\Flash\FlashTypes;
+use App\Enums\Users\UserRoles;
 use App\Form\UserFormType;
 use App\Form\UserProfileFormType;
 use App\Repository\UserProgressRepository;
@@ -14,6 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class ProfileController extends AbstractController
 {

@@ -14,6 +14,8 @@ use App\Services\User\UserRegistrator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
@@ -30,7 +32,8 @@ class RegistrationController extends AbstractController
         protected EmailVerifier $emailVerifier,
         protected UserRegistrator $userRegistrator,
         protected RolesGetter $rolesGetter,
-        protected EntityManagerInterface $entityManager
+        protected EntityManagerInterface $entityManager,
+        protected ParameterBagInterface $parameterBag
 
     ){}
 
@@ -63,7 +66,7 @@ class RegistrationController extends AbstractController
             // generate a signed url and email it to the user
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
                 (new TemplatedEmail())
-                    ->from(new Address('a@a.ru', 'Admin'))
+                    ->from(new Address($this->parameterBag->get('app.admin_email'), $this->parameterBag->get('app.admin_name')))
                     ->to($user->getEmail())
                     ->subject('Подтвердите вашу почту!')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
@@ -101,7 +104,7 @@ class RegistrationController extends AbstractController
             return $this->redirectToRoute('app_register');
         }
 
-        $this->addFlash(FlashTypes::NOTICE->value, 'Your email address has been verified.');
+        $this->addFlash(FlashTypes::NOTICE->value, 'Ваша почта была потверждена!');
 
         return $this->redirectToRoute('front_index');
     }
