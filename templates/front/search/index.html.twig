@@ -25,22 +25,22 @@
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active" id="courses">
-                        {% if search.courses|length != 0 %}
-                            {% include 'front/search/search_tab.html.twig' with {'result': search.courses} %}
+                        {% if courses|length != 0 %}
+                            {% include 'front/search/search_tab.html.twig' with {'result': courses, 'route': 'course_details'} %}
                         {% else %}
                             <p>По вашему запросу курсы не найдены.</p>
                         {% endif %}
                     </div>
                     <div class="tab-pane show" id="articles">
-                        {% if search.courses|length != 0 %}
-                            {% include 'front/search/search_tab.html.twig' with {'result': search.articles} %}
+                        {% if articles|length != 0 %}
+                            {% include 'front/search/search_tab.html.twig' with {'result': articles, 'route': 'blog_details'} %}
                         {% else %}
                             <p>По вашему запросу статьи не найденыю</p>
                         {% endif %}
                     </div>
                     <div class="tab-pane" id="app_news">
-                        {% if search.courses|length != 0 %}
-                            {% include 'front/search/search_tab.html.twig' with {'result': search.news} %}
+                        {% if news|length != 0 %}
+                            {% include 'front/search/search_tab.html.twig' with {'result': news, 'route': 'news_details'} %}
                         {% else %}
                             <p>По вашему запросу новости не найдены.</p>
                         {% endif %}

@@ -22,7 +22,9 @@ class SearchController extends AbstractController
         $search = $this->searchService->search($text);
 
         return $this->render('front/search/index.html.twig', [
-            'search' => $search,
+            'courses' => $search['courses'],
+            'articles' => $search['articles'],
+            'news' => $search['news']
         ]);
     }
 }

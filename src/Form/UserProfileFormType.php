@@ -25,7 +25,8 @@ class UserProfileFormType extends AbstractType
                 ],
                 'attr' => [
                     'class' => 'form-control'
-                ]
+                ],
+                'label' => 'Получать уведомления от администрации на почту'
             ])
             ->add('submit', SubmitType::class, [
                 'attr' => [

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\PresentText;
 use App\Enums\Courses\CourseStatuses;
 use App\Enums\Courses\CourseTypes;
 use App\Repository\CourseRepository;
@@ -14,6 +15,8 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\HasLifecycleCallbacks]
 class Course
 {
+    use PresentText;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
