@@ -7,8 +7,10 @@ use App\Enums\Flash\FlashTypes;
 use App\Enums\Users\UserTypes;
 use App\EventListeners\UserCreated;
 use App\Form\RegistrationFormType;
+use App\Form\ResetPasswordType;
 use App\Security\AppCustomAuthenticator;
 use App\Security\EmailVerifier;
+use App\Services\User\PasswordRestoreService;
 use App\Services\User\RolesGetter;
 use App\Services\User\UserRegistrator;
 use Doctrine\ORM\EntityManagerInterface;
@@ -33,7 +35,8 @@ class RegistrationController extends AbstractController
         protected UserRegistrator $userRegistrator,
         protected RolesGetter $rolesGetter,
         protected EntityManagerInterface $entityManager,
-        protected ParameterBagInterface $parameterBag
+        protected ParameterBagInterface $parameterBag,
+        protected PasswordRestoreService $passwordRestoreService
 
     ){}
 
@@ -90,7 +93,6 @@ class RegistrationController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        // validate email confirmation link, sets User::isVerified=true and persists
         try {
             $this->emailVerifier->handleEmailConfirmation($request, $this->getUser());
 
@@ -107,5 +109,20 @@ class RegistrationController extends AbstractController
         $this->addFlash(FlashTypes::NOTICE->value, 'Ваша почта была потверждена!');
 
         return $this->redirectToRoute('front_index');
+    }
+
+    #[Route('/reset-password', name: 'reset_password', methods: ['GET', 'POST'])]
+    public function resetPassword(Request $request): Response
+    {
+        $restorePasswordForm = $this->createForm(ResetPasswordType::class);
+        $restorePasswordForm->handleRequest($request);
+
+        if ($restorePasswordForm->isSubmitted() && $restorePasswordForm->isValid()) {
+
+        }
+
+        return $this->render('registration/restore_password.html.twig', [
+            'form' => $restorePasswordForm
+        ]);
     }
 }
