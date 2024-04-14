@@ -7,6 +7,7 @@ use App\Entity\Course;
 use App\Entity\Task;
 use App\Entity\User;
 use App\Entity\UserProgress;
+use App\Enums\DateTimeFormatEnum;
 use App\Repository\UserProgressRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -51,6 +52,7 @@ class ProgressCreator
         $data = [
             'tasks' => $taskData
         ];
+
         $userProgress->setData(json_encode($data));
         $this->entityManager->flush();
     }

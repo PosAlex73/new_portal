@@ -35,15 +35,22 @@
                                     </thead>
                                     <tbody>
                                     {% for task in course.tasks %}
+                                        {% if taskData[task.id].endDate.date %}
+                                            {% set taskBg = 'badge bg-success p-2' %}
+                                        {% else %}
+                                            {% set taskBg = '' %}
+                                        {% endif %}
                                         <tr>
-                                            <th scope="row">{{ task.id }}</th>
+                                            <th scope="row">{{ loop.index }}</th>
                                             <td><a href="{{ path('learn_task', {id: task.id}) }}">{{ task.title }}</a></td>
                                             <td>{{ task.getTypeStr() }}</td>
                                             <td>
-                                                {% if task.id in taskData|keys %}
-                                                    {% set taskId = task.id %}
-                                                    {{ taskData[taskId].endDate.date }}
-                                                {% endif %}
+                                                <span class="{{ taskBg }}">
+                                                    {% if task.id in taskData|keys %}
+                                                        {% set taskId = task.id %}
+                                                        {{ taskData[taskId].endDate.date|date('Y-m-d H:i:s') }}
+                                                    {% endif %}
+                                                </span>
                                             </td>
                                         </tr>
                                     {% endfor %}

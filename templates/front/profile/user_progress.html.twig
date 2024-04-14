@@ -33,24 +33,32 @@
                                 <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Название курса</th>
-                                    <th>Количество задач в курсе</th>
-                                    <th>Выполнено задач</th>
-                                    <th>Дата начала</th>
-                                    <th>Дата окончания</th>
-                                    <th>Начать обучение</th>
+                                    <th class="text-center">Название курса</th>
+                                    <th class="text-center">Количество задач в курсе</th>
+                                    <th class="text-center">Выполнено задач</th>
+                                    <th class="text-center">Дата начала</th>
+{#                                    <th class="text-center">Дата окончания</th>#}
+                                    <th class="text-center">Начать обучение</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 {% for data in progressData %}
+                                    {% if data.taskNumberInCourse == data.doneTasks %}
+                                        {% set progressClass = "badge bg-success rounded-pill p-2" %}
+                                    {% elseif data.doneTasks > 0 and data.doneTasks != data.taskNumberInCourse %}
+                                        {% set progressClass = "badge bg-primary rounded-pill p-2" %}
+                                    {% else %}
+                                        {% set progressClass = "badge bg-secondary rounded-pill p-2" %}
+                                    {% endif %}
                                     <tr>
-                                        <th scope="row"></th>
-                                        <td>{{ data.title }}</td>
-                                        <td>{{ data.taskNumberInCourse }}</td>
-                                        <td>{{ data.doneTasks }}</td>
-                                        <td>{{ data.startDate }}</td>
-                                        <td>{{ data.endDate }}</td>
-                                        <td><a href="{{ path('front_learn', {id: data.progressId}) }}">Начать обучение</a></td>
+                                        <th scope="row">{{ loop.index }}</th>
+                                        <td class="text-center">{{ data.title }}</td>
+                                        <td class="text-center">{{ data.taskNumberInCourse }}</td>
+                                        <td class="text-center">
+                                            <span class="{{ progressClass }}">{{ data.doneTasks }}</span></td>
+                                        <td class="text-center">{{ data.startDate }}</td>
+{#                                        <td class="text-center">{{ data.endDate }}</td>#}
+                                        <td class="text-center"><a href="{{ path('front_learn', {id: data.progressId}) }}">Начать обучение</a></td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>
