@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\UserProgress;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\AbstractQuery;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -37,5 +38,20 @@ class UserProgressRepository extends ServiceEntityRepository
         } else {
             return $qb->getResult();
         }
+    }
+
+    public function getCourseIdsByUserId(int $userId): array
+    {
+        $qb = $this->createQueryBuilder('p');
+        $result = $qb
+            ->select('p.id')
+            ->where('p.owner = :user')
+            ->setParameters([
+                'user' => $userId
+            ])
+            ->getQuery()
+            ->getResult();
+
+        return array_column($result, 'id');
     }
 }

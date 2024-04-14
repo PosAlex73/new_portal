@@ -11,12 +11,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class BugReportController extends AbstractController
 {
     use BackUrl;
 
     #[Route('/report/{id}', name: 'bug_report', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_USER')]
     public function index(Course $course, Request $request): Response
     {
         $form = $this->createForm(BugCourseReportType::class);

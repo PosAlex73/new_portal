@@ -9,9 +9,13 @@
             <div class="col-xl-4">
                 <div class="card">
                     <div class="card-body project-box">
-                        <div class="badge bg-success float-end">{{ course.category.title }}</div>
-                        <h4 class="mt-0"><a href="" class="text-dark">{{ course.title }}</a></h4>
-                        <p class="text-success text-uppercase font-13">Web Design</p>
+                        <div class="badge bg-success float-end font-20">{{ course.category.title }}</div>
+                        <h4 class="mt-0 font-20"><span class="text-dark">{{ course.title }}</span></h4>
+                        {% if course.id in userCourses %}
+                            <p class="text-success font-20">Курс приобретен</p>
+                        {% else %}
+                            <p class="text-secondary font-20">Курс не приобретен</p>
+                        {% endif %}
                         <p class="text-muted font-13">{{ course.shortDescription()|raw }}
                         </p>
 
@@ -21,15 +25,12 @@
                                 <p class="text-muted">Количество задач в курсе</p>
                             </li>
                         </ul>
-
                         <div>
                             <a href="{{ path('course_details', {id: course.id}) }}" class="btn btn-primary">Посмотреть курс</a>
                         </div>
-
                     </div>
                 </div>
-
-            </div><!-- end col-->
+            </div>
         {% endfor %}
         {% else %}
             <div class="row">

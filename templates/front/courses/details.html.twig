@@ -13,10 +13,8 @@
                             <i class="mdi mdi-dots-vertical"></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end">
-                            <!-- item-->
                             {% if app.user %}
                                 <a href="{{ path('bug_report', {id: course.id}) }}" class="dropdown-item">Сообщить об ошибке</a>
-                            <!-- item-->
                             {% endif %}
                         </div>
                     </div>
@@ -68,9 +66,7 @@
 
                 </div>
             </div>
-
-        </div><!-- end col -->
-
+        </div>
         <div class="col-md-4">
             <div class="card">
                 <div class="card-body">
@@ -100,7 +96,6 @@
                     </div>
                 </div>
             </div>
-
-        </div><!-- end col -->
+        </div>
     </div>
 {% endblock %}

@@ -24,18 +24,24 @@ class CoursesController extends AbstractController
         protected CourseRepository $courseRepository,
         protected ProgressCreator $progressCreator,
         protected UserProgressRepository $userProgressRepository
-    )
-    {
-    }
+    ){}
 
     #[Route('/courses', name: 'courses_list')]
     public function index(): Response
     {
         $courses = $this->courseRepository->getForCoursePage();
-
-        return $this->render('front/courses/index.html.twig', [
+        $data = [
             'courses' => $courses,
-        ]);
+        ];
+
+        /** @var User $user */
+        $user = $this->getUser();
+
+        if ($user) {
+            $data['userCourses'] = $this->userProgressRepository->getCourseIdsByUserId($user->getId());
+        }
+
+        return $this->render('front/courses/index.html.twig', $data);
     }
 
     #[Route('/courses/details/{id}', name: 'course_details')]

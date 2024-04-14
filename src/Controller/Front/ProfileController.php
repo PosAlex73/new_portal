@@ -23,13 +23,12 @@ class ProfileController extends AbstractController
         protected EntityManagerInterface $entityManager,
         protected UserProgressRepository $userProgressRepository,
         protected CourseCounter $courseCounter
-    )
-    {
-    }
+    ){}
 
     use BackUrl;
 
     #[Route('/profile', name: 'profile')]
+    #[IsGranted('ROLE_USER')]
     public function index(Request $request): Response
     {
         $user = $this->getUser();
@@ -51,6 +50,7 @@ class ProfileController extends AbstractController
     }
 
     #[Route('/profile/progress', name: 'user_progress')]
+    #[IsGranted('ROLE_USER')]
     public function userProgress()
     {
         /** @var User $user */
@@ -65,6 +65,7 @@ class ProfileController extends AbstractController
     }
 
     #[Route('/profile/settings', name: 'user_settings')]
+    #[IsGranted('ROLE_USER')]
     public function userProfile(Request $request)
     {
         $userProfile = $this->getUser()->getUserProfile();
