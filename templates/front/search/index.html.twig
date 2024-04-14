@@ -35,7 +35,7 @@
                         {% if articles|length != 0 %}
                             {% include 'front/search/search_tab.html.twig' with {'result': articles, 'route': 'blog_details'} %}
                         {% else %}
-                            <p>По вашему запросу статьи не найденыю</p>
+                            <p>По вашему запросу статьи не найдены</p>
                         {% endif %}
                     </div>
                     <div class="tab-pane" id="app_news">

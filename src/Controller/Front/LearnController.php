@@ -46,6 +46,7 @@ class LearnController extends AbstractController
     }
 
     #[Route('/profile/learn-task/{id}', name: 'learn_task')]
+    #[IsGranted('ROLE_USER')]
     public function learnTask(Task $task): Response
     {
         $taskTemplate = $this->templateGetter->getTemplateForTask($task);
@@ -57,6 +58,7 @@ class LearnController extends AbstractController
     }
 
     #[Route('/profile/task-check/{id}/', name: 'check_task')]
+    #[IsGranted('ROLE_USER')]
     public function checkTask(Task $task, Request $request): Response
     {
 
