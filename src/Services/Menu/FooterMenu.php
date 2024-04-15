@@ -14,7 +14,9 @@ class FooterMenu
     public function getFooterMenu()
     {
         return [
-            new MenuElement('')
+            new MenuElement('О нас', $this->urlGenerator->generate('about_us')),
+            new MenuElement('Сервисное соглашение', $this->urlGenerator->generate('service_statement')),
+            new MenuElement('Помощь', $this->urlGenerator->generate('help')),
         ];
     }
 }

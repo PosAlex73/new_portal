@@ -39,13 +39,9 @@ class Category
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $created = null;
 
-    #[ORM\OneToMany(mappedBy: 'category', targetEntity: Page::class)]
-    private Collection $pages;
-
     public function __construct()
     {
         $this->courses = new ArrayCollection();
-        $this->pages = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -139,36 +135,6 @@ class Category
     public function setCreated(\DateTimeInterface $created): static
     {
         $this->created = $created;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Page>
-     */
-    public function getPages(): Collection
-    {
-        return $this->pages;
-    }
-
-    public function addPage(Page $page): static
-    {
-        if (!$this->pages->contains($page)) {
-            $this->pages->add($page);
-            $page->setCategory($this);
-        }
-
-        return $this;
-    }
-
-    public function removePage(Page $page): static
-    {
-        if ($this->pages->removeElement($page)) {
-            // set the owning side to null (unless already changed)
-            if ($page->getCategory() === $this) {
-                $page->setCategory(null);
-            }
-        }
 
         return $this;
     }

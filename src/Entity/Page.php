@@ -30,8 +30,11 @@ class Page
     #[ORM\Column(length: 1)]
     private ?string $status = null;
 
-    #[ORM\ManyToOne(inversedBy: 'pages')]
-    private ?Category $category = null;
+    #[ORM\Column(length: 1)]
+    private ?string $type = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $name = null;
 
     public function getId(): ?int
     {
@@ -98,18 +101,6 @@ class Page
         return $this;
     }
 
-    public function getCategory(): ?Category
-    {
-        return $this->category;
-    }
-
-    public function setCategory(?Category $category): static
-    {
-        $this->category = $category;
-
-        return $this;
-    }
-
     #[ORM\PreUpdate]
     public function preUpdated()
     {
@@ -121,5 +112,29 @@ class Page
     {
         $this->preUpdated();
         $this->created = new \DateTime();
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): static
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): static
+    {
+        $this->name = $name;
+
+        return $this;
     }
 }

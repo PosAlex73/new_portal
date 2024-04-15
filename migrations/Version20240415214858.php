@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20240113133830 extends AbstractMigration
+final class Version20240415214858 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -24,6 +24,7 @@ final class Version20240113133830 extends AbstractMigration
         $this->addSql('CREATE SEQUENCE article_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
         $this->addSql('CREATE SEQUENCE category_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
         $this->addSql('CREATE SEQUENCE course_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
+        $this->addSql('CREATE SEQUENCE course_bug_report_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
         $this->addSql('CREATE SEQUENCE page_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
         $this->addSql('CREATE SEQUENCE setting_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
         $this->addSql('CREATE SEQUENCE task_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
@@ -36,10 +37,12 @@ final class Version20240113133830 extends AbstractMigration
         $this->addSql('CREATE TABLE app_new (id INT NOT NULL, title VARCHAR(255) NOT NULL, text TEXT NOT NULL, created TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, status VARCHAR(1) NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE TABLE article (id INT NOT NULL, title VARCHAR(255) NOT NULL, text TEXT NOT NULL, created TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, status VARCHAR(1) NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE TABLE category (id INT NOT NULL, title VARCHAR(255) NOT NULL, status VARCHAR(1) NOT NULL, text TEXT DEFAULT NULL, updated TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, created TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY(id))');
-        $this->addSql('CREATE TABLE course (id INT NOT NULL, category_id INT DEFAULT NULL, title VARCHAR(255) NOT NULL, short_description TEXT DEFAULT NULL, text TEXT NOT NULL, created TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, status VARCHAR(1) NOT NULL, type VARCHAR(1) NOT NULL, position INT NOT NULL, course_code VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE course (id INT NOT NULL, category_id INT DEFAULT NULL, title VARCHAR(255) NOT NULL, short_description TEXT DEFAULT NULL, text TEXT NOT NULL, created TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, status VARCHAR(1) NOT NULL, type VARCHAR(1) NOT NULL, position INT NOT NULL, course_code VARCHAR(255) NOT NULL, lang VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_169E6FB912469DE2 ON course (category_id)');
-        $this->addSql('CREATE TABLE page (id INT NOT NULL, category_id INT DEFAULT NULL, title VARCHAR(255) NOT NULL, text TEXT NOT NULL, created TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, status VARCHAR(1) NOT NULL, PRIMARY KEY(id))');
-        $this->addSql('CREATE INDEX IDX_140AB62012469DE2 ON page (category_id)');
+        $this->addSql('CREATE TABLE course_bug_report (id INT NOT NULL, reporter_id INT DEFAULT NULL, course_id INT NOT NULL, title VARCHAR(255) NOT NULL, text TEXT NOT NULL, created TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, status VARCHAR(1) NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE INDEX IDX_291092F9E1CFE6F5 ON course_bug_report (reporter_id)');
+        $this->addSql('CREATE INDEX IDX_291092F9591CC992 ON course_bug_report (course_id)');
+        $this->addSql('CREATE TABLE page (id INT NOT NULL, title VARCHAR(255) NOT NULL, text TEXT NOT NULL, created TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, status VARCHAR(1) NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE TABLE setting (id INT NOT NULL, title VARCHAR(255) NOT NULL, value TEXT NOT NULL, updated TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, type VARCHAR(1) NOT NULL, tab VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE TABLE task (id INT NOT NULL, course_id INT DEFAULT NULL, title VARCHAR(255) NOT NULL, text TEXT NOT NULL, status VARCHAR(1) NOT NULL, type VARCHAR(1) NOT NULL, created TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_527EDB25591CC992 ON task (course_id)');
@@ -57,23 +60,9 @@ final class Version20240113133830 extends AbstractMigration
         $this->addSql('CREATE TABLE user_progress (id INT NOT NULL, owner_id INT DEFAULT NULL, course_id INT DEFAULT NULL, created TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, end_date TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, data TEXT NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_C28C16467E3C61F9 ON user_progress (owner_id)');
         $this->addSql('CREATE INDEX IDX_C28C1646591CC992 ON user_progress (course_id)');
-        $this->addSql('CREATE TABLE messenger_messages (id BIGSERIAL NOT NULL, body TEXT NOT NULL, headers TEXT NOT NULL, queue_name VARCHAR(190) NOT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, available_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, delivered_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, PRIMARY KEY(id))');
-        $this->addSql('CREATE INDEX IDX_75EA56E0FB7336F0 ON messenger_messages (queue_name)');
-        $this->addSql('CREATE INDEX IDX_75EA56E0E3BD61CE ON messenger_messages (available_at)');
-        $this->addSql('CREATE INDEX IDX_75EA56E016BA31DB ON messenger_messages (delivered_at)');
-        $this->addSql('COMMENT ON COLUMN messenger_messages.created_at IS \'(DC2Type:datetime_immutable)\'');
-        $this->addSql('COMMENT ON COLUMN messenger_messages.available_at IS \'(DC2Type:datetime_immutable)\'');
-        $this->addSql('COMMENT ON COLUMN messenger_messages.delivered_at IS \'(DC2Type:datetime_immutable)\'');
-        $this->addSql('CREATE OR REPLACE FUNCTION notify_messenger_messages() RETURNS TRIGGER AS $$
-            BEGIN
-                PERFORM pg_notify(\'messenger_messages\', NEW.queue_name::text);
-                RETURN NEW;
-            END;
-        $$ LANGUAGE plpgsql;');
-        $this->addSql('DROP TRIGGER IF EXISTS notify_trigger ON messenger_messages;');
-        $this->addSql('CREATE TRIGGER notify_trigger AFTER INSERT OR UPDATE ON messenger_messages FOR EACH ROW EXECUTE PROCEDURE notify_messenger_messages();');
         $this->addSql('ALTER TABLE course ADD CONSTRAINT FK_169E6FB912469DE2 FOREIGN KEY (category_id) REFERENCES category (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
-        $this->addSql('ALTER TABLE page ADD CONSTRAINT FK_140AB62012469DE2 FOREIGN KEY (category_id) REFERENCES category (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
+        $this->addSql('ALTER TABLE course_bug_report ADD CONSTRAINT FK_291092F9E1CFE6F5 FOREIGN KEY (reporter_id) REFERENCES "user" (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
+        $this->addSql('ALTER TABLE course_bug_report ADD CONSTRAINT FK_291092F9591CC992 FOREIGN KEY (course_id) REFERENCES course (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE task ADD CONSTRAINT FK_527EDB25591CC992 FOREIGN KEY (course_id) REFERENCES course (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE test_text ADD CONSTRAINT FK_3EF28D088DB60186 FOREIGN KEY (task_id) REFERENCES task (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE thread ADD CONSTRAINT FK_31204C837E3C61F9 FOREIGN KEY (owner_id) REFERENCES "user" (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
@@ -92,6 +81,7 @@ final class Version20240113133830 extends AbstractMigration
         $this->addSql('DROP SEQUENCE article_id_seq CASCADE');
         $this->addSql('DROP SEQUENCE category_id_seq CASCADE');
         $this->addSql('DROP SEQUENCE course_id_seq CASCADE');
+        $this->addSql('DROP SEQUENCE course_bug_report_id_seq CASCADE');
         $this->addSql('DROP SEQUENCE page_id_seq CASCADE');
         $this->addSql('DROP SEQUENCE setting_id_seq CASCADE');
         $this->addSql('DROP SEQUENCE task_id_seq CASCADE');
@@ -102,7 +92,8 @@ final class Version20240113133830 extends AbstractMigration
         $this->addSql('DROP SEQUENCE user_profile_id_seq CASCADE');
         $this->addSql('DROP SEQUENCE user_progress_id_seq CASCADE');
         $this->addSql('ALTER TABLE course DROP CONSTRAINT FK_169E6FB912469DE2');
-        $this->addSql('ALTER TABLE page DROP CONSTRAINT FK_140AB62012469DE2');
+        $this->addSql('ALTER TABLE course_bug_report DROP CONSTRAINT FK_291092F9E1CFE6F5');
+        $this->addSql('ALTER TABLE course_bug_report DROP CONSTRAINT FK_291092F9591CC992');
         $this->addSql('ALTER TABLE task DROP CONSTRAINT FK_527EDB25591CC992');
         $this->addSql('ALTER TABLE test_text DROP CONSTRAINT FK_3EF28D088DB60186');
         $this->addSql('ALTER TABLE thread DROP CONSTRAINT FK_31204C837E3C61F9');
@@ -115,6 +106,7 @@ final class Version20240113133830 extends AbstractMigration
         $this->addSql('DROP TABLE article');
         $this->addSql('DROP TABLE category');
         $this->addSql('DROP TABLE course');
+        $this->addSql('DROP TABLE course_bug_report');
         $this->addSql('DROP TABLE page');
         $this->addSql('DROP TABLE setting');
         $this->addSql('DROP TABLE task');
@@ -124,6 +116,5 @@ final class Version20240113133830 extends AbstractMigration
         $this->addSql('DROP TABLE "user"');
         $this->addSql('DROP TABLE user_profile');
         $this->addSql('DROP TABLE user_progress');
-        $this->addSql('DROP TABLE messenger_messages');
     }
 }

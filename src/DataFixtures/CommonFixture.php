@@ -168,6 +168,7 @@ class CommonFixture extends Fixture implements FixtureGroupInterface
     {
         return [
             SettingsFixture::class,
+            PageFixture::class
         ];
     }
 
