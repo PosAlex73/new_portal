@@ -27,11 +27,13 @@ class CoursesController extends AbstractController
     ){}
 
     #[Route('/courses', name: 'courses_list')]
-    public function index(): Response
+    public function index(Request $request): Response
     {
-        $courses = $this->courseRepository->getForCoursePage();
+        $page = $request->get('page', 1);
+        $courses = $this->courseRepository->paginate($page);
+
         $data = [
-            'courses' => $courses,
+            'paginator' => $courses,
         ];
 
         /** @var User $user */

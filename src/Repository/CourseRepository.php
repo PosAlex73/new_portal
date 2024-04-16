@@ -4,8 +4,12 @@ namespace App\Repository;
 
 use App\Entity\Course;
 use App\Enums\Courses\CourseStatuses;
+use App\Enums\Settings\SettingEnum;
+use App\Services\Settings\Set;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @extends ServiceEntityRepository<Course>
@@ -17,7 +21,11 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class CourseRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(
+        protected ManagerRegistry $registry,
+        protected PaginatorInterface $paginator,
+        protected Set $set
+    )
     {
         parent::__construct($registry, Course::class);
     }
@@ -33,11 +41,17 @@ class CourseRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function getForCoursePage()
+    public function paginate(int $page = 1)
     {
-        //fixme сделать отдельный метод
+        $frontendPageNumber = $this->set->get(SettingEnum::FRONT_PAGINATION);
+        $query = $this->createQueryBuilder('c')
+            ->where('c.status = :status')
+            ->setParameters([
+                'status' => CourseStatuses::ACTIVE->value
+            ])
+            ->getQuery();
 
-        return $this->getForIndexPage();
+        return $this->paginator->paginate($query, $page, $frontendPageNumber->getValue());
     }
 
     public function getBySearch(string $text)

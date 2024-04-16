@@ -21,12 +21,13 @@ class BlogController extends AbstractController
     }
 
     #[Route('/blog', name: 'blog_list')]
-    public function index(): Response
+    public function index(Request $request): Response
     {
-        $articles = $this->articleRepository->getForListPage();
+        $page = $request->get('page', 1);
+        $paginator = $this->articleRepository->paginate($page);
 
         return $this->render('front/blog/index.html.twig', [
-            'articles' => $articles,
+            'paginator' => $paginator,
         ]);
     }
 

@@ -6,6 +6,7 @@
 imports:
     - { resource: 'code_checker.yaml' }
     - { resource: 'app.yaml' }
+    - { resource: 'paginator.yaml' }
 parameters:
     course_path: '%kernel.project_dir%/data/courses/'
 services:

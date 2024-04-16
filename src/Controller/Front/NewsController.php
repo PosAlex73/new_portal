@@ -21,12 +21,13 @@ class NewsController extends AbstractController
     }
 
     #[Route('/news', name: 'news_list')]
-    public function index(): Response
+    public function index(Request $request): Response
     {
-        $news = $this->appNewRepository->getForListPage();
+        $page = $request->get('page', 1);
+        $news = $this->appNewRepository->paginate($page);
 
         return $this->render('front/news/index.html.twig', [
-            'news' => $news,
+            'paginator' => $news,
         ]);
     }
 

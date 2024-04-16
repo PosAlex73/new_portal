@@ -3,8 +3,11 @@
 {% block page_title %} Статьи {% endblock %}
 
 {% block content %}
-    {% if articles|length > 0 %}
-        {% for article in articles %}
+    <div class="navigation">
+        {{ knp_pagination_render(paginator) }}
+    </div>
+    {% if paginator|length > 0 %}
+        {% for article in paginator %}
             <div class="col-xl-12">
                 <div class="card">
                     <div class="card-body project-box">
@@ -21,6 +24,9 @@
 
             </div>
         {% endfor %}
+        <div class="navigation">
+            {{ knp_pagination_render(paginator) }}
+        </div>
     {% else %}
         <div class="row">
             <div class="card">

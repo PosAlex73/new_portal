@@ -3,9 +3,12 @@
 {% block page_title %} Новости {% endblock %}
 
 {% block content %}
-    {% if news|length > 0 %}
+    {% if paginator|length > 0 %}
+        <div class="navigation">
+            {{ knp_pagination_render(paginator) }}
+        </div>
         <div class="row">
-            {% for new in news %}
+            {% for new in paginator %}
                 <div class="card">
                     <div class="card-body">
                         <p class="card-title">{{ new.title }}</p>
@@ -14,6 +17,9 @@
                     </div>
                 </div>
             {% endfor %}
+        <div class="navigation">
+            {{ knp_pagination_render(paginator) }}
+        </div>
         </div>
     {% else %}
         <div class="row">

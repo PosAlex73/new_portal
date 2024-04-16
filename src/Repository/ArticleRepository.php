@@ -4,8 +4,11 @@ namespace App\Repository;
 
 use App\Entity\Article;
 use App\Enums\CommonStatus;
+use App\Enums\Settings\SettingEnum;
+use App\Services\Settings\Set;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @extends ServiceEntityRepository<Article>
@@ -17,7 +20,11 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ArticleRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(
+        protected ManagerRegistry $registry,
+        protected PaginatorInterface $paginator,
+        protected Set $set
+    )
     {
         parent::__construct($registry, Article::class);
     }
@@ -31,6 +38,19 @@ class ArticleRepository extends ServiceEntityRepository
             ])
             ->getQuery()
             ->getResult();
+    }
+
+    public function paginate(int $page)
+    {
+        $frontendPageNumber = $this->set->get(SettingEnum::FRONT_PAGINATION);
+        $query = $this->createQueryBuilder('a')
+            ->where('a.status = :status')
+            ->setParameters([
+                'status' => CommonStatus::ACTIVE->value
+            ])
+            ->getQuery();
+
+        return $this->paginator->paginate($query, $page, $frontendPageNumber->getValue());
     }
 
     public function getBySearch(string $text)

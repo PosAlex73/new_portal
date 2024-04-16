@@ -32,6 +32,7 @@ class CategoryRepository extends ServiceEntityRepository
     {
         $offset = $page * $this->elementsPerPage;
         $qb = $this->createQueryBuilder('c');
+
         return $qb
             ->setFirstResult($offset)
             ->setMaxResults($this->elementsPerPage)
