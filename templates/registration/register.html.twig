@@ -17,7 +17,9 @@
             {{ form_start(registrationForm) }}
             {{ form_row(registrationForm.email) }}
             {{ form_row(registrationForm.plainPassword) }}
-            {{ form_row(registrationForm.agreeTerms) }}
+            {{ form_row(registrationForm.firstName) }}
+            {{ form_row(registrationForm.lastName) }}
+            <a href="{{ path('service_statement') }}">{{ form_row(registrationForm.agreeTerms) }}</a>
             {{ form_end(registrationForm) }}
         </div>
     </div>

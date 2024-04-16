@@ -46,18 +46,6 @@ class RegistrationFormType extends AbstractType
                     new Length(false, 6, 24)
                 ]
             ])
-            ->add('agreeTerms', CheckboxType::class, [
-                                'mapped' => false,
-                'constraints' => [
-                    new IsTrue([
-                        'message' => 'You should agree to our terms.',
-                    ]),
-                ],
-                'attr' => [
-                    'class' => 'form-check-input mx-2'
-                ],
-                'label' => 'Согласен с условиями'
-            ])
             ->add('plainPassword', PasswordType::class, [
                 'label' => 'Пароль',
                 'mapped' => false,
@@ -82,6 +70,18 @@ class RegistrationFormType extends AbstractType
                     'class' => 'btn btn-primary my-3'
                 ],
                 'label' => 'Зарегистрироваться'
+            ])
+            ->add('agreeTerms', CheckboxType::class, [
+                'mapped' => false,
+                'constraints' => [
+                    new IsTrue([
+                        'message' => 'You should agree to our terms.',
+                    ]),
+                ],
+                'attr' => [
+                    'class' => 'form-check-input mx-2'
+                ],
+                'label' => 'Согласен с условиями'
             ])
         ;
     }

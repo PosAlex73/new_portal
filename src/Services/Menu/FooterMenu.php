@@ -7,16 +7,22 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class FooterMenu
 {
-    public function __construct(protected UrlGeneratorInterface $urlGenerator)
+    public function __construct(
+        protected UrlGeneratorInterface $urlGenerator,
+        protected FooterMenuGetter $footerMenuGetter
+    )
     {
     }
 
-    public function getFooterMenu()
+    public function getFooterMenu(): array
     {
-        return [
-            new MenuElement('О нас', $this->urlGenerator->generate('about_us')),
-            new MenuElement('Сервисное соглашение', $this->urlGenerator->generate('service_statement')),
-            new MenuElement('Помощь', $this->urlGenerator->generate('help')),
-        ];
+        $footerMenu = $this->footerMenuGetter->getFooterMenuData();
+        $elementsData = [];
+
+        foreach ($footerMenu as $elementDto) {
+            $elementsData[] = new MenuElement($elementDto->getTitle(), $this->urlGenerator->generate($elementDto->getRouteName()));
+        }
+
+        return $elementsData;
     }
 }

@@ -4,6 +4,8 @@ namespace App\Controller\Admin;
 
 use App\Entity\Page;
 use App\Enums\CommonStatus;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
@@ -30,7 +32,6 @@ class PageCrudController extends AbstractCrudController
                 'Активно' => CommonStatus::ACTIVE->value,
                 'Отключено' => CommonStatus::DISABLED->value
             ]),
-            AssociationField::new('category')
         ];
 
         if ($pageName === Crud::PAGE_INDEX) {
@@ -39,5 +40,13 @@ class PageCrudController extends AbstractCrudController
         }
 
         return $fields;
+    }
+
+    public function configureActions(Actions $actions): Actions
+    {
+        $actions->disable(Action::DELETE);
+        $actions->disable(Action::NEW);
+
+        return parent::configureActions($actions);
     }
 }
