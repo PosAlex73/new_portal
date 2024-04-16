@@ -3,6 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\CourseBugReport;
+use App\Entity\User;
+use App\Enums\Settings\SettingEnum;
+use App\Services\Settings\Set;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -16,33 +19,21 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class CourseBugReportRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(
+        protected ManagerRegistry $registry,
+        protected Set $set
+    )
     {
         parent::__construct($registry, CourseBugReport::class);
     }
 
-//    /**
-//     * @return CourseBugReport[] Returns an array of CourseBugReport objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('c.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function checkUserCreatedManyReports(User $user)
+    {
+        $userReportsCounts = $this->count([
+            'reporter' => $user->getId()
+        ]);
 
-//    public function findOneBySomeField($value): ?CourseBugReport
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        $maxReports = $this->set->get(SettingEnum::MAX_REPORTS);
+        return $userReportsCounts === (int) $maxReports->getId();
+    }
 }

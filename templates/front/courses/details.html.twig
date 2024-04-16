@@ -8,20 +8,20 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-body task-detail">
-                    <div class="dropdown float-end">
-                        <a href="#" class="dropdown-toggle arrow-none card-drop" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="mdi mdi-dots-vertical"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end">
-                            {% if app.user %}
-                                <a href="{{ path('bug_report', {id: course.id}) }}" class="dropdown-item">Сообщить об ошибке</a>
-                            {% endif %}
+                    {% if app.user %}
+                        <div class="dropdown float-end">
+                            <a href="#" class="dropdown-toggle arrow-none card-drop" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="mdi mdi-dots-vertical"></i>
+                            </a>
+                                <div class="dropdown-menu dropdown-menu-end">
+                                        <a href="{{ path('bug_report', {id: course.id}) }}" class="dropdown-item">Сообщить об ошибке</a>
+                                </div>
                         </div>
-                    </div>
+                    {% endif %}
                     <div class="d-flex mb-3">
                         <div class="flex-grow-1">
                             <h4 class="media-heading mt-0">{{ course.title }}</h4>
-                            <span class="badge bg-danger">{{ course.category.title }}</span>
+                            <span class="badge bg-danger p-2 font-15">{{ course.category.title }}</span>
                         </div>
                     </div>
 
@@ -70,12 +70,6 @@
         <div class="col-md-4">
             <div class="card">
                 <div class="card-body">
-                    <div class="dropdown float-end">
-                        <a href="#" class="dropdown-toggle arrow-none card-drop" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="mdi mdi-dots-vertical"></i>
-                        </a>
-                    </div>
-
                     <h4 class="header-title mt-0 mb-3">Задачи в курсе ({{ course.taskCount() }})</h4>
 
                     <div>

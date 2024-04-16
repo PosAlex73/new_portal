@@ -25,6 +25,9 @@ class SettingsCreator
                 ],
                 SettingEnum::HERO->value => [
                     'value' => ''
+                ],
+                SettingEnum::MAX_REPORTS->value => [
+                    'value' => 5
                 ]
             ],
             SettingTabs::COMMON->value => [
@@ -36,7 +39,7 @@ class SettingsCreator
                 SettingEnum::APP_ENABLED->value => [
                     'value' => CommonStatus::ACTIVE->value
                 ]
-            ]
+            ],
         ];
     }
 }

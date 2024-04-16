@@ -10,4 +10,5 @@ enum SettingEnum: string
     case REGISTER_ENABLED = 'register_enabled';
     case ADMIN_PAGINATION = 'admin_pagination';
     case FRONT_PAGINATION = 'front_pagination';
+    case MAX_REPORTS = 'max_reposts';
 }

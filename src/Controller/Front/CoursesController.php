@@ -41,6 +41,8 @@ class CoursesController extends AbstractController
 
         if ($user) {
             $data['userCourses'] = $this->userProgressRepository->getCourseIdsByUserId($user->getId());
+        } else {
+            $data['userCourses'] = [];
         }
 
         return $this->render('front/courses/index.html.twig', $data);

@@ -45,9 +45,6 @@ class BugCourseReportType extends AbstractType
                     new Length(null, '10', '1024')
                 ]
             ])
-            ->add('course', HiddenType::class, [
-                'data' => 'id'
-            ])
             ->add('submit', SubmitType::class, [
                 'attr' => [
                     'class' => 'btn btn-primary mt-2'

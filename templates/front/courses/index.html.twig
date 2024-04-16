@@ -14,7 +14,7 @@
                         <div class="card-body project-box">
                             <div class="badge bg-success float-end font-20">{{ course.category.title }}</div>
                             <h4 class="mt-0 font-20"><span class="text-dark">{{ course.title }}</span></h4>
-                            {% if course.id in userCourses %}
+                            {% if userCourses and course.id in userCourses %}
                                 <p class="text-success font-20">Курс приобретен</p>
                             {% else %}
                                 <p class="text-secondary font-20">Курс не приобретен</p>
