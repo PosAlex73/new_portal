@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\CourseBugReport;
 use App\Entity\User;
+use App\Enums\Courses\BugStatus;
 use App\Enums\Settings\SettingEnum;
 use App\Services\Settings\Set;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -30,7 +31,8 @@ class CourseBugReportRepository extends ServiceEntityRepository
     public function checkUserCreatedManyReports(User $user)
     {
         $userReportsCounts = $this->count([
-            'reporter' => $user->getId()
+            'reporter' => $user->getId(),
+            'status' => BugStatus::NEW->value
         ]);
 
         $maxReports = $this->set->get(SettingEnum::MAX_REPORTS);
