@@ -13,7 +13,7 @@
                     <div class="card-body">
                         <p class="card-title">{{ new.title }}</p>
                         <p>{{ new.getShortText() }}</p>
-                        <a href="{{ path('news_details', {id: new.id}) }}" class="btn btn-primary">Посмотреть новость</a>
+                        <a data-news-link="true" href="{{ path('news_details', {id: new.id}) }}" class="btn btn-primary">Посмотреть новость</a>
                     </div>
                 </div>
             {% endfor %}

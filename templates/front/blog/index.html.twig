@@ -11,12 +11,12 @@
             <div class="col-xl-12">
                 <div class="card">
                     <div class="card-body project-box">
-                        <h4 class="mt-0"><a href="" class="text-dark">{{ article.title }}</a></h4>
+                        <h4 class="mt-0"><span data-blog-title class="text-dark">{{ article.title }}</span></h4>
                         <p class="text-muted font-13">{{ article.getTextShort() }}
                         </p>
 
                         <div>
-                            <a href="{{ path('blog_details', {id: article.id}) }}" class="btn btn-primary">Посмотреть статью</a>
+                            <a href="{{ path('blog_details', {id: article.id}) }}" data-blog-details-button class="btn btn-primary">Посмотреть статью</a>
                         </div>
 
                     </div>
