@@ -44,4 +44,18 @@ class IndexPageCest
         $I->see('Статьи');
         $I->see('Посмотреть статью');
     }
+
+    public function testStaticPages(AcceptanceTester $tester)
+    {
+        $staticPages = [
+            'help' => 'Помощь',
+            'about-us' => 'О нас',
+            'service-statement' => 'Сервисное соглашение'
+        ];
+
+        foreach ($staticPages as $page => $title) {
+            $tester->amOnPage('/' . $page);
+            $tester->see($title);
+        }
+    }
 }
