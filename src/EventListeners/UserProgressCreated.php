@@ -2,7 +2,6 @@
 
 namespace App\EventListeners;
 
-use App\Dto\Courses\InitialCourseDto;
 use App\Dto\Progress\UserProgressDataStartDto;
 use App\Entity\UserProgress;
 use Doctrine\Bundle\DoctrineBundle\Attribute\AsEntityListener;

@@ -4,12 +4,14 @@ namespace App\Controller\Front;
 
 use App\Controller\Front\Traits\BackUrl;
 use App\Entity\User;
+use App\Entity\UserProgress;
 use App\Enums\Flash\FlashTypes;
 use App\Enums\Users\UserRoles;
 use App\Form\UserFormType;
 use App\Form\UserProfileFormType;
 use App\Repository\UserProgressRepository;
 use App\Services\UserProgress\CourseCounter;
+use App\Services\UserProgress\UserProgressResetService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,7 +24,8 @@ class ProfileController extends AbstractController
     public function __construct(
         protected EntityManagerInterface $entityManager,
         protected UserProgressRepository $userProgressRepository,
-        protected CourseCounter $courseCounter
+        protected CourseCounter $courseCounter,
+        protected UserProgressResetService $userProgressResetService
     ){}
 
     use BackUrl;
@@ -82,5 +85,19 @@ class ProfileController extends AbstractController
         return $this->render('front/profile/user_settings.html.twig', [
             'profileForm' => $profileForm
         ]);
+    }
+
+    #[Route('/profile/reset-user-progress/{id}', name: 'reset_progress')]
+    #[IsGranted('ROLE_USER')]
+    public function resetUserProgress(UserProgress $userProgress, Request $request): Response
+    {
+        $result = $this->userProgressResetService->resetProgress($userProgress);
+        if ($result) {
+            $this->addFlash(FlashTypes::NOTICE->value, 'Прогресс успешно сброшен.');
+        } else {
+            $this->addFlash(FlashTypes::ERROR->value, 'Прогресс не удалось сбросить.');
+        }
+
+        return $this->redirectToRoute('profile');
     }
 }

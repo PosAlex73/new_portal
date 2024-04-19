@@ -61,6 +61,9 @@ class UserFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
+            'attr' => [
+                'id' => 'user_profile_form'
+            ]
         ]);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Enums\Flash\FlashTypes;
+use App\Enums\Users\UserTypes;
 use App\Messages\UserRegistered;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;

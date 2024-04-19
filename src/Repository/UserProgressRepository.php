@@ -17,7 +17,10 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class UserProgressRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(
+        protected ManagerRegistry $registry,
+        protected UserRepository $userRepository
+    )
     {
         parent::__construct($registry, UserProgress::class);
     }
@@ -53,5 +56,25 @@ class UserProgressRepository extends ServiceEntityRepository
             ->getResult();
 
         return array_column($result, 'id');
+    }
+
+    public function getProgressByUserId(int $userId)
+    {
+        return $this->findBy([
+            'owner' => $userId
+        ]);
+    }
+
+    public function getByUserEmail(string $email)
+    {
+        $user = $this->userRepository->findByEmail($email);
+
+        if (!$user) {
+            return [];
+        }
+
+        return $this->findBy([
+            'owner' => $user->getId()
+        ]);
     }
 }

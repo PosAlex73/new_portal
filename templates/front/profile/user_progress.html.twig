@@ -37,7 +37,6 @@
                                     <th class="text-center">Количество задач в курсе</th>
                                     <th class="text-center">Выполнено задач</th>
                                     <th class="text-center">Дата начала</th>
-{#                                    <th class="text-center">Дата окончания</th>#}
                                     <th class="text-center">Действия</th>
                                 </tr>
                                 </thead>
@@ -65,7 +64,7 @@
                                                 </button>
                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="">
                                                     <a class="dropdown-item" href="{{ path('front_learn', {id: data.progressId}) }}">Начать обучение</a>
-                                                    <a class="dropdown-item" href="#">Another action</a>
+                                                    <a class="dropdown-item text-danger" href="{{ path('reset_progress', {id: data.progressID}) }}">Сбросить прогресс</a>
                                                 </div>
                                             </div>
 
