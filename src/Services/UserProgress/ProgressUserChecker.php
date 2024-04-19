@@ -12,6 +12,16 @@ class ProgressUserChecker
     {
     }
 
+    public function getUserProgressIds(User $user)
+    {
+        $ids = [];
+        foreach($user->getUserProgress()?->getIterator() as $userProgress) {
+            $ids[] = $userProgress->getCourse()->getId();
+        }
+
+        return $ids;
+    }
+
     /**
      * @param User $user
      * @param Course $course

@@ -5,22 +5,30 @@ namespace Tests\Acceptance;
 
 use App\Entity\Course;
 use App\Repository\CourseRepository;
+use App\Repository\UserProgressRepository;
 use App\Repository\UserRepository;
+use App\Services\Courses\CourseLoader;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Tests\Support\AcceptanceTester;
 
 class CoursesCest
 {
-    /** @var CourseRepository */
     private CourseRepository $courseRepository;
 
     private UserRepository $userRepository;
+
+    private UserProgressRepository $userProgressRepository;
+
+    private Security $security;
 
     public function _before(AcceptanceTester $I)
     {
         $this->courseRepository = $I->grabService(CourseRepository::class);
         $this->userRepository = $I->grabService(UserRepository::class);
+        $this->userProgressRepository = $I->grabService(UserProgressRepository::class);
+        $this->security = $I->grabService(Security::class);
     }
 
     // tests
@@ -57,5 +65,11 @@ class CoursesCest
         $coursesUrl = $router->generate('course_details', ['id' => $course->getId()]);
 
         $I->amOnPage($coursesUrl);
+    }
+
+    public function checkCourseApplied(AcceptanceTester $tester)
+    {
+        $tester->login('u@u.ru', 'user');
+
     }
 }

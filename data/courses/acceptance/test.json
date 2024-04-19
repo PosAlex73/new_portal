@@ -1,0 +1,88 @@
+{
+  "technology": "php",
+  "description": "base course",
+  "lang": "php",
+  "level": "1",
+  "tasks": {
+    "task_1": {
+      "type": "theory",
+      "title": "test"
+    },
+    "task_2": {
+      "type": "test",
+      "title": "test",
+      "tests": [
+        {
+          "text": "change me test text #1",
+          "right_variant": "1",
+          "variants": {
+            "variant_1": "change me variant text #1",
+            "variant_2": "change me variant text #2",
+            "variant_3": "change me variant text #3",
+            "variant_4": "change me variant text #4"
+          }
+        },
+        {
+          "text": "change me test text #2",
+          "right_variant": "2",
+          "variants": {
+            "variant_1": "change me variant text #1",
+            "variant_2": "change me variant text #2",
+            "variant_3": "change me variant text #3",
+            "variant_4": "change me variant text #4"
+          }
+        },
+        {
+          "text": "change me test text #3",
+          "right_variant": "3",
+          "variants": {
+            "variant_1": "change me variant text #1",
+            "variant_2": "change me variant text #2",
+            "variant_3": "change me variant text #3",
+            "variant_4": "change me variant text #4"
+          }
+        }
+      ]
+    },
+    "task_3": {
+      "type": "practice",
+      "title": "test"
+    },
+    "task_4": {
+      "type": "theory",
+      "title": "test"
+    },
+    "task_5": {
+      "type": "theory",
+      "title": "test"
+    },
+    "task_6": {
+      "type": "theory",
+      "title": "test"
+    },
+    "task_7": {
+      "type": "theory",
+      "title": "test"
+    },
+    "task_8": {
+      "type": "theory",
+      "title": "test"
+    },
+    "task_9": {
+      "type": "theory",
+      "title": "test"
+    },
+    "task_10": {
+      "type": "theory",
+      "title": "test"
+    },
+    "task_11": {
+      "type": "theory",
+      "title": "test"
+    },
+    "task_12": {
+      "type": "theory",
+      "title": "test"
+    }
+  }
+}

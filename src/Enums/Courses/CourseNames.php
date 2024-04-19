@@ -8,4 +8,5 @@ enum CourseNames: string
     case TEST2 = 'test2';
     case TEST3 = 'test3';
     case PHP = 'php';
+    case ACCEPTANCE = 'acceptance';
 }

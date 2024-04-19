@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Dto\Courses\TestCourseDto;
 use App\Entity\AppNew;
 use App\Entity\Article;
 use App\Entity\Category;
@@ -21,6 +22,7 @@ use App\Enums\Users\UserTypes;
 use App\Repository\CategoryRepository;
 use App\Repository\CourseRepository;
 use App\Services\Courses\CourseLoader;
+use App\Services\Courses\TestCourseCreatorService;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -33,7 +35,8 @@ class CommonFixture extends Fixture implements FixtureGroupInterface
         protected UserPasswordHasherInterface $passwordHasher,
         protected CourseLoader $courseLoader,
         protected CategoryRepository $categoryRepository,
-        protected CourseRepository $courseRepository
+        protected CourseRepository $courseRepository,
+        protected TestCourseCreatorService $testCourseCreatorService
     )
     {
     }
@@ -82,46 +85,10 @@ class CommonFixture extends Fixture implements FixtureGroupInterface
         ]);
 
         foreach ($testCourses as $course) {
-            $initialCourseDto = $this->courseLoader->getCourseByName('test', $course);
-            $newCourse = new Course();
-            $newCourse->setTitle($initialCourseDto->getTitle());
-            $newCourse->setStatus(CourseStatuses::ACTIVE->value);
-            $newCourse->setText($faker->realText(1000));
-            $newCourse->setPosition(0);
-            $newCourse->setShortDescription($faker->realText());
-            $newCourse->setCategory($category);
-            $newCourse->setCourseCode('test/' . $course);
-            $newCourse->setType(CourseTypes::FREE->value);
-            $newCourse->setLang($initialCourseDto->getLang());
-            $manager->persist($newCourse);
-            $manager->flush();
-
-            foreach ($initialCourseDto->getTasks() as $task) {
-                $newTask = new Task();
-                $newTask->setCourse($newCourse);
-                $newTask->setType($this->getTaskType($task['type']));
-                $newTask->setTitle($faker->realText(20));
-                $newTask->setText($faker->realText(500));
-                $newTask->setStatus(CommonStatus::ACTIVE->value);
-                $manager->persist($newTask);
-                $manager->flush();
-
-                if ($task['type'] === 'test' && !empty($task['tests'])) {
-                    foreach ($task['tests'] as $testText) {
-                        $newTestText = new TestText();
-                        $newTestText->setText($testText['text']);
-                        $newTestText->setTask($newTask);
-                        $newTestText->setVariantOne($testText['variants']['variant_1']);
-                        $newTestText->setVariantTwo($testText['variants']['variant_2']);
-                        $newTestText->setVariantThree($testText['variants']['variant_3']);
-                        $newTestText->setVariantFour($testText['variants']['variant_4']);
-                        $newTestText->setRightVariant($testText['right_variant']);
-                        $manager->persist($newTestText);
-                        $manager->flush();
-                    }
-                }
-            }
-
+            $createDto = new TestCourseDto(
+                $course, $category
+            );
+            $this->testCourseCreatorService->createFakeCourse($createDto);
         }
 
         foreach (range(0, 30) as $_) {
@@ -153,15 +120,6 @@ class CommonFixture extends Fixture implements FixtureGroupInterface
             $manager->flush();
         }
 
-    }
-
-    private function getTaskType(string $type)
-    {
-        return match ($type) {
-            'theory' => TaskTypes::THEORY->value,
-            'test' => TaskTypes::TEST->value,
-            'practice' => TaskTypes::PRACTICE->value,
-        };
     }
 
     public function getDependencies()

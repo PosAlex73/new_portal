@@ -10,6 +10,7 @@ use App\Enums\Flash\FlashTypes;
 use App\Repository\CourseRepository;
 use App\Repository\UserProgressRepository;
 use App\Services\UserProgress\ProgressCreator;
+use App\Services\UserProgress\ProgressUserChecker;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,7 +24,8 @@ class CoursesController extends AbstractController
     public function __construct(
         protected CourseRepository $courseRepository,
         protected ProgressCreator $progressCreator,
-        protected UserProgressRepository $userProgressRepository
+        protected UserProgressRepository $userProgressRepository,
+        protected ProgressUserChecker $progressUserChecker
     ){}
 
     #[Route('/courses', name: 'courses_list')]
@@ -40,7 +42,7 @@ class CoursesController extends AbstractController
         $user = $this->getUser();
 
         if ($user) {
-            $data['userCourses'] = $this->userProgressRepository->getCourseIdsByUserId($user->getId());
+            $data['userCourses'] = $this->progressUserChecker->getUserProgressIds($user);
         } else {
             $data['userCourses'] = [];
         }
