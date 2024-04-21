@@ -30,7 +30,9 @@ class CourseCrudController extends AbstractCrudController
             IdField::new('id')->setDisabled(),
             TextField::new('title'),
             TextEditorField::new('short_description'),
-            TextEditorField::new('text'),
+            TextEditorField::new('text')->setTrixEditorConfig([
+
+            ]),
             ChoiceField::new('type')->setChoices([
                 'Бесплатно' => CourseTypes::FREE->value,
                 'Платно' => CourseTypes::PAY->value,
