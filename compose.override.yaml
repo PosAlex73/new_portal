@@ -34,8 +34,6 @@ services:
 ###> symfony/mailer ###
   mailer:
     image: axllent/mailpit
-    networks:
-      - portal
     ports:
       - "1025"
       - "8025"
