@@ -16,7 +16,7 @@ class CourseLoader
 
     public function getCourseByName(string $tech, string $courseName)
     {
-        $courseArray = json_decode(file_get_contents($this->coursePath . $tech . '/' . $courseName . '.json'), true);
+        $courseArray = $this->getCourseArray($tech, $courseName);
 
         return new InitialCourseDto(
             $courseArray['technology'],
@@ -25,5 +25,10 @@ class CourseLoader
             $courseArray['tasks'],
             $courseArray['lang']
         );
+    }
+
+    private function getCourseArray(string $tech, string $courseName)
+    {
+        return json_decode(file_get_contents($this->coursePath . $tech . '/' . $courseName . '.json'), true);
     }
 }
