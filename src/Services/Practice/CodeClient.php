@@ -13,14 +13,16 @@ class CodeClient
     protected string $secret;
 
     protected string $checkerUrl;
+    private readonly string $url;
+    private readonly string $port;
 
     public function __construct(
         protected ParameterBagInterface $parameterBag,
         protected HttpClientInterface $httpClient
     )
     {
-        $this->secret = $this->parameterBag->get('secret');
-        $this->checkerUrl = $this->parameterBag->get('checker_url');
+        $this->url = $this->parameterBag->get('code_checker.url');
+        $this->port = $this->parameterBag->get('code_checker.port');
     }
 
     public function setCodeDto(PracticeCodeDto $practiceCodeDto)

@@ -70,6 +70,5 @@ class CoursesCest
     public function checkCourseApplied(AcceptanceTester $tester)
     {
         $tester->login('u@u.ru', 'user');
-
     }
 }
