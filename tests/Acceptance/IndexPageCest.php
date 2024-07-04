@@ -1,7 +1,6 @@
 <?php
 
-
-namespace Tests\Acceptance;
+namespace App\Tests\Acceptance;
 
 use Symfony\Component\Routing\RouterInterface;
 use Tests\Support\AcceptanceTester;

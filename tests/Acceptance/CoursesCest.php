@@ -1,16 +1,12 @@
 <?php
 
+namespace App\Tests\Acceptance;
 
-namespace Tests\Acceptance;
-
-use App\Entity\Course;
 use App\Repository\CourseRepository;
 use App\Repository\UserProgressRepository;
 use App\Repository\UserRepository;
-use App\Services\Courses\CourseLoader;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Tests\Support\AcceptanceTester;
 
 class CoursesCest

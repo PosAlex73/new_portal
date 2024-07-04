@@ -1,11 +1,8 @@
 <?php
 
+namespace App\Tests\Acceptance;
 
-namespace Tests\Acceptance;
-
-use App\Entity\Task;
 use App\Entity\UserProgress;
-use App\Enums\Task\TaskTypes;
 use App\Repository\UserProgressRepository;
 use Symfony\Component\Routing\RouterInterface;
 use Tests\Support\AcceptanceTester;

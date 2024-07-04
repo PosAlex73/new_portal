@@ -1,9 +1,7 @@
 <?php
 
+namespace App\Tests\Acceptance;
 
-namespace Tests\Acceptance;
-
-use App\Entity\UserProgress;
 use App\Repository\UserProgressRepository;
 use App\Repository\UserRepository;
 use Tests\Support\AcceptanceTester;
