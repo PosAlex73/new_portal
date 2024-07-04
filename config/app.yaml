@@ -1,0 +1,5 @@
+parameters:
+  app.admin_email: 'a@a.ru'
+  app.admin_name: 'Admin Adminovich'
+  code_checker.url: host.docker.internal
+  code_checker.port: 2358

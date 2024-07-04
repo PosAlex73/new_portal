@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% include "common/head.html.twig" %}
+
+<body class="loading" data-layout-mode="horizontal" data-layout-color="light" data-layout-size="fluid" data-topbar-color="dark" data-leftbar-position="fixed">
+
+<div id="wrapper">
+    {% block header %}
+        {% include "common/topbar.html.twig" %}
+        {% include "common/sidebar.html.twig" %}
+    {% endblock %}
+    <div class="content-page">
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page-title-box">
+{#                            <div class="page-title-right">#}
+{#                                {% block breadcrumbs %}#}
+{#                                    <ol class="breadcrumb m-0">#}
+{#                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Adminto</a></li>#}
+{#                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Layouts</a></li>#}
+{#                                        <li class="breadcrumb-item active">Horizontal Layout</li>#}
+{#                                    </ol>#}
+{#                                {% endblock %}#}
+{#                            </div>#}
+                            <h4 class="page-title">{% block page_title %}Главная страница{% endblock %}</h4>
+                        </div>
+                    </div>
+                </div>
+                {% include 'common/flash.html.twig' %}
+                {% block content %}
+                {% endblock %}
+            </div>
+        </div>
+        <footer class="footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="text-md-end footer-links d-none d-sm-block">
+                            {{ component('Footer') }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+
+
+</div>
+{% include 'common/scripts.html.twig' %}
+
+</body>
+</html>

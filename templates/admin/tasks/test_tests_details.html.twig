@@ -1,0 +1,14 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block page_actions %}
+    <div>
+        <a href="{{ ea_url().setRoute('edit_test_text', {id: testText.task.id}) }}" class="btn btn-primary">Назад</a>
+    </div>
+{% endblock %}
+
+
+{% block main %}
+    <div class="row">
+        {{ form(testTestForm) }}
+    </div>
+{% endblock %}

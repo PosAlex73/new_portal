@@ -1,0 +1,14 @@
+{% extends 'layout/base.html.twig' %}
+
+{% block page_title %} Помощь {% endblock %}
+
+{% block content %}
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="header-title">{{ page.title }}</h4>
+                {{ page.text|raw }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

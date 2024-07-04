@@ -1,0 +1,27 @@
+{% extends 'layout/base.html.twig' %}
+{% block header %}{% endblock %}
+{% block breadcrumbs %}{% endblock %}
+{% block page_title %}{% endblock %}
+
+{% block content %}
+    <div class="row d-flex justify-content-center">
+        <div class="card col-6">
+            {% for flash_error in app.flashes('verify_email_error') %}
+                <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+            {% endfor %}
+
+            <h1>Регистрация</h1>
+
+            {{ form_errors(registrationForm) }}
+
+            {{ form_start(registrationForm) }}
+            {{ form_row(registrationForm.email) }}
+            {{ form_row(registrationForm.plainPassword) }}
+            {{ form_row(registrationForm.firstName) }}
+            {{ form_row(registrationForm.lastName) }}
+            <a href="{{ path('service_statement') }}">{{ form_row(registrationForm.agreeTerms) }}</a>
+            {{ form_end(registrationForm) }}
+        </div>
+    </div>
+
+{% endblock %}
