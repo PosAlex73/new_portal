@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Support;
+namespace App\Tests\Support;
 
 /**
  * Inherited Methods
+ *
  * @method void wantTo($text)
  * @method void wantToTest($text)
  * @method void execute($callable)
@@ -26,14 +27,4 @@ class AcceptanceTester extends \Codeception\Actor
     /**
      * Define custom actions here
      */
-
-    public function login(string $email, string $password)
-    {
-        $I = $this;
-        $I->amOnPage('/login');
-        $I->submitForm('#login_form', [
-            'email' => $email,
-            'password' => $password
-        ]);
-    }
 }
