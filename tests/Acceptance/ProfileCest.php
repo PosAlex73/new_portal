@@ -4,7 +4,7 @@ namespace App\Tests\Acceptance;
 
 use App\Repository\UserProgressRepository;
 use App\Repository\UserRepository;
-use Tests\Support\AcceptanceTester;
+use App\Tests\Support\AcceptanceTester;
 
 class ProfileCest
 {

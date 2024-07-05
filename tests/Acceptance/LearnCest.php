@@ -4,8 +4,8 @@ namespace App\Tests\Acceptance;
 
 use App\Entity\UserProgress;
 use App\Repository\UserProgressRepository;
+use App\Tests\Support\AcceptanceTester;
 use Symfony\Component\Routing\RouterInterface;
-use Tests\Support\AcceptanceTester;
 
 class LearnCest
 {

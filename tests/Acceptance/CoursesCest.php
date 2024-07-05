@@ -5,9 +5,9 @@ namespace App\Tests\Acceptance;
 use App\Repository\CourseRepository;
 use App\Repository\UserProgressRepository;
 use App\Repository\UserRepository;
+use App\Tests\Support\AcceptanceTester;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Routing\RouterInterface;
-use Tests\Support\AcceptanceTester;
 
 class CoursesCest
 {

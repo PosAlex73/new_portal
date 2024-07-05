@@ -3,7 +3,7 @@
 namespace App\Tests\Acceptance;
 
 use App\Repository\UserProgressRepository;
-use Tests\Support\AcceptanceTester;
+use App\Tests\Support\AcceptanceTester;
 
 class LearnProgressCest
 {
