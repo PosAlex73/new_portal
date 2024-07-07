@@ -6,7 +6,6 @@ use App\Controller\Front\Traits\BackUrl;
 use App\Entity\User;
 use App\Entity\UserProgress;
 use App\Enums\Flash\FlashTypes;
-use App\Enums\Users\UserRoles;
 use App\Form\UserFormType;
 use App\Form\UserProfileFormType;
 use App\Repository\UserProgressRepository;

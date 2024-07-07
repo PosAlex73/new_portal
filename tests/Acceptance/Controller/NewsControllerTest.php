@@ -3,6 +3,8 @@
 namespace App\Tests\Acceptance\Controller;
 
 use App\Entity\Article;
+use App\Enums\Http\HttpRequest;
+use App\Enums\System\FrontRouteNames;
 use App\Repository\ArticleRepository;
 use App\Tests\Traits\ServiceGetter;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -23,9 +25,13 @@ class NewsControllerTest extends WebTestCase
         $articles = $articlesRepository->getForListPage(1);
         $this->assertNotEmpty($articles);
 
-        $blogUrl = $this->getUrlGenerator()->generate('blog_list');
+        $blogUrl = $this->getUrlGenerator()->generate(FrontRouteNames::BLOG_LIST->value);
 
-        $client->request('GET', $blogUrl);
+        $client->request(HttpRequest::GET->value, $blogUrl);
         $this->assertResponseIsSuccessful();
+
+        foreach ($articles as $article) {
+//            $thos
+        }
     }
 }

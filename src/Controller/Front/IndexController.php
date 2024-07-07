@@ -2,6 +2,7 @@
 
 namespace App\Controller\Front;
 
+use App\Enums\System\FrontRouteNames;
 use App\Repository\CourseRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;

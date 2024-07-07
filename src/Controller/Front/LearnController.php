@@ -7,6 +7,7 @@ use App\Entity\Task;
 use App\Entity\User;
 use App\Entity\UserProgress;
 use App\Enums\Flash\FlashTypes;
+use App\Enums\System\FrontRouteNames;
 use App\Repository\UserProgressRepository;
 use App\Services\UserProgress\ProgressCreator;
 use App\Services\UserProgress\TaskDoneChecker;

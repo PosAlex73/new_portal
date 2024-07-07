@@ -2,7 +2,6 @@
 
 namespace App\Controller\Front;
 
-use App\Form\SearchFormType;
 use App\Services\Search\SearchService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
