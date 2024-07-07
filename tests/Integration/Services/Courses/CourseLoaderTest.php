@@ -4,8 +4,6 @@ namespace App\Tests\Integration\Services\Courses;
 
 use App\Services\Courses\CourseLoader;
 use App\Tests\Traits\MakeMethodPublic;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
@@ -38,13 +36,5 @@ class CourseLoaderTest extends KernelTestCase
         $this->assertNotEmpty($courseArray['level']);
         $this->assertNotEmpty($courseArray['tasks']);
         $this->assertNotEmpty($courseArray['lang']);
-    }
-
-    public function testSomething(): void
-    {
-        $kernel = self::bootKernel();
-
-        /** @var EntityManager $em */
-        $em = $this->getContainer()->get(EntityManagerInterface::class);
     }
 }

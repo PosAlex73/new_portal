@@ -29,18 +29,7 @@ class ArticleRepository extends ServiceEntityRepository
         parent::__construct($registry, Article::class);
     }
 
-    public function getForListPage()
-    {
-        return $this->createQueryBuilder('a')
-            ->where('a.status = :status')
-            ->setParameters([
-                'status' => CommonStatus::ACTIVE->value
-            ])
-            ->getQuery()
-            ->getResult();
-    }
-
-    public function paginate(int $page)
+    public function getForListPage(int $page)
     {
         $frontendPageNumber = $this->set->get(SettingEnum::FRONT_PAGINATION);
         $query = $this->createQueryBuilder('a')

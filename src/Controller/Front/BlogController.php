@@ -24,7 +24,7 @@ class BlogController extends AbstractController
     public function index(Request $request): Response
     {
         $page = $request->get('page', 1);
-        $paginator = $this->articleRepository->paginate($page);
+        $paginator = $this->articleRepository->getForListPage($page);
 
         return $this->render('front/blog/index.html.twig', [
             'paginator' => $paginator,
