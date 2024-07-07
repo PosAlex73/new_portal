@@ -47,7 +47,7 @@ class TestsRunCommand extends Command
         system("php $projectDir/bin/console --env=test doctrine:schema:create");
         system("yes | php $projectDir/bin/console --env=test doctrine:fixtures:load");
 
-        system("php $projectDir/vendor/bin/codecept run");
+        system("php $projectDir/bin/phpunit");
 
         return Command::SUCCESS;
     }
