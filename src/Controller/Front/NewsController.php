@@ -24,7 +24,7 @@ class NewsController extends AbstractController
     public function index(Request $request): Response
     {
         $page = $request->get('page', 1);
-        $news = $this->appNewRepository->paginate($page);
+        $news = $this->appNewRepository->getForListPage($page);
 
         return $this->render('front/news/index.html.twig', [
             'paginator' => $news,

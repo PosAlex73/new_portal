@@ -27,4 +27,13 @@ trait ServiceGetter
 
         return $urlGenerator;
     }
+
+    public function getEntityManager(): EntityManagerInterface
+    {
+        if (!method_exists($this, 'getContainer')) {
+            throw new MethodNotExistsException();
+        }
+
+        return $this->getContainer()->get(EntityManagerInterface::class);
+    }
 }

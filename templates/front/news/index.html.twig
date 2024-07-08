@@ -11,7 +11,7 @@
             {% for new in paginator %}
                 <div class="card">
                     <div class="card-body">
-                        <p class="card-title">{{ new.title }}</p>
+                        <h4 class="card-title">{{ new.title }}</h4>
                         <p>{{ new.getShortText() }}</p>
                         <a data-news-link="true" href="{{ path('news_details', {id: new.id}) }}" class="btn btn-primary">Посмотреть новость</a>
                     </div>

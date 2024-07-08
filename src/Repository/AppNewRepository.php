@@ -29,7 +29,7 @@ class AppNewRepository extends ServiceEntityRepository
         parent::__construct($registry, AppNew::class);
     }
 
-    public function paginate(int $page = 1)
+    public function getForListPage(int $page = 1)
     {
         $frontendNumber = $this->set->get(SettingEnum::FRONT_PAGINATION);
         $query = $this->createQueryBuilder('n')

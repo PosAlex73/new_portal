@@ -2,10 +2,11 @@
 
 namespace App\Tests\Acceptance\Controller;
 
-use App\Entity\Article;
+use App\Entity\AppNew;
+use App\Enums\CommonStatus;
 use App\Enums\Http\HttpRequest;
 use App\Enums\System\FrontRouteNames;
-use App\Repository\ArticleRepository;
+use App\Repository\AppNewRepository;
 use App\Tests\Traits\ServiceGetter;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -13,25 +14,47 @@ class NewsControllerTest extends WebTestCase
 {
     use ServiceGetter;
 
-    public function testNewsList()
+    public function testNewList()
     {
         $client = static::createClient();
 
-        /** @var ArticleRepository $articlesRepository */
-        $articlesRepository = $this->getRepositoryByModel(Article::class);
+        /** @var AppNewRepository $newsRepository */
+        $newsRepository = $this->getRepositoryByModel(AppNew::class);
+        $urlGenerator = $this->getUrlGenerator();
 
+        /** @var AppNew[] $news */
+        $news = $newsRepository->getForListPage();
+        $client->request(
+            HttpRequest::GET->value,
+            $urlGenerator->generate(FrontRouteNames::NEWS_LIST->value)
+        );
 
-        /** @var Article[] $articles */
-        $articles = $articlesRepository->getForListPage(1);
-        $this->assertNotEmpty($articles);
-
-        $blogUrl = $this->getUrlGenerator()->generate(FrontRouteNames::BLOG_LIST->value);
-
-        $client->request(HttpRequest::GET->value, $blogUrl);
         $this->assertResponseIsSuccessful();
-
-        foreach ($articles as $article) {
-//            $thos
+        foreach ($news as $new) {
+            $this->assertAnySelectorTextContains('h4', $new->getTitle());
         }
+    }
+
+    public function testNewsDetails()
+    {
+        $client = static::createClient();
+
+        $new = new AppNew();
+        $new->setTitle('test new');
+        $new->setText('test test');
+        $new->setStatus(CommonStatus::ACTIVE->value);
+
+        $em = $this->getEntityManager();
+        $em->persist($new);
+        $em->flush();
+
+        $urlGenerator = $this->getUrlGenerator();
+        $client->request(
+            HttpRequest::GET->value,
+            $urlGenerator->generate(FrontRouteNames::NEWS_DETAILS->value, ['id' => $new->getId()])
+        );
+
+        $this->assertResponseIsSuccessful();
+        $this->assertAnySelectorTextContains('h4', $new->getTitle());
     }
 }

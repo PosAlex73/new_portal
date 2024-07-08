@@ -42,6 +42,18 @@ class ArticleRepository extends ServiceEntityRepository
         return $this->paginator->paginate($query, $page, $frontendPageNumber->getValue());
     }
 
+    public function getAnyActiveArticle()
+    {
+        $query = $this->createQueryBuilder('a');
+        return $query
+            ->where('status = :status')
+            ->setParameters([
+                'status' => CommonStatus::ACTIVE->value
+            ])
+            ->getQuery()
+            ->getSingleResult();
+    }
+
     public function getBySearch(string $text)
     {
         $qb = $this->createQueryBuilder('c');
