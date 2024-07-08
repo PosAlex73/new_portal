@@ -25,4 +25,5 @@ enum FrontRouteNames: string
     case USER_SETTINGS = 'user_settings';
     case RESET_PROGRESS = 'reset_progress';
     case SEARCH = 'search';
+    case LOGIN  = 'app_login';
 }

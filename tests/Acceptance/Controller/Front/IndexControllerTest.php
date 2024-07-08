@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Tests\Acceptance\Controller;
+namespace App\Tests\Acceptance\Controller\Front;
 
 use App\Entity\Course;
 use App\Enums\Courses\CourseStatuses;
 use App\Repository\CourseRepository;
+use App\Tests\Acceptance\ExtendedWebTestCase;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class IndexControllerTest extends WebTestCase
+class IndexControllerTest extends ExtendedWebTestCase
 {
     public function testIndexPage(): void
     {

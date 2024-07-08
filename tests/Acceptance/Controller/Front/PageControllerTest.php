@@ -1,20 +1,17 @@
 <?php
 
-namespace App\Tests\Acceptance\Controller;
+namespace App\Tests\Acceptance\Controller\Front;
 
 use App\Entity\Page;
 use App\Enums\Http\HttpRequest;
 use App\Enums\Pages\PageNames;
 use App\Enums\System\FrontRouteNames;
 use App\Repository\PageRepository;
-use App\Tests\Traits\ServiceGetter;
+use App\Tests\Acceptance\ExtendedWebTestCase;
 use PHPUnit\Util\Exception;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class PageControllerTest extends WebTestCase
+class PageControllerTest extends ExtendedWebTestCase
 {
-    use ServiceGetter;
-
     public function testPages()
     {
         $client = static::createClient();

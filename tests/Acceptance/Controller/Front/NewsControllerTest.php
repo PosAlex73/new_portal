@@ -1,19 +1,16 @@
 <?php
 
-namespace App\Tests\Acceptance\Controller;
+namespace App\Tests\Acceptance\Controller\Front;
 
 use App\Entity\AppNew;
 use App\Enums\CommonStatus;
 use App\Enums\Http\HttpRequest;
 use App\Enums\System\FrontRouteNames;
 use App\Repository\AppNewRepository;
-use App\Tests\Traits\ServiceGetter;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use App\Tests\Acceptance\ExtendedWebTestCase;
 
-class NewsControllerTest extends WebTestCase
+class NewsControllerTest extends ExtendedWebTestCase
 {
-    use ServiceGetter;
-
     public function testNewList()
     {
         $client = static::createClient();

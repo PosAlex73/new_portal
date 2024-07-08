@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Tests\Acceptance\Controller;
+namespace App\Tests\Acceptance\Controller\Front;
 
 use App\Entity\Course;
 use App\Enums\Courses\CourseStatuses;
+use App\Tests\Acceptance\ExtendedWebTestCase;
 use App\Tests\Traits\CourseGetter;
 use App\Tests\Traits\EntityManagerGetter;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class CourseControllerTest extends WebTestCase
+class CourseControllerTest extends ExtendedWebTestCase
 {
     use CourseGetter;
     use EntityManagerGetter;
