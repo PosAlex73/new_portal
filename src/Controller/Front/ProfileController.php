@@ -90,7 +90,9 @@ class ProfileController extends AbstractController
     #[IsGranted('ROLE_USER')]
     public function resetUserProgress(UserProgress $userProgress, Request $request): Response
     {
-        $result = $this->userProgressResetService->resetProgress($userProgress);
+        /** @var User $user */
+        $user = $this->getUser();
+        $result = $this->userProgressResetService->resetProgress($userProgress, $user);
         if ($result) {
             $this->addFlash(FlashTypes::NOTICE->value, 'Прогресс успешно сброшен.');
         } else {

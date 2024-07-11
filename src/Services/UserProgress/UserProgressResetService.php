@@ -13,7 +13,6 @@ class UserProgressResetService
 {
     public function __construct(
         private EntityManagerInterface $entityManager,
-        private Security $security,
         private UserProgressRepository $userProgressRepository
     ){}
 
@@ -23,11 +22,8 @@ class UserProgressResetService
      * @param UserProgress $userProgress
      * @return bool
      */
-    public function resetProgress(UserProgress $userProgress): bool
+    public function resetProgress(UserProgress $userProgress, User $user): bool
     {
-        /** @var User $user */
-        $user = $this->security->getUser();
-
         if (empty($user)) {
             return false;
         }
