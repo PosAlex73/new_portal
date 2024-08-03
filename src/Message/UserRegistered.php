@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Messages;
+namespace App\Message;
 
 class UserRegistered
 {

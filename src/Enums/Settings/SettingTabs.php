@@ -8,4 +8,5 @@ enum SettingTabs: string
     case FRONT = 'front';
     case SYSTEM = 'system';
     case COMMON = 'common';
+    case REGISTRATION_TYPES = 'registration_types';
 }

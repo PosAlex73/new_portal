@@ -1,8 +1,8 @@
 <?php
 
-namespace App\MessageHandlers;
+namespace App\MessageHandler;
 
-use App\Messages\UserRegistered;
+use App\Message\UserRegistered;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]

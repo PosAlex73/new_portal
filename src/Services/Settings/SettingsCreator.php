@@ -17,9 +17,6 @@ class SettingsCreator
                 ]
             ],
             SettingTabs::FRONT->value => [
-                SettingEnum::REGISTER_ENABLED->value => [
-                    'value' => CommonStatus::ACTIVE->value
-                ],
                 SettingEnum::FRONT_PAGINATION->value => [
                     'value' => 20
                 ],
@@ -40,6 +37,20 @@ class SettingsCreator
                     'value' => CommonStatus::ACTIVE->value
                 ]
             ],
+            SettingTabs::REGISTRATION_TYPES->value => [
+                SettingEnum::REGISTER_ENABLED->value => [
+                    'value' => CommonStatus::ACTIVE->value
+                ],
+                SettingEnum::REGISTRATION_GOOGLE->value => [
+                    'value' => CommonStatus::DISABLED->value,
+                ],
+                SettingEnum::REGISTRATION_VK->value => [
+                    'value' => CommonStatus::DISABLED->value
+                ],
+                SettingEnum::REGISTRATION_YANDEX->value => [
+                    'value' => CommonStatus::DISABLED->value
+                ]
+            ]
         ];
     }
 }
