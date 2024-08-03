@@ -32,10 +32,10 @@ class ProfileController extends AbstractController
     #[Route('/profile', name: 'profile')]
     public function index(Request $request): Response
     {
-        /** @var User $user */
+        /** @var User|null $user */
         $user = $this->getUser();
 
-        if (!$user->isVerified()) {
+        if (!is_null($user) && !$user->isVerified()) {
             $this->addFlash(FlashTypes::ERROR->value, 'Необходимо подтвердить почтовый ящык. Письмо было отправлено на ваш почтовый ящик: ' . $user->getEmail());
             return $this->redirectToRoute('front_index');
         }

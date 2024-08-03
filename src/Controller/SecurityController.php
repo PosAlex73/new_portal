@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Enums\Flash\FlashTypes;
 use App\Enums\Users\UserTypes;
 use App\Messages\UserRegistered;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -32,6 +33,10 @@ class SecurityController extends AbstractController
 
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
+
+        if ($error instanceof Exception) {
+            $error = 'Неверный логин или пароль.';
+        }
 
         return $this->render('security/login.html.twig',
             [
