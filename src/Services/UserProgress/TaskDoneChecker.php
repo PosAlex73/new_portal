@@ -21,22 +21,21 @@ class TaskDoneChecker
 
     public function checkTask(Task $task, Request $request): TaskDoneDto
     {
-        $checker = $this->resolveChecker($task->getType());
+        $checker = $this->resolveChecker(TaskTypes::from($task->getType()));
         return $checker->check($task, $request);
     }
 
     /**
-     * @param string $type
+     * @param TaskTypes $type
      * @return TaskCheckerInterface
      * @throws Exception
      */
-    protected function resolveChecker(string $type): TaskCheckerInterface
+    protected function resolveChecker(TaskTypes $type): TaskCheckerInterface
     {
         return match ($type) {
-            TaskTypes::THEORY->value => new TheoryChecker(),
-            TaskTypes::TEST->value => new TestChecker(),
-            TaskTypes::PRACTICE->value => new PracticeChecker($this->client),
-            default => throw new Exception()
+            TaskTypes::THEORY => new TheoryChecker(),
+            TaskTypes::TEST => new TestChecker(),
+            TaskTypes::PRACTICE => new PracticeChecker($this->client),
         };
     }
 }

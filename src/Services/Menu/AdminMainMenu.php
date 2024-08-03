@@ -8,9 +8,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class AdminMainMenu
 {
     public function __construct(protected UrlGeneratorInterface $generator)
-    {
-
-    }
+    {}
 
     public function getMainMenu()
     {

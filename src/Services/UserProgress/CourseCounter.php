@@ -10,9 +10,7 @@ class CourseCounter
 {
     public function __construct(
         protected CourseRepository $courseRepository
-    )
-    {
-    }
+    ){}
 
     /**
      * @param iterable<UserProgress> $userProgressCollection

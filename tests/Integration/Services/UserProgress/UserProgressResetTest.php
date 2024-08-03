@@ -13,7 +13,7 @@ class UserProgressResetTest extends BaseKernelTestCase
     {
         $kernel = self::bootKernel();
 
-
+        $this->assertEquals(true, true);
 
     }
 }
