@@ -63,6 +63,7 @@ class CommonFixture extends Fixture implements FixtureGroupInterface
         $admin->setEmail('a@a.ru');
         $admin->setStatus(UserStatuses::ACTIVE->value);
         $admin->setRoles(['ROLE_ADMIN', 'ROLE_USER']);
+        $admin->setIsVerified(true);
 
         $manager->persist($admin);
         $manager->flush();
@@ -75,6 +76,7 @@ class CommonFixture extends Fixture implements FixtureGroupInterface
         $user->setStatus(UserStatuses::ACTIVE->value);
         $user->setLastName($faker->lastName());
         $user->setFirstName($faker->firstName());
+        $user->setIsVerified(true);
 
         $manager->persist($user);
         $manager->flush();
