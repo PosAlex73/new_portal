@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin\SimpleControllers;
 
+use App\Enums\Settings\SettingTabs;
 use App\Repository\SettingRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Attribute\Route;
@@ -15,12 +16,12 @@ class SettingsValuesController extends AbstractController
     #[Route('/admin/settings-values/', name: 'setting_values')]
     public function settingValues()
     {
-        $settings = $this->settingRepository->findAll();
-
-
+        $settings = $this->settingRepository->fillByTabs();
+        $settingTabs = SettingTabs::cases();
 
         return $this->render('admin/settings/index.html.twig', [
-            'settings' => $settings
+            'settings' => $settings,
+            'settingTabs' => $settingTabs
         ]);
     }
 }

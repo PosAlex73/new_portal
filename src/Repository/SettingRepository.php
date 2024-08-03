@@ -21,28 +21,15 @@ class SettingRepository extends ServiceEntityRepository
         parent::__construct($registry, Setting::class);
     }
 
-//    /**
-//     * @return Setting[] Returns an array of Setting objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('s')
-//            ->andWhere('s.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('s.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function fillByTabs(): array
+    {
+        $settings = $this->findAll();
+        $result = [];
 
-//    public function findOneBySomeField($value): ?Setting
-//    {
-//        return $this->createQueryBuilder('s')
-//            ->andWhere('s.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        foreach ($settings as $setting) {
+            $result[$setting->getTab()][] = $setting;
+        }
+
+        return $result;
+    }
 }
