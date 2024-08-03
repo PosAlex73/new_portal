@@ -30,10 +30,16 @@ class ProfileController extends AbstractController
     use BackUrl;
 
     #[Route('/profile', name: 'profile')]
-    #[IsGranted('ROLE_USER')]
     public function index(Request $request): Response
     {
+        /** @var User $user */
         $user = $this->getUser();
+
+        if (!$user->isVerified()) {
+            $this->addFlash(FlashTypes::ERROR->value, 'Необходимо подтвердить почтовый ящык. Письмо было отправлено на ваш почтовый ящик: ' . $user->getEmail());
+            return $this->redirectToRoute('front_index');
+        }
+
         $userForm = $this->createForm(UserFormType::class, $user);
 
         $userForm->handleRequest($request);
