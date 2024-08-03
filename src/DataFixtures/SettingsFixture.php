@@ -12,9 +12,8 @@ class SettingsFixture extends Fixture implements FixtureGroupInterface
 {
     public function __construct(
         protected SettingsCreator $settingsCreator,
-    )
-    {
-    }
+    ){}
+
     public function load(ObjectManager $manager): void
     {
         $initialSettings = $this->settingsCreator->getInitialSettings();
@@ -23,6 +22,7 @@ class SettingsFixture extends Fixture implements FixtureGroupInterface
                 $newSetting = new Setting();
                 $newSetting->setTitle($title);
                 $newSetting->setValue($setting['value']);
+                $newSetting->setType($setting['type']);
                 $newSetting->setTab($tab);
                 $newSetting->setType('');
                 $newSetting->setUpdated(new \DateTime());

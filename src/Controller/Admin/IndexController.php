@@ -47,6 +47,7 @@ class IndexController extends AbstractDashboardController
             MenuItem::linkToCrud('Новости', 'fa fa-home', AppNew::class),
             MenuItem::section('Система'),
             MenuItem::linkToCrud('Настройки', 'fa fa-home', Setting::class),
+            MenuItem::linkToRoute('Настройки тест', 'fa fa-home', 'setting_values')
         ];
 
         return $menu;
