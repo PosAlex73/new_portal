@@ -35,7 +35,7 @@ class SettingRepository extends ServiceEntityRepository
 
     public function findByTitle(string $settingTitle)
     {
-        return $this->findBy([
+        return $this->findOneBy([
             'title' => $settingTitle
         ]);
     }
