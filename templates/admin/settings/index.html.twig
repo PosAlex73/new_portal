@@ -1,7 +1,7 @@
 {% extends '@EasyAdmin/page/content.html.twig' %}
 
 {% block main %}
-    <form action="{{ path('setting_values') }}" method="post">
+    <form action="" method="post">
         <div class="card-body">
             <h4 class="header-title mb-4">Настройки приложения</h4>
             <ul class="nav nav-pills navtab-bg nav-justified">
@@ -13,10 +13,30 @@
                     </li>
                 {% endfor %}
             </ul>
-            {% for key, setting in settings %}
+            {% for key, settingValues in settings %}
             <div class="tab-content mt-2">
                 <div class="tab-pane {% if loop.first %} active {% endif %}" id="{{ key }}">
-{#                    {% if setting.type ==  %}#}
+                    {% for settingValue in settingValues %}
+                        {% set templateName = "admin/settings/types/#{settingValue.type}.html.twig" %}
+                        {% if settingValue.type == 'select' or settingValue.type == 'choice' %}
+                            {% set templateValues = {
+                                'name': "settings[#{settingValue.title}]",
+                                'value': settingValue.value,
+                                'choices': {'Включено': 'A', 'Выключено': 'D'},
+                                'labelText': settingValue.title,
+                                'id': settingValue.title
+                            } %}
+                        {% else %}
+                            {% set templateValues = {
+                                'name': "settings[#{settingValue.title}]",
+                                'value': settingValue.value,
+                                'labelText': settingValue.title,
+                                'id': settingValue.title
+                            } %}
+                        {% endif %}
+
+                        {% include templateName with templateValues %}
+                    {% endfor %}
                 </div>
             </div>
             {% endfor %}

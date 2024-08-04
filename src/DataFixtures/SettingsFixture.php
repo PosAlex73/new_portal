@@ -24,7 +24,6 @@ class SettingsFixture extends Fixture implements FixtureGroupInterface
                 $newSetting->setValue($setting['value']);
                 $newSetting->setType($setting['type']);
                 $newSetting->setTab($tab);
-                $newSetting->setType('');
                 $newSetting->setUpdated(new \DateTime());
 
                 $manager->persist($newSetting);
