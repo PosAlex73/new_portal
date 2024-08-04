@@ -14,8 +14,8 @@ class RedisClient
 
     public function __construct(private ParameterBagInterface $parameterBag)
     {
-        $this->redisHost = $this->parameterBag->get('redis.host');
-        $this->redisPort = $this->parameterBag->get('redis.port');
+        $this->redisHost = $this->parameterBag->get('redis_host');
+        $this->redisPort = $this->parameterBag->get('redis_port');
     }
 
     public function getRedisClient(): Client
