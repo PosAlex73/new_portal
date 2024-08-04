@@ -27,7 +27,7 @@ class IndexController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('App');
+            ->setTitle('Portal Inc.');
     }
 
     public function configureMenuItems(): iterable

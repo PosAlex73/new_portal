@@ -8,6 +8,7 @@ imports:
     - { resource: 'code_checker.yaml' }
     - { resource: 'app.yaml' }
     - { resource: 'paginator.yaml' }
+    - { resource: 'redis.yaml' }
 parameters:
     course_path: '%kernel.project_dir%/data/courses/'
 services:
