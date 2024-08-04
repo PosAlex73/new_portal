@@ -59,6 +59,20 @@ class UserCrudController extends AbstractCrudController
 
     public function configureActions(Actions $actions): Actions
     {
+        $blockUserAction = Action::new('blockUserAction', 'Заблокировать пользователя', null)
+            ->linkToRoute('block_user', fn(User $user) => [
+                'id' => $user->getId()
+            ])->displayIf(function ($user) {
+                return !empty($user) && $user->getType() !== UserTypes::ADMIN->value && $user->getStatus() !== UserStatuses::DISABLED->value;
+            });
+
+        $unblockUserAction = Action::new('unblockUSerAction', 'Разблокировать пользователя', null)
+            ->linkToRoute('unblock_user', fn(User $user) => [
+                'id' => $user->getId()
+            ])->displayIf(function ($user) {
+                return !empty($user) && $user->getType() !== UserTypes::ADMIN->value && $user->getStatus() === UserStatuses::DISABLED->value;
+            });
+
         $chatAction =
             Action::new('showThread', 'Показать чат', null)
                 ->linkToRoute('show_thread', function (User $user) {
@@ -78,8 +92,15 @@ class UserCrudController extends AbstractCrudController
 
         $actions->add(Crud::PAGE_INDEX, $profileAction);
         $actions->add(Crud::PAGE_EDIT, $profileAction);
+
         $actions->add(Crud::PAGE_INDEX, $chatAction);
         $actions->add(Crud::PAGE_EDIT, $chatAction);
+
+        $actions->add(Crud::PAGE_INDEX, $blockUserAction);
+        $actions->add(Crud::PAGE_EDIT, $blockUserAction);
+
+        $actions->add(Crud::PAGE_INDEX, $unblockUserAction);
+        $actions->add(Crud::PAGE_EDIT, $unblockUserAction);
 
         return $actions;
     }
