@@ -14,6 +14,7 @@ security:
             security: false
         main:
             custom_authenticator: App\Security\AppCustomAuthenticator
+            user_checker: App\UserCheckers\UserChecker
             lazy: true
             provider: app_user_provider
             remember_me:

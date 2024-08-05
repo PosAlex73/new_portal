@@ -59,18 +59,20 @@ class UserCrudController extends AbstractCrudController
 
     public function configureActions(Actions $actions): Actions
     {
+
+
         $blockUserAction = Action::new('blockUserAction', 'Заблокировать пользователя', null)
             ->linkToRoute('block_user', fn(User $user) => [
                 'id' => $user->getId()
             ])->displayIf(function ($user) {
-                return !empty($user) && $user->getType() !== UserTypes::ADMIN->value && $user->getStatus() !== UserStatuses::DISABLED->value;
+                return !empty($user) && $user->getType() !== UserTypes::ADMIN->value && $user->getStatus() !== UserStatuses::BANNED->value;
             });
 
         $unblockUserAction = Action::new('unblockUSerAction', 'Разблокировать пользователя', null)
             ->linkToRoute('unblock_user', fn(User $user) => [
                 'id' => $user->getId()
             ])->displayIf(function ($user) {
-                return !empty($user) && $user->getType() !== UserTypes::ADMIN->value && $user->getStatus() === UserStatuses::DISABLED->value;
+                return !empty($user) && $user->getType() !== UserTypes::ADMIN->value && $user->getStatus() === UserStatuses::BANNED->value;
             });
 
         $chatAction =

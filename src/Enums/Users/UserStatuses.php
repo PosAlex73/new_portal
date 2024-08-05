@@ -7,4 +7,5 @@ enum UserStatuses: string
     case ACTIVE = 'A';
     case PENDING = 'P';
     case DISABLED = 'D';
+    case BANNED = 'B';
 }
