@@ -3,8 +3,8 @@
 {% block page_title %}Популярные курсы{% endblock %}
 
 {% block content %}
-    <div class="row">
-        {% if courses is defined and courses|length > 0 %}
+    {% if courses is defined and courses|length > 0 %}
+        <div class="row">
             {% for course in courses %}
                 <div class="col-md-6 col-xl-3">
                     <div class="card">
@@ -17,12 +17,12 @@
 
                 </div>
             {% endfor %}
-        {% else %}
-            <div class="card">
-                <div class="card-body">
-                    <p class="card-text">В данный момент курсов не опубликовано</p>
-                </div>
+        </div>
+    {% else %}
+        <div class="card">
+            <div class="card-body">
+                <p class="card-text">В данный момент курсов не опубликовано</p>
             </div>
-        {% endif %}
-    </div>
+        </div>
+    {% endif %}
 {% endblock %}

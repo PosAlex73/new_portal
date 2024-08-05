@@ -34,7 +34,7 @@ class IndexController extends AbstractDashboardController
     {
         $menu  = [
             MenuItem::section('Общий раздел'),
-            MenuItem::linkToDashboard('Dashboard', 'fa fa-home'),
+            MenuItem::linkToDashboard('Главная', 'fa fa-home'),
             MenuItem::section('Обучение'),
             MenuItem::linkToCrud('Курсы', 'fa fa-home', Course::class),
             MenuItem::linkToCrud('Задачи', 'fa fa-home', Task::class),
