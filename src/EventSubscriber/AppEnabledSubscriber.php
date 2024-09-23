@@ -28,7 +28,8 @@ class AppEnabledSubscriber implements EventSubscriberInterface
         $user = $this->security->getUser();
 
         if (
-            $appEnabled->getValue() === CommonStatus::DISABLED->value
+            !empty($user)
+            && $appEnabled->getValue() === CommonStatus::DISABLED->value
             && (is_null($user) || $user->getType() === UserTypes::SIMPLE->value)
         ) {
             throw new ApplicationTerminatedException();
