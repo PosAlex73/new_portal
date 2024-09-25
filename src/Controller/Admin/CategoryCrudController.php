@@ -22,7 +22,7 @@ class CategoryCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         $fields = [
-            IdField::new('id'),
+            IdField::new('id')->setDisabled(),
             TextField::new('title'),
             TextEditorField::new('text'),
             ChoiceField::new('status')->setChoices([
