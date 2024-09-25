@@ -57,8 +57,8 @@ class CourseCrudController extends AbstractCrudController
 
     public function configureActions(Actions $actions): Actions
     {
-        $action = Action::new('showTasks', 'Посмотреть задачи', null)
-            ->linkToRoute('show_tasks', fn(Course $course) => ['id' => $course]);
+        $action = Action::new('showTasks', 'Посмотреть задачи')
+            ->linkToRoute('show_tasks', fn(Course $course) => ['id' => $course->getId()]);
 
         $actions->remove(Crud::PAGE_INDEX, Action::NEW);
         $actions->remove(Crud::PAGE_INDEX, Action::DELETE);

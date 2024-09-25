@@ -8,10 +8,10 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class TasksController extends AbstractController
 {
-    #[Route('/admin/course/show-tasks/{id}')]
+    #[Route('/admin/course/show-tasks/{id}', name: 'show_tasks')]
     public function showTasks(Course $course)
     {
-        $this->render('admin/tasks/list.html.twig', [
+        return $this->render('admin/tasks/list.html.twig', [
             'course' => $course,
             'tasks' => $course->getTasks()
         ]);
