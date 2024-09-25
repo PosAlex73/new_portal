@@ -16,4 +16,9 @@ class TasksController extends AbstractController
             'tasks' => $course->getTasks()
         ]);
     }
+
+    public function disableTasks()
+    {
+
+    }
 }

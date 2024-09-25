@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Enums\CommonStatus;
 use App\Enums\Task\TaskTypes;
 use App\Repository\TaskRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -160,6 +161,14 @@ class Task
             TaskTypes::TEST->value => 'Тест',
             TaskTypes::THEORY->value => 'Теория',
             TaskTypes::PRACTICE->value => 'Практика',
+        };
+    }
+
+    public function getStatusStr()
+    {
+        return match ($this->getStatus()) {
+            CommonStatus::ACTIVE->value => "Активно",
+            CommonStatus::DISABLED->value => "Отключено"
         };
     }
 

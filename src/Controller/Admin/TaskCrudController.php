@@ -38,7 +38,7 @@ class TaskCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         $fields = [
-            IdField::new('id'),
+            IdField::new('id')->setDisabled(),
             TextField::new('title'),
             TextEditorField::new('text'),
             ChoiceField::new('status')->setChoices([
@@ -49,7 +49,7 @@ class TaskCrudController extends AbstractCrudController
                 'Теория' => TaskTypes::THEORY->value,
                 'Тест' => TaskTypes::TEST->value,
                 'Практика' => TaskTypes::PRACTICE->value,
-            ]),
+            ])->setDisabled(),
             AssociationField::new('course')->setDisabled()
         ];
 
