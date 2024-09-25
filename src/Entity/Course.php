@@ -64,11 +64,18 @@ class Course
     #[ORM\OneToMany(mappedBy: 'course', targetEntity: CourseBugReport::class, orphanRemoval: true)]
     private Collection $courseBugReports;
 
+    /**
+     * @var Collection<int, CourseLink>
+     */
+    #[ORM\ManyToMany(targetEntity: CourseLink::class, mappedBy: 'course')]
+    private Collection $courseLinks;
+
     public function __construct()
     {
         $this->userProgress = new ArrayCollection();
         $this->tasks = new ArrayCollection();
         $this->courseBugReports = new ArrayCollection();
+        $this->courseLinks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -344,6 +351,33 @@ class Course
             if ($courseBugReport->getCourse() === $this) {
                 $courseBugReport->setCourse(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CourseLink>
+     */
+    public function getCourseLinks(): Collection
+    {
+        return $this->courseLinks;
+    }
+
+    public function addCourseLink(CourseLink $courseLink): static
+    {
+        if (!$this->courseLinks->contains($courseLink)) {
+            $this->courseLinks->add($courseLink);
+            $courseLink->addCourse($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCourseLink(CourseLink $courseLink): static
+    {
+        if ($this->courseLinks->removeElement($courseLink)) {
+            $courseLink->removeCourse($this);
         }
 
         return $this;

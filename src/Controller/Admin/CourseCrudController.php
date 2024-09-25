@@ -11,6 +11,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
@@ -27,12 +28,10 @@ class CourseCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         $fields = [
+            FormField::addTab('General'),
             IdField::new('id')->setDisabled(),
             TextField::new('title'),
             TextEditorField::new('short_description'),
-            TextEditorField::new('text')->setTrixEditorConfig([
-
-            ]),
             ChoiceField::new('type')->setChoices([
                 'Бесплатно' => CourseTypes::FREE->value,
                 'Платно' => CourseTypes::PAY->value,
@@ -44,7 +43,32 @@ class CourseCrudController extends AbstractCrudController
                 'Отключено' => CourseStatuses::DISABLED->value,
                 'В разработке' => CourseStatuses::IN_DEVELOPMENT->value,
                 'В архиве' => CourseStatuses::ARCHIVED->value,
-            ])
+            ]),
+            FormField::addTab('Edit'),
+            TextEditorField::new('text')
+                ->setLabel('Content')
+                ->setTrixEditorConfig([
+                    'blockAttributes' => [
+                        'heading1' => ['tagName' => 'h1'],
+                        'heading2' => ['tagName' => 'h2'],
+                    ],
+                    'inlineAttributes' => [
+                        'bold' => ['tagName' => 'b'],
+                        'italic' => ['tagName' => 'i'],
+                    ],
+                    'css' => [
+                        'attachment' => 'admin_file_field_attachment',
+                    ],
+                    'alwaysShowPlaceholder' => true,
+                    'hideButtonIcons' => false,
+                    'toolbar' => [
+                        'bold', 'italic', 'link', 'heading1', 'heading2', 'bullet', 'number', 'quote', 'code', 'attachFiles',
+                    ],
+                    'autogrow' => true,
+                    'minHeight' => 300,
+                    'maxHeight' => 500,
+                ])
+                ->setNumOfRows(30),
         ];
 
         if ($pageName === Crud::PAGE_INDEX) {
