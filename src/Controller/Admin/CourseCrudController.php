@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Admin\Fields\RichEditor;
 use App\Entity\Course;
 use App\Enums\Courses\CourseStatuses;
 use App\Enums\Courses\CourseTypes;
@@ -45,30 +46,7 @@ class CourseCrudController extends AbstractCrudController
                 'В архиве' => CourseStatuses::ARCHIVED->value,
             ]),
             FormField::addTab('Edit'),
-            TextEditorField::new('text')
-                ->setLabel('Content')
-                ->setTrixEditorConfig([
-                    'blockAttributes' => [
-                        'heading1' => ['tagName' => 'h1'],
-                        'heading2' => ['tagName' => 'h2'],
-                    ],
-                    'inlineAttributes' => [
-                        'bold' => ['tagName' => 'b'],
-                        'italic' => ['tagName' => 'i'],
-                    ],
-                    'css' => [
-                        'attachment' => 'admin_file_field_attachment',
-                    ],
-                    'alwaysShowPlaceholder' => true,
-                    'hideButtonIcons' => false,
-                    'toolbar' => [
-                        'bold', 'italic', 'link', 'heading1', 'heading2', 'bullet', 'number', 'quote', 'code', 'attachFiles',
-                    ],
-                    'autogrow' => true,
-                    'minHeight' => 300,
-                    'maxHeight' => 500,
-                ])
-                ->setNumOfRows(30),
+            RichEditor::new('text'),
         ];
 
         if ($pageName === Crud::PAGE_INDEX) {
