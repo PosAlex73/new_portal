@@ -46,7 +46,7 @@ class CourseCrudController extends AbstractCrudController
                 'В архиве' => CourseStatuses::ARCHIVED->value,
             ]),
             FormField::addTab('Edit'),
-            RichEditor::new('text'),
+            TextEditorField::new('text')->setNumOfRows(30)
         ];
 
         if ($pageName === Crud::PAGE_INDEX) {
