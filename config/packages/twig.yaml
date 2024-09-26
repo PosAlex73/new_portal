@@ -1,7 +1,6 @@
 twig:
     file_name_pattern: '*.twig'
-    form_themes:
-        - 'form/rich_editor.html.twig'
+    form_themes: ['form/custom_types.html.twig']
 when@test:
     twig:
         strict_variables: true

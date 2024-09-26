@@ -2,7 +2,7 @@
 
 namespace App\Admin\Fields;
 
-use App\Fields\RichEditorType;
+use App\Form\Type\RichEditorType;
 use EasyCorp\Bundle\EasyAdminBundle\Contracts\Field\FieldInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FieldTrait;
 
