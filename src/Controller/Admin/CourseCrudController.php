@@ -46,7 +46,9 @@ class CourseCrudController extends AbstractCrudController
                 'В архиве' => CourseStatuses::ARCHIVED->value,
             ]),
             FormField::addTab('Edit'),
-            TextEditorField::new('text')->setNumOfRows(30)
+            TextEditorField::new('text')
+                ->setNumOfRows(30)
+                ->addJsFiles('assets/js/trix.js')
         ];
 
         if ($pageName === Crud::PAGE_INDEX) {
