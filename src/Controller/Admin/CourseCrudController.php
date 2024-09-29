@@ -2,7 +2,6 @@
 
 namespace App\Controller\Admin;
 
-use App\Admin\Fields\RichEditor;
 use App\Entity\Course;
 use App\Enums\Courses\CourseStatuses;
 use App\Enums\Courses\CourseTypes;
@@ -16,7 +15,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
@@ -75,14 +73,21 @@ class CourseCrudController extends AbstractCrudController
 
     public function configureActions(Actions $actions): Actions
     {
-        $action = Action::new('showTasks', 'Посмотреть задачи')
-            ->linkToRoute('show_tasks', fn(Course $course) => ['id' => $course->getId()]);
+        $courseCallback = fn(Course $course) => ['id' => $course->getId()];
+        $showTasksAction = Action::new('showTasks', 'Посмотреть задачи')
+            ->linkToRoute('show_tasks', $courseCallback);
+
+        $editCourseAction = Action::new('editCourse', 'Содержание курса')
+            ->linkToRoute('editCourse', $courseCallback);
 
         $actions->remove(Crud::PAGE_INDEX, Action::NEW);
         $actions->remove(Crud::PAGE_INDEX, Action::DELETE);
 
-        $actions->add(Crud::PAGE_INDEX, $action);
-        $actions->add(Crud::PAGE_EDIT, $action);
+        $actions->add(Crud::PAGE_INDEX, $showTasksAction);
+        $actions->add(Crud::PAGE_EDIT, $showTasksAction);
+
+        $actions->add(Crud::PAGE_INDEX, $editCourseAction);
+        $actions->add(Crud::PAGE_EDIT, $editCourseAction);
 
         return $actions;
     }
