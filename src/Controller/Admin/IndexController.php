@@ -6,6 +6,9 @@ use App\Entity\AppNew;
 use App\Entity\Article;
 use App\Entity\Category;
 use App\Entity\Course;
+use App\Entity\CourseLink;
+use App\Entity\CourseTag;
+use App\Entity\Image;
 use App\Entity\Page;
 use App\Entity\Setting;
 use App\Entity\Task;
@@ -39,6 +42,8 @@ class IndexController extends AbstractDashboardController
             MenuItem::linkToCrud('Курсы', 'fa fa-home', Course::class),
             MenuItem::linkToCrud('Задачи', 'fa fa-home', Task::class),
             MenuItem::linkToCrud('Категории', 'fa fa-home', Category::class),
+            MenuItem::linkToCrud('Теги', 'fa fa-home', CourseTag::class),
+            MenuItem::linkToCrud('Ссылки', 'fa fa-home', CourseLink::class),
             MenuItem::section('Пользователи'),
             MenuItem::linkToCrud('Пользователи', 'fa fa-home', User::class),
             MenuItem::section('Страницы'),
@@ -46,7 +51,8 @@ class IndexController extends AbstractDashboardController
             MenuItem::linkToCrud('Страницы', 'fa fa-home', Page::class),
             MenuItem::linkToCrud('Новости', 'fa fa-home', AppNew::class),
             MenuItem::section('Система'),
-            MenuItem::linkToRoute('Настройки', 'fa fa-home', 'setting_values')
+            MenuItem::linkToRoute('Настройки', 'fa fa-home', 'setting_values'),
+            MenuItem::linkToCrud('Картинки', 'fa fa-home', Image::class)
         ];
 
         return $menu;

@@ -70,12 +70,19 @@ class Course
     #[ORM\ManyToMany(targetEntity: CourseLink::class, mappedBy: 'course')]
     private Collection $courseLinks;
 
+    /**
+     * @var Collection<int, CourseTag>
+     */
+    #[ORM\ManyToMany(targetEntity: CourseTag::class, mappedBy: 'courses')]
+    private Collection $courseTags;
+
     public function __construct()
     {
         $this->userProgress = new ArrayCollection();
         $this->tasks = new ArrayCollection();
         $this->courseBugReports = new ArrayCollection();
         $this->courseLinks = new ArrayCollection();
+        $this->courseTags = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -378,6 +385,33 @@ class Course
     {
         if ($this->courseLinks->removeElement($courseLink)) {
             $courseLink->removeCourse($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CourseTag>
+     */
+    public function getCourseTags(): Collection
+    {
+        return $this->courseTags;
+    }
+
+    public function addCourseTag(CourseTag $courseTag): static
+    {
+        if (!$this->courseTags->contains($courseTag)) {
+            $this->courseTags->add($courseTag);
+            $courseTag->addCourse($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCourseTag(CourseTag $courseTag): static
+    {
+        if ($this->courseTags->removeElement($courseTag)) {
+            $courseTag->removeCourse($this);
         }
 
         return $this;

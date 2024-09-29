@@ -9,6 +9,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CourseLinkRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class CourseLink
 {
     #[ORM\Id]
@@ -33,9 +34,6 @@ class CourseLink
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $updated = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $ыeфstatus = null;
 
     public function __construct()
     {
@@ -119,18 +117,6 @@ class CourseLink
         return $this;
     }
 
-    public function getыeфstatus(): ?string
-    {
-        return $this->ыeфstatus;
-    }
-
-    public function setыeфstatus(string $ыeфstatus): static
-    {
-        $this->ыeфstatus = $ыeфstatus;
-
-        return $this;
-    }
-
     #[ORM\PreUpdate]
     public function preUpdated()
     {
@@ -142,5 +128,10 @@ class CourseLink
     {
         $this->preUpdated();
         $this->created = new \DateTime();
+    }
+
+    public function __toString(): string
+    {
+        return $this->title;
     }
 }

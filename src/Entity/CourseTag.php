@@ -2,27 +2,29 @@
 
 namespace App\Entity;
 
-use App\Repository\ImageRepository;
+use App\Repository\CourseTagRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: ImageRepository::class)]
+#[ORM\Entity(repositoryClass: CourseTagRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-class Image
+class CourseTag
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 1024)]
+    #[ORM\Column(length: 255)]
     private ?string $title = null;
 
-    #[ORM\Column(length: 2048)]
-    private ?string $path = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $type = null;
+    /**
+     * @var Collection<int, Course>
+     */
+    #[ORM\ManyToMany(targetEntity: Course::class, inversedBy: 'courseTags')]
+    private Collection $courses;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $created = null;
@@ -31,10 +33,12 @@ class Image
     private ?\DateTimeInterface $updated = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $extension = null;
+    private ?string $status = null;
 
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $data = null;
+    public function __construct()
+    {
+        $this->courses = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -53,26 +57,26 @@ class Image
         return $this;
     }
 
-    public function getPath(): ?string
+    /**
+     * @return Collection<int, Course>
+     */
+    public function getCourses(): Collection
     {
-        return $this->path;
+        return $this->courses;
     }
 
-    public function setPath(string $path): static
+    public function addCourse(Course $course): static
     {
-        $this->path = $path;
+        if (!$this->courses->contains($course)) {
+            $this->courses->add($course);
+        }
 
         return $this;
     }
 
-    public function getType(): ?string
+    public function removeCourse(Course $course): static
     {
-        return $this->type;
-    }
-
-    public function setType(string $type): static
-    {
-        $this->type = $type;
+        $this->courses->removeElement($course);
 
         return $this;
     }
@@ -101,28 +105,21 @@ class Image
         return $this;
     }
 
-    public function getExtension(): ?string
+    public function getStatus(): ?string
     {
-        return $this->extension;
+        return $this->status;
     }
 
-    public function setExtension(string $extension): static
+    public function setStatus(string $status): static
     {
-        $this->extension = $extension;
+        $this->status = $status;
 
         return $this;
     }
 
-    public function getData(): ?string
+    public function __toString(): string
     {
-        return $this->data;
-    }
-
-    public function setData(string $data): static
-    {
-        $this->data = $data;
-
-        return $this;
+        return $this->getTitle();
     }
 
     #[ORM\PreUpdate]
