@@ -7,7 +7,6 @@ use App\Enums\Courses\CourseStatuses;
 use App\Enums\Courses\CourseTypes;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
@@ -45,8 +44,6 @@ class CourseCrudController extends AbstractCrudController
                 'В разработке' => CourseStatuses::IN_DEVELOPMENT->value,
                 'В архиве' => CourseStatuses::ARCHIVED->value,
             ]),
-            FormField::addTab('Edit'),
-            TextEditorField::new('text', 'Текст курса'),
             FormField::addTab('Ссылки и теги'),
             AssociationField::new('courseLinks')
                 ->autocomplete()

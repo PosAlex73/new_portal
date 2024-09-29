@@ -137,4 +137,9 @@ class Image
         $this->preUpdated();
         $this->created = new \DateTime();
     }
+
+    public function __toString(): string
+    {
+        return $this->getTitle();
+    }
 }
