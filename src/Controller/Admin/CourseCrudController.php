@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Admin\Fields\RichEditor;
 use App\Entity\Course;
 use App\Enums\Courses\CourseStatuses;
 use App\Enums\Courses\CourseTypes;
@@ -15,6 +16,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
@@ -45,9 +47,7 @@ class CourseCrudController extends AbstractCrudController
                 'В архиве' => CourseStatuses::ARCHIVED->value,
             ]),
             FormField::addTab('Edit'),
-            TextEditorField::new('text')
-                ->setNumOfRows(30)
-                ->addJsFiles('assets/js/trix.js'),
+            TextEditorField::new('text', 'Текст курса'),
             FormField::addTab('Ссылки и теги'),
             AssociationField::new('courseLinks')
                 ->autocomplete()
