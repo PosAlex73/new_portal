@@ -1,15 +1,17 @@
 {% extends '@EasyAdmin/page/content.html.twig' %}
 {% block content_title %}{{ course.title }}{% endblock %}
 {% block page_actions %}
-    <a class="btn btn-primary" id="save_course_button" href="{{ ea_url().setRoute('editCourse', {id: course.id}) }}">Сохранить</a>
+    <a class="btn btn-primary" id="save_course_button" href="">Сохранить</a>
     <a class="btn btn-secondary" href="{{ ea_url().setController('App\\Controller\\Admin\\CourseCrudController').setEntityId(course.id)}}">Назад к курсу</a>
 {% endblock %}
 {% block main %}
-    <textarea id="basic-example"></textarea>
+    <form action="{{ ea_url().setRoute('editCourse', {id: course.id}) }}" method="post" id="content_save">
+        <textarea name="content" id="content"></textarea>
+    </form>
     <script src="assets/js/tinymce/tinymce.min.js"></script>
     <script>
         const editor = tinymce.init({
-            selector: 'textarea#basic-example',
+            selector: 'textarea#content',
             height: 500,
             plugins: [
                 'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
@@ -62,5 +64,12 @@
             }
         });
 
+        const saveButton = document.getElementById('save_course_button')
+        const form = document.getElementById('content_save')
+
+        saveButton.addEventListener('click', function(event) {
+            event.preventDefault()
+            form.submit()
+        })
     </script>
 {% endblock %}
