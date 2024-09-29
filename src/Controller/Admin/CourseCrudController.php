@@ -2,7 +2,6 @@
 
 namespace App\Controller\Admin;
 
-use App\Admin\Fields\RichEditor;
 use App\Entity\Course;
 use App\Enums\Courses\CourseStatuses;
 use App\Enums\Courses\CourseTypes;
@@ -10,6 +9,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
@@ -17,7 +17,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class CourseCrudController extends AbstractCrudController
 {
@@ -48,12 +47,27 @@ class CourseCrudController extends AbstractCrudController
             FormField::addTab('Edit'),
             TextEditorField::new('text')
                 ->setNumOfRows(30)
-                ->addJsFiles('assets/js/trix.js')
+                ->addJsFiles('assets/js/trix.js'),
+            FormField::addTab('Ссылки и теги'),
+            AssociationField::new('courseLinks')
+                ->autocomplete()
+                ->setCrudController(CourseLinkCrudController::class)
+                ->setFormTypeOptions([
+                    'by_reference' => false
+                ]),
+            AssociationField::new('courseTags')
+                ->autocomplete()
+                ->setCrudController(CourseTagCrudController::class)
+                ->setFormTypeOptions([
+                    'by_reference' => false
+                ])
         ];
 
         if ($pageName === Crud::PAGE_INDEX) {
-            $fields[] = DateTimeField::new('created');
-            $fields[] = DateTimeField::new('updated');
+            $fields[] = DateTimeField::new('created')
+                ->setDisabled();
+            $fields[] = DateTimeField::new('updated')
+                ->setDisabled();
         }
 
         return $fields;
