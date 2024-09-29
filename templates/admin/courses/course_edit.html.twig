@@ -1,10 +1,66 @@
 {% extends '@EasyAdmin/page/content.html.twig' %}
-{% block content_title %}The Title of the Page{% endblock %}
+{% block content_title %}{{ course.title }}{% endblock %}
 {% block page_actions %}
-    <a class="btn btn-primary" href="{{ ea_url().setRoute('editCourse', {id: course.id}) }}">Сохранить</a>
+    <a class="btn btn-primary" id="save_course_button" href="{{ ea_url().setRoute('editCourse', {id: course.id}) }}">Сохранить</a>
     <a class="btn btn-secondary" href="{{ ea_url().setController('App\\Controller\\Admin\\CourseCrudController').setEntityId(course.id)}}">Назад к курсу</a>
 {% endblock %}
 {% block main %}
+    <textarea id="basic-example"></textarea>
+    <script src="assets/js/tinymce/tinymce.min.js"></script>
+    <script>
+        const editor = tinymce.init({
+            selector: 'textarea#basic-example',
+            height: 500,
+            plugins: [
+                'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
+                'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+                'insertdatetime', 'media', 'table', 'help', 'wordcount'
+            ],
+            toolbar: 'undo redo | blocks | ' +
+                'bold italic backcolor | alignleft aligncenter ' +
+                'alignright alignjustify | bullist numlist outdent indent | ' +
+                'removeformat | help',
+            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }',
+            setup: function (editor) {
+                editor.on('init', function () {
+                    // Установка контента после инициализации редактора
+                    editor.setContent(`{{ course.text|escape('js') }}`);
+                });
+            },
+            automatic_uploads: true,
+            images_upload_url: '/admin/upload',
+            file_picker_types: 'image',
+            images_upload_handler: function (blobInfo, success, failure) {
+                var xhr, formData;
 
-    <script></script>
+                xhr = new XMLHttpRequest();
+                xhr.withCredentials = false;
+                xhr.open('POST', '/admin/upload');
+
+                xhr.onload = function() {
+                    var json;
+
+                    if (xhr.status != 200) {
+                        failure('Ошибка: ' + xhr.status);
+                        return;
+                    }
+
+                    json = JSON.parse(xhr.responseText);
+
+                    if (!json || typeof json.location != 'string') {
+                        failure('Неверный формат ответа от сервера');
+                        return;
+                    }
+
+                    success(json.location);
+                };
+
+                formData = new FormData();
+                formData.append('file', blobInfo.blob(), blobInfo.filename());
+
+                xhr.send(formData);
+            }
+        });
+
+    </script>
 {% endblock %}
