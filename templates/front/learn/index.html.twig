@@ -20,7 +20,17 @@
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active" id="general">
+                        <h2 class="pb-2">{{ course.title }}</h2>
                         <p>{{ course.text|raw }}</p>
+                        {% if course.courseLinks %}
+                            <p></p>
+                            {% for link in course.courseLinks %}
+                                <h5>Полезные ссылки</h5>
+                                <div class="border border-secondary p-2 rounded-3">
+                                    <a href="{{ link.url }}" class="link-primary">{{ link.title }}</a>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
                     </div>
                     <div class="tab-pane show" id="tasks">
                             <div class="table-responsive">
