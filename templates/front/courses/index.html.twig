@@ -28,8 +28,12 @@
                                     <p class="text-muted">Количество задач в курсе</p>
                                 </li>
                             </ul>
+
                             <div>
                                 <a href="{{ path('course_details', {id: course.id}) }}" class="btn btn-primary">Посмотреть курс</a>
+                            </div>
+                            <div>
+                                {% include "front/components/course_tags.html.twig" with {course: course} %}
                             </div>
                         </div>
                     </div>

@@ -12,9 +12,9 @@
                             <h4 class="card-title">{{ course.title  }}</h4>
                             <p class="card-text">{{ course.shortDescription|raw }}</p>
                             <a href="{{ path('course_details', {id: course.id}) }}" class="btn btn-primary">Посмотреть курс</a>
+                            {% include "front/components/course_tags.html.twig" with {course: course} %}
                         </div>
                     </div>
-
                 </div>
             {% endfor %}
         </div>
