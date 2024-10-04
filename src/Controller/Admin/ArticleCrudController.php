@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Article;
+use App\Enums\Blog\BlogStatuses;
 use App\Enums\CommonStatus;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
@@ -12,6 +13,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\ChoiceFilter;
 
 class ArticleCrudController extends AbstractCrudController
 {
@@ -40,14 +42,20 @@ class ArticleCrudController extends AbstractCrudController
 
     public function configureFilters(Filters $filters): Filters
     {
+        $filters->add(ChoiceFilter::new('status')->setChoices($this->getStatusChoices()));
+        $filters->add('created');
+        $filters->add('updated');
+
         return $filters;
     }
 
     private function getStatusChoices(): array
     {
         return [
-            'Активно' => CommonStatus::ACTIVE->value,
-            'Отключено' => CommonStatus::DISABLED->value
+            'Активно' => BlogStatuses::ACTIVE->value,
+            'Отключено' => BlogStatuses::DISABLED->value,
+            'Не опубликовано' => BlogStatuses::UNPUBLISHED->value,
+            'Отменено' => BlogStatuses::CANCELLED->value,
         ];
     }
 }

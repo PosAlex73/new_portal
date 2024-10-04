@@ -3,7 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\AppNew;
-use App\Enums\CommonStatus;
+use App\Enums\Blog\NewStatuses;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
@@ -50,8 +50,10 @@ class AppNewCrudController extends AbstractCrudController
     private function getStatusChoices(): array
     {
         return [
-            'Активно' => CommonStatus::ACTIVE->value,
-            'Отключено' => CommonStatus::DISABLED->value
+            'Активно' => NewStatuses::ACTIVE->value,
+            'Отключено' => NewStatuses::DISABLED->value,
+            'Не опубликовано' => NewStatuses::UNPUBLISHED->value,
+            'Отменено' => NewStatuses::CANCELLED->value,
         ];
     }
 
