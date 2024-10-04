@@ -6,6 +6,7 @@ use App\Entity\AppNew;
 use App\Entity\Article;
 use App\Entity\Category;
 use App\Entity\Course;
+use App\Entity\CourseBugReport;
 use App\Entity\CourseLink;
 use App\Entity\CourseTag;
 use App\Entity\Image;
@@ -51,6 +52,7 @@ class IndexController extends AbstractDashboardController
             MenuItem::linkToCrud('Статьи', 'fa fa-home', Article::class),
             MenuItem::linkToCrud('Страницы', 'fa fa-home', Page::class),
             MenuItem::linkToCrud('Новости', 'fa fa-home', AppNew::class),
+            MenuItem::linkToCrud('Отчеты об ошибках', 'fa fa-home', CourseBugReport::class),
             MenuItem::section('Система'),
             MenuItem::linkToRoute('Настройки', 'fa fa-home', 'setting_values'),
             MenuItem::linkToCrud('Картинки', 'fa fa-home', Image::class)

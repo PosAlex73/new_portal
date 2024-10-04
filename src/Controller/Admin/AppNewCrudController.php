@@ -5,12 +5,14 @@ namespace App\Controller\Admin;
 use App\Entity\AppNew;
 use App\Enums\CommonStatus;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\ChoiceFilter;
 
 class AppNewCrudController extends AbstractCrudController
 {
@@ -25,10 +27,7 @@ class AppNewCrudController extends AbstractCrudController
             IdField::new('id')->setDisabled(),
             TextField::new('title'),
             TextEditorField::new('text'),
-            ChoiceField::new('status')->setChoices([
-                'Активно' => CommonStatus::ACTIVE->value,
-                'Отключено' => CommonStatus::DISABLED->value
-            ])
+            ChoiceField::new('status')->setChoices($this->getStatusChoices())
         ];
 
         if ($pageName === Crud::PAGE_INDEX) {
@@ -37,5 +36,33 @@ class AppNewCrudController extends AbstractCrudController
         }
 
         return $fields;
+    }
+
+    public function configureFilters(Filters $filters): Filters
+    {
+        $filters->add('created');
+        $filters->add('updated');
+        $filters->add(ChoiceFilter::new('status')->setChoices($this->getStatusChoices()));
+
+        return $filters;
+    }
+
+    private function getStatusChoices(): array
+    {
+        return [
+            'Активно' => CommonStatus::ACTIVE->value,
+            'Отключено' => CommonStatus::DISABLED->value
+        ];
+    }
+
+    public function configureCrud(Crud $crud): Crud
+    {
+         $crud->setSearchFields([
+            'title', 'text'
+        ]);
+
+         $crud->setDefaultSort(['id' => 'DESC']);
+
+         return $crud;
     }
 }

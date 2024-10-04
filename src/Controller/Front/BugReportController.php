@@ -5,6 +5,7 @@ namespace App\Controller\Front;
 use App\Controller\Front\Traits\BackUrl;
 use App\Entity\Course;
 use App\Entity\CourseBugReport;
+use App\Entity\User;
 use App\Enums\Flash\FlashTypes;
 use App\Form\BugCourseReportType;
 use App\Repository\CourseBugReportRepository;
@@ -32,8 +33,14 @@ class BugReportController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($this->courseBugReportRepository->checkUserCreatedManyReports($this->getUser())) {
-                $this->addFlash(FlashTypes::ERROR->value, 'Вы создали слишком много сообщений. Вы сможете создавать новые сообщения, когда администрация рассмотрит ваши отчеты');
+
+            /** @var User $user */
+            $user = $this->getUser();
+            if ($this->courseBugReportRepository->checkUserCreatedManyReports($user)) {
+                $this->addFlash(
+                    FlashTypes::ERROR->value,
+                    'Вы создали слишком много сообщений. Вы сможете создавать новые сообщения, когда администрация рассмотрит ваши отчеты'
+                );
             } else {
                 /** @var CourseBugReport $report */
                 $report = $form->getData();

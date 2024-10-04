@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Article;
 use App\Enums\CommonStatus;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
@@ -26,10 +27,7 @@ class ArticleCrudController extends AbstractCrudController
             IdField::new('id')->setDisabled(),
             TextField::new('title'),
             TextEditorField::new('text'),
-            ChoiceField::new('status')->setChoices([
-                'Активно' => CommonStatus::ACTIVE->value,
-                'Отключено' => CommonStatus::DISABLED->value
-            ])
+            ChoiceField::new('status')->setChoices($this->getStatusChoices())
         ];
 
         if ($pageName === Crud::PAGE_INDEX) {
@@ -40,4 +38,16 @@ class ArticleCrudController extends AbstractCrudController
         return $fields;
     }
 
+    public function configureFilters(Filters $filters): Filters
+    {
+        return $filters;
+    }
+
+    private function getStatusChoices(): array
+    {
+        return [
+            'Активно' => CommonStatus::ACTIVE->value,
+            'Отключено' => CommonStatus::DISABLED->value
+        ];
+    }
 }
