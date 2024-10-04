@@ -35,6 +35,9 @@ class CourseTag
     #[ORM\Column(length: 255)]
     private ?string $status = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $color = null;
+
     public function __construct()
     {
         $this->courses = new ArrayCollection();
@@ -133,5 +136,17 @@ class CourseTag
     {
         $this->preUpdated();
         $this->created = new \DateTime();
+    }
+
+    public function getColor(): ?string
+    {
+        return $this->color;
+    }
+
+    public function setColor(string $color): static
+    {
+        $this->color = $color;
+
+        return $this;
     }
 }
