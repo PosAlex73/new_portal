@@ -27,12 +27,12 @@ class CourseTagCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->setDisabled(),
-            TextField::new('title'),
-            ChoiceField::new('status')->setChoices($this->getStatusChoices()),
-            ChoiceField::new('color')->setChoices($this->getColorChoices()),
-            AssociationField::new('courses')->autocomplete(),
-            DateTimeField::new('created')->setDisabled(),
-            DateTimeField::new('updated')->setDisabled()
+            TextField::new('title', 'Заголовок'),
+            ChoiceField::new('status', 'Статус')->setChoices($this->getStatusChoices()),
+            ChoiceField::new('color', 'Цвет')->setChoices($this->getColorChoices()),
+            AssociationField::new('courses', 'Курсы')->autocomplete(),
+            DateTimeField::new('created', 'Создано')->setDisabled(),
+            DateTimeField::new('updated', 'Обновлено')->setDisabled()
         ];
     }
 
@@ -71,6 +71,8 @@ class CourseTagCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         $crud->setDefaultSort(['id' => 'DESC']);
+        $crud->setPageTitle(Crud::PAGE_INDEX, 'Теги');
+        $crud->setPageTitle(Crud::PAGE_EDIT, fn (CourseTag $tag) => $tag->getTitle());
 
         return $crud;
     }

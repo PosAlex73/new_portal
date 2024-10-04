@@ -9,6 +9,7 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\QueryBuilder;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FilterCollection;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
@@ -38,15 +39,15 @@ class CourseBugReportCrudController extends AbstractCrudController
 
         return [
             IdField::new('id')->setDisabled(),
-            TextField::new('title'),
-            TextEditorField::new('text'),
-            ChoiceField::new('status')->setChoices($this->getStatusChoices()),
-            AssociationField::new('reporter')
+            TextField::new('title', 'Заголовок'),
+            TextEditorField::new('text', 'Содержимое'),
+            ChoiceField::new('status', 'Статус')->setChoices($this->getStatusChoices()),
+            AssociationField::new('reporter', 'Репортёр')
                 ->setQueryBuilder(
                     CourseBugReportCrudController::getUserFilterForReport(...)
                 ),
-            DateTimeField::new('created')->setDisabled(),
-            DateTimeField::new('updated')->setDisabled(),
+            DateTimeField::new('created', 'Создано')->setDisabled(),
+            DateTimeField::new('updated', 'Обновлено')->setDisabled(),
         ];
     }
 
@@ -97,5 +98,14 @@ class CourseBugReportCrudController extends AbstractCrudController
             'Отказано' => BugStatus::REJECT->value,
             'Пофикшено' => BugStatus::FIXED->value
         ];
+    }
+
+    public function configureCrud(Crud $crud): Crud
+    {
+        $crud->setDefaultSort(['id' => 'DESC']);
+        $crud->setPageTitle(Crud::PAGE_EDIT, fn (CourseBugReport $courseBugReport) => $courseBugReport->getTitle());
+        $crud->setPageTitle(Crud::PAGE_INDEX, 'Баг репорты');
+
+        return $crud;
     }
 }

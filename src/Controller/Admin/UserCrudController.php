@@ -29,29 +29,29 @@ class UserCrudController extends AbstractCrudController
         ];
 
         if ($pageName === Crud::PAGE_INDEX) {
-            $fields[] = TextField::new('fullName');
+            $fields[] = TextField::new('fullName', 'Полное имя');
         }
 
         if ($pageName === Crud::PAGE_EDIT || $pageName === Crud::PAGE_DETAIL) {
-            $fields[] = TextField::new('firstName');
-            $fields[] = TextField::new('lastName');
+            $fields[] = TextField::new('firstName', 'Имя');
+            $fields[] = TextField::new('lastName', 'Фамилия');
         }
 
-        $fields[] = EmailField::new('email');
-        $fields[] = ChoiceField::new('status')->setChoices([
+        $fields[] = EmailField::new('email', 'Почта');
+        $fields[] = ChoiceField::new('status', 'Статус')->setChoices([
             'Активно' => UserStatuses::ACTIVE->value,
             'Отключено' => UserStatuses::DISABLED->value,
             'В ожидании' => UserStatuses::PENDING->value,
         ]);
 
-        $fields[] = ChoiceField::new('type')->setChoices([
+        $fields[] = ChoiceField::new('type', 'Тип')->setChoices([
             'Админ' => UserTypes::ADMIN->value,
             'Обычный' => UserTypes::SIMPLE->value,
         ])->setDisabled();
 
         if ($pageName === Crud::PAGE_INDEX) {
-            $fields[] = DateTimeField::new('created');
-            $fields[] = DateTimeField::new('updated');
+            $fields[] = DateTimeField::new('created', 'Создано');
+            $fields[] = DateTimeField::new('updated', 'Обновлено');
         }
 
         return $fields;
@@ -59,8 +59,6 @@ class UserCrudController extends AbstractCrudController
 
     public function configureActions(Actions $actions): Actions
     {
-
-
         $blockUserAction = Action::new('blockUserAction', 'Заблокировать пользователя', null)
             ->linkToRoute('block_user', fn(User $user) => [
                 'id' => $user->getId()
@@ -105,5 +103,14 @@ class UserCrudController extends AbstractCrudController
         $actions->add(Crud::PAGE_EDIT, $unblockUserAction);
 
         return $actions;
+    }
+
+    public function configureCrud(Crud $crud): Crud
+    {
+        $crud->setDefaultSort(['created' => 'DESC']);
+        $crud->setPageTitle(Crud::PAGE_INDEX, 'Пользователи');
+        $crud->setPageTitle(Crud::PAGE_EDIT, fn (User $user) => $user->getFullName());
+
+        return $crud;
     }
 }

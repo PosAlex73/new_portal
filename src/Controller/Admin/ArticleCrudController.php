@@ -26,15 +26,15 @@ class ArticleCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         $fields = [
-            IdField::new('id')->setDisabled(),
-            TextField::new('title'),
-            TextEditorField::new('text'),
-            ChoiceField::new('status')->setChoices($this->getStatusChoices())
+            IdField::new('id', 'ID')->setDisabled(),
+            TextField::new('title', 'Заголовок'),
+            TextEditorField::new('text', 'Содержимое'),
+            ChoiceField::new('status', 'Статус')->setChoices($this->getStatusChoices())
         ];
 
         if ($pageName === Crud::PAGE_INDEX) {
-            $fields[] = DateTimeField::new('created');
-            $fields[] = DateTimeField::new('updated');
+            $fields[] = DateTimeField::new('created', 'Создано');
+            $fields[] = DateTimeField::new('updated', 'Обновлено');
         }
 
         return $fields;
@@ -57,5 +57,14 @@ class ArticleCrudController extends AbstractCrudController
             'Не опубликовано' => BlogStatuses::UNPUBLISHED->value,
             'Отменено' => BlogStatuses::CANCELLED->value,
         ];
+    }
+
+    public function configureCrud(Crud $crud): Crud
+    {
+        $crud->setDefaultSort(['created' => 'DESC']);
+        $crud->setPageTitle(Crud::PAGE_INDEX, 'Статьи');
+        $crud->setPageTitle(Crud::PAGE_EDIT, fn (Article $article) => $article->getTitle());
+
+        return $crud;
     }
 }

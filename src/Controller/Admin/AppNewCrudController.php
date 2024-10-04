@@ -24,15 +24,15 @@ class AppNewCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         $fields = [
-            IdField::new('id')->setDisabled(),
-            TextField::new('title'),
-            TextEditorField::new('text'),
-            ChoiceField::new('status')->setChoices($this->getStatusChoices())
+            IdField::new('id', 'ID')->setDisabled(),
+            TextField::new('title', 'Заголовок'),
+            TextEditorField::new('text', 'Содержимое'),
+            ChoiceField::new('status', 'Статус')->setChoices($this->getStatusChoices())
         ];
 
         if ($pageName === Crud::PAGE_INDEX) {
-            $fields[] = DateTimeField::new('created');
-            $fields[] = DateTimeField::new('updated');
+            $fields[] = DateTimeField::new('created', 'Создано');
+            $fields[] = DateTimeField::new('updated', 'Обновлено');
         }
 
         return $fields;
@@ -62,6 +62,9 @@ class AppNewCrudController extends AbstractCrudController
          $crud->setSearchFields([
             'title', 'text'
         ]);
+
+         $crud->setPageTitle(Crud::PAGE_INDEX, 'Новости');
+         $crud->setPageTitle(Crud::PAGE_EDIT, fn (AppNew $appNew) => $appNew->getTitle());
 
          $crud->setDefaultSort(['id' => 'DESC']);
 

@@ -27,14 +27,14 @@ class CategoryCrudController extends AbstractCrudController
     {
         $fields = [
             IdField::new('id')->setDisabled(),
-            TextField::new('title'),
-            TextEditorField::new('text'),
-            ChoiceField::new('status')->setChoices($this->getStatusChoices()),
+            TextField::new('title', 'Заголовок'),
+            TextEditorField::new('text', 'Содержимое'),
+            ChoiceField::new('status', 'Статус')->setChoices($this->getStatusChoices()),
         ];
 
         if ($pageName === Crud::PAGE_INDEX) {
-            $fields[] = DateTimeField::new('created');
-            $fields[] = DateTimeField::new('updated');
+            $fields[] = DateTimeField::new('created', 'Создано');
+            $fields[] = DateTimeField::new('updated', 'Обновлено');
         }
 
         return $fields;
@@ -59,6 +59,9 @@ class CategoryCrudController extends AbstractCrudController
 
     public function configureCrud(Crud $crud): Crud
     {
+        $crud->setPageTitle(Crud::PAGE_INDEX, 'Категории');
+        $crud->setPageTitle(Crud::PAGE_EDIT, fn (Category $category) => $category->getTitle());
+
         return $crud->setDefaultSort(['updated' => 'DESC']);
     }
 
