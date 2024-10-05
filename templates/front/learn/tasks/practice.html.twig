@@ -2,10 +2,14 @@
     <div class="card-body">
         <h4 class="card-title">{{ task.title }}</h4>
         <p>{{ task.text }}</p>
+        {% if checkerAlive %}
         <div>
             <textarea name="code" id="code_editor" cols="30" rows="10" class="form-control"></textarea>
         </div>
         <input type="submit" value="Отправить на проверку" class="btn btn-primary mt-2">
+        {% else %}
+            <p class="text-danger">В данный момент сервис проверки не доступен. Попробуйте позднее</p>
+        {% endif %}
     </div>
 </div>
 

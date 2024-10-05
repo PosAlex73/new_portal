@@ -9,6 +9,8 @@ use App\Entity\UserProgress;
 use App\Enums\Flash\FlashTypes;
 use App\Enums\System\FrontRouteNames;
 use App\Repository\UserProgressRepository;
+use App\Services\Practice\CodeClient;
+use App\Services\Practice\CodeClientService;
 use App\Services\UserProgress\ProgressCreator;
 use App\Services\UserProgress\TaskDoneChecker;
 use App\Services\UserProgress\TemplateGetter;
@@ -24,7 +26,8 @@ class LearnController extends AbstractController
         protected UserProgressRepository $userProgressRepository,
         protected TaskDoneChecker $taskDoneChecker,
         protected TemplateGetter $templateGetter,
-        protected ProgressCreator $progressCreator
+        protected ProgressCreator $progressCreator,
+        protected CodeClientService $codeClientService
     )
     {
     }
@@ -52,9 +55,12 @@ class LearnController extends AbstractController
     {
         $taskTemplate = $this->templateGetter->getTemplateForTask($task);
 
+        $checkerIsAlive = $this->codeClientService->isCheckerAlive();
+
         return $this->render('front/learn/learn.html.twig', [
             'task' => $task,
-            'taskTemplate' => $taskTemplate
+            'taskTemplate' => $taskTemplate,
+            'checkerAlive' => $checkerIsAlive
         ]);
     }
 
