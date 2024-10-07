@@ -115,6 +115,7 @@ class CommonFixture extends Fixture implements FixtureGroupInterface
 
         $courses = $this->courseRepository->findAll();
         foreach ($courses as $course) {
+            $course->setImage($faker->imageUrl());
             $userProgress = new UserProgress();
             $userProgress->setOwner($user);
             $userProgress->setCourse($course);

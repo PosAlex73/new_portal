@@ -3,326 +3,58 @@
 {% block page_title %}Популярные курсы{% endblock %}
 
 {% block content %}
-<section class="g-pt-75 g-pb-45">
-    <div class="container">
-        <div class="row">
-            <div class="col-12 col-sm-6 col-md-6 col-lg-3 g-mb-30">
-                <figure class="u-block-hover u-shadow-v24">
-                    <div class="g-pos-rel">
-                        <img class="w-100" src="assets/img-temp/480x700/img1.jpg" alt="Gravity">
-                        <figcaption>
-                            <span class="u-ribbon-v1 g-width-40 g-height-40 g-color-white g-bg-primary g-font-weight-700 g-font-size-11 text-center text-uppercase g-rounded-50x g-top-15 g-left-15 g-px-2 g-py-10">New</span>
-                            <div class="g-z-index-2 g-pos-abs g-top-15 g-right-15">
-                                <a class="g-color-black g-color-primary--hover g-font-size-16 g-text-underline--none--hover rounded" href="#">
-                                    <i class="icon-medical-022 u-line-icon-pro"></i>
-                                </a>
-                            </div>
-                            <div class="u-block-hover__additional--fade g-flex-middle g-pa-15">
-                                <div class="g-flex-middle-item--bottom">
-                                    <a class="d-inline-block g-bg-primary-opacity-0_8 g-bg-primary--hover g-color-white g-font-size-default g-text-underline--none--hover rounded g-py-5 g-px-10" href="#">
-                                        <i class="g-mr-5 icon-finance-100 u-line-icon-pro"></i>
-                                        add to cart
-                                    </a>
+    <section class="g-pt-75 g-pb-45">
+        <div class="container">
+            <div class="row">
+                {% for course in courses %}
+                <div class="col-12 col-sm-6 col-md-4 col-lg-4 g-mb-30">
+                    <figure class="u-block-hover u-shadow-v24">
+                        <div class="g-pos-rel">
+                            <img class="w-100" src="{{ course.image }}" alt="Gravity">
+                            <figcaption>
+                                {% if course.isNew %}
+                                    <span class="u-ribbon-v1 g-width-40 g-height-40 g-color-white g-bg-primary g-font-weight-700 g-font-size-11 text-center text-uppercase g-rounded-50x g-top-15 g-left-15 g-px-2 g-py-10">Новый</span>
+                                {% endif %}
+{#                                {% if favorites[course.id] %}#}
+{#                                    <div class="g-z-index-2 g-pos-abs g-top-15 g-right-15">#}
+{#                                        <a class="g-color-black g-color-primary--hover g-font-size-16 g-text-underline--none--hover rounded" href="#">#}
+{#                                            <i class="icon-medical-022 u-line-icon-pro"></i>#}
+{#                                        </a>#}
+{#                                    </div>#}
+{#                                {% endif %}#}
+                                <div class="u-block-hover__additional--fade g-flex-middle g-pa-15">
+                                    <div class="g-flex-middle-item--bottom">
+                                        <a class="d-inline-block g-bg-primary-opacity-0_8 g-bg-primary--hover g-color-white g-font-size-default g-text-underline--none--hover rounded g-py-5 g-px-10" href="{{ path('course_details', {id: course.id}) }}">
+                                            <i class="g-mr-5 icon-finance-100 u-line-icon-pro"></i>
+                                            Посмотреть курс
+                                        </a>
+                                    </div>
                                 </div>
-                            </div>
-                        </figcaption>
-                    </div>
-                    <div class="g-px-15 g-py-20">
-                        <header class="d-flex justify-content-between">
-                            <h4 class="h5">
-                                <a class="g-color-main g-color-primary--hover g-text-underline--none--hover" href="#">Classic Shirt</a>
-                            </h4>
-                            <div class="d-block text-right">
-                                <span class="g-color-black g-font-size-16 g-line-height-1">$49.99</span>
-                            </div>
-                        </header>
-                        <ul class="list-unstyled g-color-gray-dark-v4 g-font-size-12 g-mb-5">
-                            <li>
-                                <a class="g-color-gray-dark-v4 g-color-black--hover g-font-style-normal text-uppercase" href="#">Men</a>
-                            </li>
-                            <li>Suits, Blazers</li>
-                        </ul>
-                        <div class="js-rating g-color-primary g-font-size-11" data-rating="3" data-spacing="2" data-backward-icons-classes="fa fa-star g-opacity-0_5"><div class="g-rating" style="display: inline-block; position: relative; z-index: 1; white-space: nowrap; margin-left: -2px; margin-right: -2px;"><div class="g-rating-forward" style="position: absolute; left: 0px; top: 0px; height: 100%; overflow: hidden; width: 60%;"><i class="fa fa-star" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star" style="margin-left: 2px; margin-right: 2px;"></i></div><div class="g-rating-backward" style="position: relative; z-index: 1;"><i class="fa fa-star g-opacity-0_5" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star g-opacity-0_5" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star g-opacity-0_5" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star g-opacity-0_5" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star g-opacity-0_5" style="margin-left: 2px; margin-right: 2px;"></i></div></div></div>
-                    </div>
-                </figure>
-            </div>
-            <div class="col-12 col-sm-6 col-md-6 col-lg-3 g-mb-30">
-                <figure class="u-block-hover u-shadow-v24">
-                    <div class="g-pos-rel">
-                        <img class="w-100" src="assets/img-temp/480x700/img2.jpg" alt="Gravity">
-                        <figcaption>
-                            <div class="g-z-index-2 g-pos-abs g-top-15 g-right-15">
-                                <a class="g-color-black g-color-primary--hover g-font-size-16 g-text-underline--none--hover rounded" href="#">
-                                    <i class="icon-medical-022 u-line-icon-pro"></i>
-                                </a>
-                            </div>
-                            <div class="u-block-hover__additional--fade g-flex-middle g-pa-15">
-                                <div class="g-flex-middle-item--bottom">
-                                    <a class="d-inline-block g-bg-primary-opacity-0_8 g-bg-primary--hover g-color-white g-font-size-default g-text-underline--none--hover rounded g-py-5 g-px-10" href="#">
-                                        <i class="g-mr-5 icon-finance-100 u-line-icon-pro"></i>
-                                        add to cart
-                                    </a>
-                                </div>
-                            </div>
-                        </figcaption>
-                    </div>
-                    <div class="g-px-15 g-py-20">
-                        <header class="d-flex justify-content-between">
-                            <h4 class="h5">
-                                <a class="g-color-main g-color-primary--hover g-text-underline--none--hover" href="#">Winter Jacket</a>
-                            </h4>
-                            <div class="d-block text-right">
-                                <span class="g-color-black g-font-size-16 g-line-height-1">$55.00</span>
-                            </div>
-                        </header>
-                        <ul class="list-unstyled g-color-gray-dark-v4 g-font-size-12 g-mb-5">
-                            <li>
-                                <a class="g-color-gray-dark-v4 g-color-black--hover g-font-style-normal text-uppercase" href="#">Women</a>
-                            </li>
-                            <li>Dresses, Hats</li>
-                        </ul>
-                        <div class="js-rating g-color-primary g-font-size-11" data-rating="3" data-spacing="2" data-backward-icons-classes="fa fa-star g-opacity-0_5"><div class="g-rating" style="display: inline-block; position: relative; z-index: 1; white-space: nowrap; margin-left: -2px; margin-right: -2px;"><div class="g-rating-forward" style="position: absolute; left: 0px; top: 0px; height: 100%; overflow: hidden; width: 60%;"><i class="fa fa-star" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star" style="margin-left: 2px; margin-right: 2px;"></i></div><div class="g-rating-backward" style="position: relative; z-index: 1;"><i class="fa fa-star g-opacity-0_5" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star g-opacity-0_5" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star g-opacity-0_5" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star g-opacity-0_5" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star g-opacity-0_5" style="margin-left: 2px; margin-right: 2px;"></i></div></div></div>
-                    </div>
-                </figure>
-            </div>
-            <div class="col-12 col-sm-6 col-md-6 col-lg-3 g-mb-30">
-                <figure class="u-block-hover u-shadow-v24">
-                    <div class="g-pos-rel">
-                        <img class="w-100" src="assets/img-temp/480x700/img3.jpg" alt="Gravity">
-                        <figcaption>
-                            <span class="u-ribbon-v1 g-width-40 g-height-40 g-color-white g-bg-red g-font-weight-700 g-font-size-11 text-center text-uppercase g-rounded-50x g-top-15 g-left-15 g-px-2 g-py-10">Sold</span>
-                            <div class="g-z-index-2 g-pos-abs g-top-15 g-right-15">
-                                <a class="g-color-black g-color-primary--hover g-font-size-16 g-text-underline--none--hover rounded" href="#">
-                                    <i class="icon-medical-022 u-line-icon-pro"></i>
-                                </a>
-                            </div>
-                            <div class="u-block-hover__additional--fade g-flex-middle g-pa-15">
-                                <div class="g-flex-middle-item--bottom">
-                                    <a class="d-inline-block g-bg-primary-opacity-0_8 g-bg-primary--hover g-color-white g-font-size-default g-text-underline--none--hover rounded g-py-5 g-px-10" href="#">
-                                        <i class="g-mr-5 icon-finance-100 u-line-icon-pro"></i>
-                                        add to cart
-                                    </a>
-                                </div>
-                            </div>
-                        </figcaption>
-                    </div>
-                    <div class="g-px-15 g-py-20">
-                        <header class="d-flex justify-content-between">
-                            <h4 class="h5">
-                                <a class="g-color-main g-color-primary--hover g-text-underline--none--hover" href="#">Summer Short</a>
-                            </h4>
-                            <div class="d-block text-right">
-                                <span class="g-color-black g-font-size-16 g-line-height-1">$99.99</span>
-                            </div>
-                        </header>
-                        <ul class="list-unstyled g-color-gray-dark-v4 g-font-size-12 g-mb-5">
-                            <li>
-                                <a class="g-color-gray-dark-v4 g-color-black--hover g-font-style-normal text-uppercase" href="#">Men</a>
-                            </li>
-                            <li>Coats, Socks</li>
-                        </ul>
-                        <div class="js-rating g-color-primary g-font-size-11" data-rating="3" data-spacing="2" data-backward-icons-classes="fa fa-star g-opacity-0_5"><div class="g-rating" style="display: inline-block; position: relative; z-index: 1; white-space: nowrap; margin-left: -2px; margin-right: -2px;"><div class="g-rating-forward" style="position: absolute; left: 0px; top: 0px; height: 100%; overflow: hidden; width: 60%;"><i class="fa fa-star" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star" style="margin-left: 2px; margin-right: 2px;"></i></div><div class="g-rating-backward" style="position: relative; z-index: 1;"><i class="fa fa-star g-opacity-0_5" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star g-opacity-0_5" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star g-opacity-0_5" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star g-opacity-0_5" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star g-opacity-0_5" style="margin-left: 2px; margin-right: 2px;"></i></div></div></div>
-                    </div>
-                </figure>
-            </div>
-            <div class="col-12 col-sm-6 col-md-6 col-lg-3 g-mb-30">
-                <figure class="u-block-hover u-shadow-v24">
-                    <div class="g-pos-rel">
-                        <img class="w-100" src="assets/img-temp/480x700/img4.jpg" alt="Gravity">
-                        <figcaption>
-                            <div class="g-z-index-2 g-pos-abs g-top-15 g-right-15">
-                                <a class="g-color-black g-color-primary--hover g-font-size-16 g-text-underline--none--hover rounded" href="#">
-                                    <i class="icon-medical-022 u-line-icon-pro"></i>
-                                </a>
-                            </div>
-                            <div class="u-block-hover__additional--fade g-flex-middle g-pa-15">
-                                <div class="g-flex-middle-item--bottom">
-                                    <a class="d-inline-block g-bg-primary-opacity-0_8 g-bg-primary--hover g-color-white g-font-size-default g-text-underline--none--hover rounded g-py-5 g-px-10" href="#">
-                                        <i class="g-mr-5 icon-finance-100 u-line-icon-pro"></i>
-                                        add to cart
-                                    </a>
-                                </div>
-                            </div>
-                        </figcaption>
-                    </div>
-                    <div class="g-px-15 g-py-20">
-                        <header class="d-flex justify-content-between">
-                            <h4 class="h5">
-                                <a class="g-color-main g-color-primary--hover g-text-underline--none--hover" href="#">Classic Coat</a>
-                            </h4>
-                            <div class="d-block text-right">
-                                <span class="g-color-black g-font-size-16 g-line-height-1">$44.00</span>
-                            </div>
-                        </header>
-                        <ul class="list-unstyled g-color-gray-dark-v4 g-font-size-12 g-mb-5">
-                            <li>
-                                <a class="g-color-gray-dark-v4 g-color-black--hover g-font-style-normal text-uppercase" href="#">Women</a>
-                            </li>
-                            <li>Shirts, Suits</li>
-                        </ul>
-                        <div class="js-rating g-color-primary g-font-size-11" data-rating="3" data-spacing="2" data-backward-icons-classes="fa fa-star g-opacity-0_5"><div class="g-rating" style="display: inline-block; position: relative; z-index: 1; white-space: nowrap; margin-left: -2px; margin-right: -2px;"><div class="g-rating-forward" style="position: absolute; left: 0px; top: 0px; height: 100%; overflow: hidden; width: 60%;"><i class="fa fa-star" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star" style="margin-left: 2px; margin-right: 2px;"></i></div><div class="g-rating-backward" style="position: relative; z-index: 1;"><i class="fa fa-star g-opacity-0_5" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star g-opacity-0_5" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star g-opacity-0_5" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star g-opacity-0_5" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star g-opacity-0_5" style="margin-left: 2px; margin-right: 2px;"></i></div></div></div>
-                    </div>
-                </figure>
-            </div>
-            <div class="col-12 col-sm-6 col-md-6 col-lg-3 g-mb-30">
-                <figure class="u-block-hover u-shadow-v24">
-                    <div class="g-pos-rel">
-                        <img class="w-100" src="assets/img-temp/480x700/img5.jpg" alt="Gravity">
-                        <figcaption>
-                            <div class="g-z-index-2 g-pos-abs g-top-15 g-right-15">
-                                <a class="g-color-black g-color-primary--hover g-font-size-16 g-text-underline--none--hover rounded" href="#">
-                                    <i class="icon-medical-022 u-line-icon-pro"></i>
-                                </a>
-                            </div>
-                            <div class="u-block-hover__additional--fade g-flex-middle g-pa-15">
-                                <div class="g-flex-middle-item--bottom">
-                                    <a class="d-inline-block g-bg-primary-opacity-0_8 g-bg-primary--hover g-color-white g-font-size-default g-text-underline--none--hover rounded g-py-5 g-px-10" href="#">
-                                        <i class="g-mr-5 icon-finance-100 u-line-icon-pro"></i>
-                                        add to cart
-                                    </a>
-                                </div>
-                            </div>
-                        </figcaption>
-                    </div>
-                    <div class="g-px-15 g-py-20">
-                        <header class="d-flex justify-content-between">
-                            <h4 class="h5">
-                                <a class="g-color-main g-color-primary--hover g-text-underline--none--hover" href="#">Woman Dresses</a>
-                            </h4>
-                            <div class="d-block text-right">
-                                <span class="g-color-black g-font-size-16 g-line-height-1">$11.00</span>
-                            </div>
-                        </header>
-                        <ul class="list-unstyled g-color-gray-dark-v4 g-font-size-12 g-mb-5">
-                            <li>
-                                <a class="g-color-gray-dark-v4 g-color-black--hover g-font-style-normal text-uppercase" href="#">Woman</a>
-                            </li>
-                            <li>Glasses, Suits</li>
-                        </ul>
-                        <div class="js-rating g-color-primary g-font-size-11" data-rating="5" data-spacing="2" data-backward-icons-classes="fa fa-star g-opacity-0_5"><div class="g-rating" style="display: inline-block; position: relative; z-index: 1; white-space: nowrap; margin-left: -2px; margin-right: -2px;"><div class="g-rating-forward" style="position: absolute; left: 0px; top: 0px; height: 100%; overflow: hidden; width: 100%;"><i class="fa fa-star" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star" style="margin-left: 2px; margin-right: 2px;"></i></div><div class="g-rating-backward" style="position: relative; z-index: 1;"><i class="fa fa-star g-opacity-0_5" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star g-opacity-0_5" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star g-opacity-0_5" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star g-opacity-0_5" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star g-opacity-0_5" style="margin-left: 2px; margin-right: 2px;"></i></div></div></div>
-                    </div>
-                </figure>
-            </div>
-            <div class="col-12 col-sm-6 col-md-6 col-lg-3 g-mb-30">
-                <figure class="u-block-hover u-shadow-v24">
-                    <div class="g-pos-rel">
-                        <img class="w-100" src="assets/img-temp/480x700/img6.jpg" alt="Gravity">
-                        <figcaption>
-                            <span class="u-ribbon-v1 g-width-40 g-height-40 g-color-white g-bg-purple g-font-weight-700 g-font-size-11 text-center text-uppercase g-rounded-50x g-top-15 g-left-15 g-px-2 g-py-10">Hot</span>
-                            <div class="g-z-index-2 g-pos-abs g-top-15 g-right-15">
-                                <a class="g-color-black g-color-primary--hover g-font-size-16 g-text-underline--none--hover rounded" href="#">
-                                    <i class="icon-medical-022 u-line-icon-pro"></i>
-                                </a>
-                            </div>
-                            <div class="u-block-hover__additional--fade g-flex-middle g-pa-15">
-                                <div class="g-flex-middle-item--bottom">
-                                    <a class="d-inline-block g-bg-primary-opacity-0_8 g-bg-primary--hover g-color-white g-font-size-default g-text-underline--none--hover rounded g-py-5 g-px-10" href="#">
-                                        <i class="g-mr-5 icon-finance-100 u-line-icon-pro"></i>
-                                        add to cart
-                                    </a>
-                                </div>
-                            </div>
-                        </figcaption>
-                    </div>
-                    <div class="g-px-15 g-py-20">
-                        <header class="d-flex justify-content-between">
-                            <h4 class="h5">
-                                <a class="g-color-main g-color-primary--hover g-text-underline--none--hover" href="#">Hooded Jeans</a>
-                            </h4>
-                            <div class="d-block text-right">
-                                <span class="g-color-black g-font-size-16 g-line-height-1">$66.00</span>
-                            </div>
-                        </header>
-                        <ul class="list-unstyled g-color-gray-dark-v4 g-font-size-12 g-mb-5">
-                            <li>
-                                <a class="g-color-gray-dark-v4 g-color-black--hover g-font-style-normal text-uppercase" href="#">Men</a>
-                            </li>
-                            <li>Shirts, Blazers</li>
-                        </ul>
-                        <div class="js-rating g-color-primary g-font-size-11" data-rating="4" data-spacing="2" data-backward-icons-classes="fa fa-star g-opacity-0_5"><div class="g-rating" style="display: inline-block; position: relative; z-index: 1; white-space: nowrap; margin-left: -2px; margin-right: -2px;"><div class="g-rating-forward" style="position: absolute; left: 0px; top: 0px; height: 100%; overflow: hidden; width: 80%;"><i class="fa fa-star" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star" style="margin-left: 2px; margin-right: 2px;"></i></div><div class="g-rating-backward" style="position: relative; z-index: 1;"><i class="fa fa-star g-opacity-0_5" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star g-opacity-0_5" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star g-opacity-0_5" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star g-opacity-0_5" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star g-opacity-0_5" style="margin-left: 2px; margin-right: 2px;"></i></div></div></div>
-                    </div>
-                </figure>
-            </div>
-            <div class="col-12 col-sm-6 col-md-6 col-lg-3 g-mb-30">
-                <figure class="u-block-hover u-shadow-v24">
-                    <div class="g-pos-rel">
-                        <img class="w-100" src="assets/img-temp/480x700/img7.jpg" alt="Gravity">
-                        <figcaption>
-                            <div class="g-z-index-2 g-pos-abs g-top-15 g-right-15">
-                                <a class="g-color-black g-color-primary--hover g-font-size-16 g-text-underline--none--hover rounded" href="#">
-                                    <i class="icon-medical-022 u-line-icon-pro"></i>
-                                </a>
-                            </div>
-                            <div class="u-block-hover__additional--fade g-flex-middle g-pa-15">
-                                <div class="g-flex-middle-item--bottom">
-                                    <a class="d-inline-block g-bg-primary-opacity-0_8 g-bg-primary--hover g-color-white g-font-size-default g-text-underline--none--hover rounded g-py-5 g-px-10" href="#">
-                                        <i class="g-mr-5 icon-finance-100 u-line-icon-pro"></i>
-                                        add to cart
-                                    </a>
-                                </div>
-                            </div>
-                        </figcaption>
-                    </div>
-                    <div class="g-px-15 g-py-20">
-                        <header class="d-flex justify-content-between">
-                            <h4 class="h5">
-                                <a class="g-color-main g-color-primary--hover g-text-underline--none--hover" href="#">Children Boots</a>
-                            </h4>
-                            <div class="d-block text-right">
-                                <span class="g-color-black g-font-size-16 g-line-height-1">$88.00</span>
-                            </div>
-                        </header>
-                        <ul class="list-unstyled g-color-gray-dark-v4 g-font-size-12 g-mb-5">
-                            <li>
-                                <a class="g-color-gray-dark-v4 g-color-black--hover g-font-style-normal text-uppercase" href="#">Child</a>
-                            </li>
-                            <li>Dresses, Beauty</li>
-                        </ul>
-                        <div class="js-rating g-color-primary g-font-size-11" data-rating="5" data-spacing="2" data-backward-icons-classes="fa fa-star g-opacity-0_5"><div class="g-rating" style="display: inline-block; position: relative; z-index: 1; white-space: nowrap; margin-left: -2px; margin-right: -2px;"><div class="g-rating-forward" style="position: absolute; left: 0px; top: 0px; height: 100%; overflow: hidden; width: 100%;"><i class="fa fa-star" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star" style="margin-left: 2px; margin-right: 2px;"></i></div><div class="g-rating-backward" style="position: relative; z-index: 1;"><i class="fa fa-star g-opacity-0_5" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star g-opacity-0_5" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star g-opacity-0_5" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star g-opacity-0_5" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star g-opacity-0_5" style="margin-left: 2px; margin-right: 2px;"></i></div></div></div>
-                    </div>
-                </figure>
-            </div>
-            <div class="col-12 col-sm-6 col-md-6 col-lg-3 g-mb-30">
-                <figure class="u-block-hover u-shadow-v24">
-                    <div class="g-pos-rel">
-                        <img class="w-100" src="assets/img-temp/480x700/img8.jpg" alt="Gravity">
-                        <figcaption>
-                            <span class="u-ribbon-v1 g-width-40 g-height-40 g-color-white g-bg-red g-font-weight-700 g-font-size-11 text-center text-uppercase g-rounded-50x g-top-15 g-left-15 g-px-2 g-py-10">Sold</span>
-                            <div class="g-z-index-2 g-pos-abs g-top-15 g-right-15">
-                                <a class="g-color-black g-color-primary--hover g-font-size-16 g-text-underline--none--hover rounded" href="#">
-                                    <i class="icon-medical-022 u-line-icon-pro"></i>
-                                </a>
-                            </div>
-                            <div class="u-block-hover__additional--fade g-flex-middle g-pa-15">
-                                <div class="g-flex-middle-item--bottom">
-                                    <a class="d-inline-block g-bg-primary-opacity-0_8 g-bg-primary--hover g-color-white g-font-size-default g-text-underline--none--hover rounded g-py-5 g-px-10" href="#">
-                                        <i class="g-mr-5 icon-finance-100 u-line-icon-pro"></i>
-                                        add to cart
-                                    </a>
-                                </div>
-                            </div>
-                        </figcaption>
-                    </div>
-                    <div class="g-px-15 g-py-20">
-                        <header class="d-flex justify-content-between">
-                            <h4 class="h5">
-                                <a class="g-color-main g-color-primary--hover g-text-underline--none--hover" href="#">Modern Shoes</a>
-                            </h4>
-                            <div class="d-block text-right">
-                                <span class="g-color-black g-font-size-16 g-line-height-1">$29.99</span>
-                            </div>
-                        </header>
-                        <ul class="list-unstyled g-color-gray-dark-v4 g-font-size-12 g-mb-5">
-                            <li>
-                                <a class="g-color-gray-dark-v4 g-color-black--hover g-font-style-normal text-uppercase" href="#">Boy</a>
-                            </li>
-                            <li>Coats, Socks</li>
-                        </ul>
-                        <div class="js-rating g-color-primary g-font-size-11" data-rating="4" data-spacing="2" data-backward-icons-classes="fa fa-star g-opacity-0_5"><div class="g-rating" style="display: inline-block; position: relative; z-index: 1; white-space: nowrap; margin-left: -2px; margin-right: -2px;"><div class="g-rating-forward" style="position: absolute; left: 0px; top: 0px; height: 100%; overflow: hidden; width: 80%;"><i class="fa fa-star" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star" style="margin-left: 2px; margin-right: 2px;"></i></div><div class="g-rating-backward" style="position: relative; z-index: 1;"><i class="fa fa-star g-opacity-0_5" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star g-opacity-0_5" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star g-opacity-0_5" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star g-opacity-0_5" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star g-opacity-0_5" style="margin-left: 2px; margin-right: 2px;"></i></div></div></div>
-                    </div>
-                </figure>
+                            </figcaption>
+                        </div>
+                        <div class="g-px-15 g-py-20">
+                            <header class="d-flex justify-content-between">
+                                <h4 class="h5">
+                                    <a class="g-color-main g-color-primary--hover g-text-underline--none--hover" href="#">{{ course.title }}</a>
+                                </h4>
+{#                                <div class="d-block text-right">#}
+{#                                    <span class="g-color-black g-font-size-16 g-line-height-1">$49.99</span>#}
+{#                                </div>#}
+                            </header>
+                            <ul class="list-unstyled g-color-gray-dark-v4 g-font-size-12 g-mb-5">
+                                <li>
+                                    <span class="g-color-gray-dark-v4 g-color-black--hover g-font-style-normal">{{ course.getPresentText }}</span>
+                                </li>
+                                <li>{{ course.title }}</li>
+                            </ul>
+{#                            {% if ratings[course.id] %}#}
+{#                                <div class="js-rating g-color-primary g-font-size-11" data-rating="3" data-spacing="2" data-backward-icons-classes="fa fa-star g-opacity-0_5"><div class="g-rating" style="display: inline-block; position: relative; z-index: 1; white-space: nowrap; margin-left: -2px; margin-right: -2px;"><div class="g-rating-forward" style="position: absolute; left: 0px; top: 0px; height: 100%; overflow: hidden; width: 60%;"><i class="fa fa-star" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star" style="margin-left: 2px; margin-right: 2px;"></i></div><div class="g-rating-backward" style="position: relative; z-index: 1;"><i class="fa fa-star g-opacity-0_5" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star g-opacity-0_5" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star g-opacity-0_5" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star g-opacity-0_5" style="margin-left: 2px; margin-right: 2px;"></i><i class="fa fa-star g-opacity-0_5" style="margin-left: 2px; margin-right: 2px;"></i></div></div></div>#}
+{#                            {% endif %}#}
+                        </div>
+                    </figure>
+                </div>
+                {% endfor %}
             </div>
         </div>
-    </div>
-</section>
+    </section>
 {% endblock %}

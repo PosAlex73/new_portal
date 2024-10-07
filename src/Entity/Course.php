@@ -76,6 +76,15 @@ class Course
     #[ORM\ManyToMany(targetEntity: CourseTag::class, mappedBy: 'courses')]
     private Collection $courseTags;
 
+    #[ORM\Column(length: 2048, nullable: true)]
+    private ?string $image = null;
+
+    #[ORM\Column]
+    private ?bool $isNew = null;
+
+    #[ORM\OneToOne(mappedBy: 'course', cascade: ['persist', 'remove'])]
+    private ?FavoriteCourse $favoriteCourse = null;
+
     public function __construct()
     {
         $this->userProgress = new ArrayCollection();
@@ -413,6 +422,52 @@ class Course
         if ($this->courseTags->removeElement($courseTag)) {
             $courseTag->removeCourse($this);
         }
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): static
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    public function isNew(): ?bool
+    {
+        return $this->isNew;
+    }
+
+    public function setNew(bool $isNew): static
+    {
+        $this->isNew = $isNew;
+
+        return $this;
+    }
+
+    public function getFavoriteCourse(): ?FavoriteCourse
+    {
+        return $this->favoriteCourse;
+    }
+
+    public function setFavoriteCourse(?FavoriteCourse $favoriteCourse): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($favoriteCourse === null && $this->favoriteCourse !== null) {
+            $this->favoriteCourse->setCourse(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($favoriteCourse !== null && $favoriteCourse->getCourse() !== $this) {
+            $favoriteCourse->setCourse($this);
+        }
+
+        $this->favoriteCourse = $favoriteCourse;
 
         return $this;
     }

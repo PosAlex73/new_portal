@@ -67,6 +67,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'reporter', targetEntity: CourseBugReport::class)]
     private Collection $courseBugReports;
 
+    #[ORM\OneToOne(mappedBy: 'user_like', cascade: ['persist', 'remove'])]
+    private ?FavoriteCourse $favoriteCourse = null;
+
     public function __construct()
     {
         $this->userProgress = new ArrayCollection();
@@ -339,5 +342,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __toString(): string
     {
         return $this->getFullName();
+    }
+
+    public function getFavoriteCourse(): ?FavoriteCourse
+    {
+        return $this->favoriteCourse;
+    }
+
+    public function setFavoriteCourse(?FavoriteCourse $favoriteCourse): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($favoriteCourse === null && $this->favoriteCourse !== null) {
+            $this->favoriteCourse->setUserLike(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($favoriteCourse !== null && $favoriteCourse->getUserLike() !== $this) {
+            $favoriteCourse->setUserLike($this);
+        }
+
+        $this->favoriteCourse = $favoriteCourse;
+
+        return $this;
     }
 }
