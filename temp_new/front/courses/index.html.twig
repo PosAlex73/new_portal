@@ -1,0 +1,59 @@
+{% extends 'layout/base.html.twig' %}
+
+{% block page_title %} Список курсов {% endblock %}
+
+{% block content %}
+    <div class="row">
+        {% if paginator|length > 0 %}
+            <div class="navigation">
+                {{ knp_pagination_render(paginator) }}
+            </div>
+            {% for course in paginator %}
+                <div class="col-xl-4">
+                    <div class="card">
+                        <div class="card-body project-box">
+                            <div class="badge bg-success float-end font-20">{{ course.category.title }}</div>
+                            <h4 class="mt-0 font-20"><span class="text-dark">{{ course.title }}</span></h4>
+                            {% if userCourses and course.id in userCourses %}
+                                <p class="text-success font-20">Курс приобретен</p>
+                            {% else %}
+                                <p class="text-secondary font-20">Курс не приобретен</p>
+                            {% endif %}
+                            <p class="text-muted font-13">{{ course.shortDescription()|raw }}
+                            </p>
+
+                            <ul class="list-inline">
+                                <li class="list-inline-item me-4">
+                                    <h4 class="mb-0">{{ course.tasks|length }}</h4>
+                                    <p class="text-muted">Количество задач в курсе</p>
+                                </li>
+                            </ul>
+
+                            <div>
+                                <a href="{{ path('course_details', {id: course.id}) }}" class="btn btn-primary">Посмотреть курс</a>
+                            </div>
+                            <div>
+                                {% include "front/components/course_tags.html.twig" with {course: course} %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="navigation">
+                {{ knp_pagination_render(paginator) }}
+            </div>
+        {% else %}
+            <div class="row">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-text">
+                            Курсы пока что не опубликованы
+                        </p>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        <div class="navigation">
+        </div>
+    </div>
+{% endblock %}

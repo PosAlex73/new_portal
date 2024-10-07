@@ -1,0 +1,7 @@
+{% if course.courseTags %}
+    <div class="mt-2">
+        {% for tag in course.courseTags %}
+            <h5><span class="badge bg-success rounded-pill float-start mt-1">{{ tag.title }}</span></h5>
+        {% endfor %}
+    </div>
+{% endif %}

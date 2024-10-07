@@ -1,0 +1,95 @@
+{% extends 'layout/base.html.twig' %}
+
+{% block page_title %}{{ course.title }}{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <a href="{{ path('courses_list') }}" class="btn btn-secondary m-2">Назад к списку</a>
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body task-detail">
+                    {% if app.user %}
+                        <div class="dropdown float-end">
+                            <a href="#" class="dropdown-toggle arrow-none card-drop" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="mdi mdi-dots-vertical"></i>
+                            </a>
+                                <div class="dropdown-menu dropdown-menu-end">
+                                        <a href="{{ path('bug_report', {id: course.id}) }}" class="dropdown-item">Сообщить об ошибке</a>
+                                </div>
+                        </div>
+                    {% endif %}
+                    <div class="d-flex mb-3">
+                        <div class="flex-grow-1">
+                            <h4 class="media-heading mt-0">{{ course.title }}</h4>
+                            <span class="badge bg-danger p-2 font-15">{{ course.category.title }}</span>
+                        </div>
+                    </div>
+
+                    <p class="text-muted">
+                        {{ course.text|raw }}
+                    </p>
+
+                    <div class="row task-dates mb-0 mt-2">
+                        <div class="col-lg-6">
+                            <h5 class="font-600 m-b-5">Дата создания</h5>
+                            <p>{{ course.getCreatedStr() }}</p>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <h5 class="font-600 m-b-5">Дата обновления</h5>
+                            <p>{{ course.getUpdatedStr() }}</p>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+
+                    <div class="attached-files mt-3">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="text-end">
+                                    {% if app.user and hasCourse == false %}
+                                        <a href="{{ path('course_add_to_user', {id: course.id}) }}" class="btn btn-success waves-effect waves-light me-1">
+                                            Добавить курс
+                                        </a>
+                                    {% elseif hasCourse == true %}
+                                        <button type="button" class="btn btn-light waves-effect waves-light me-1">
+                                            У вас уже есть данный курс
+                                        </button>
+                                    {% else %}
+                                        <a href="{{ path('app_login') }}" class="btn btn-light waves-effect waves-light me-1">
+                                            Войти
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="header-title mt-0 mb-3">Задачи в курсе ({{ course.taskCount() }})</h4>
+
+                    <div>
+                        {% for task in course.tasks %}
+                            <div class="d-flex mb-3">
+                                <div class="flex-grow-1">
+                                    <h5 class="mt-0">{{ task.title }}</h5>
+                                    <p class="font-13 text-muted mb-0">
+                                        <span class="text-primary">{{ task.getTypeStr() }}</span>
+                                        <div>
+                                            {{ task.getShortText() }}
+
+                                         </div>
+                                    </p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

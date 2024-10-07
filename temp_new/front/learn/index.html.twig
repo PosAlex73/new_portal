@@ -1,0 +1,75 @@
+{% extends 'layout/base.html.twig' %}
+
+{% block page_title %}Обучение{% endblock %}
+
+{% block content %}
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <ul class="nav nav-pills navtab-bg nav-justified">
+                    <li class="nav-item">
+                        <a href="#general" data-bs-toggle="tab" aria-expanded="false" class="nav-link active">
+                            Информация о курсе
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#tasks" data-bs-toggle="tab" aria-expanded="true" class="nav-link">
+                            Задачи
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="general">
+                        <h2 class="pb-2">{{ course.title }}</h2>
+                        <p>{{ course.text|raw }}</p>
+                        {% if course.courseLinks %}
+                            <p></p>
+                            {% for link in course.courseLinks %}
+                                <h5>Полезные ссылки</h5>
+                                <div class="border border-secondary p-2 rounded-3">
+                                    <a href="{{ link.url }}" class="link-primary">{{ link.title }}</a>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="tab-pane show" id="tasks">
+                            <div class="table-responsive">
+                                <table class="table mb-0">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Название</th>
+                                        <th>Тип задачи</th>
+                                        <th>Выполнение</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for task in course.tasks %}
+                                        {% if task.id in taskData and taskData[task.id].endDate.date %}
+                                            {% set taskBg = 'badge bg-success p-2' %}
+                                        {% else %}
+                                            {% set taskBg = '' %}
+                                        {% endif %}
+                                        <tr>
+                                            <th scope="row">{{ loop.index }}</th>
+                                            <td><a href="{{ path('learn_task', {id: task.id}) }}">{{ task.title }}</a></td>
+                                            <td>{{ task.getTypeStr() }}</td>
+                                            <td>
+                                                <span class="{{ taskBg }}">
+                                                    {% if task.id in taskData|keys %}
+                                                        {% set taskId = task.id %}
+                                                        {{ taskData[taskId].endDate.date|date('Y-m-d H:i:s') }}
+                                                    {% endif %}
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'layout/base.html.twig' %}
+
+{% block page_title %} Сообщить об ошибке {% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-body">
+            {{ form_start(form) }}
+            {{ form_row(form.title) }}
+            {{ form_row(form.text) }}
+            {{ form_row(form.submit) }}
+            {{ form_end(form) }}
+            <p class="text-danger mt-2">Пожалуйста, используйте форму только по назначению. В противном случае ваша учетная запись может быть заблокирована.</p>
+        </div>
+    </div>
+{% endblock %}

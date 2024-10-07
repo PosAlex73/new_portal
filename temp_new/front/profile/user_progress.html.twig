@@ -1,0 +1,85 @@
+{% extends 'layout/base.html.twig' %}
+
+{% block page_title %} Здравствуйте, {{ app.user.fullName }} {% endblock %}
+
+{% block content %}
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="header-title mb-4">Курсы для обучения</h4>
+
+                <ul class="nav nav-pills navtab-bg nav-justified">
+                    <li class="nav-item">
+                        <a href="{{ path('profile') }}" class="nav-link">
+                            Общая информация
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ path('user_progress') }}" class="nav-link active">
+                            Обучение
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ path('user_settings') }}" class="nav-link">
+                            Настройки
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane show active" id="home1">
+                        {% if progressData|length > 0 %}
+                        <div class="table-responsive">
+                            <table class="table mb-0">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th class="text-center">Название курса</th>
+                                    <th class="text-center">Количество задач в курсе</th>
+                                    <th class="text-center">Выполнено задач</th>
+                                    <th class="text-center">Дата начала</th>
+                                    <th class="text-center">Действия</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for data in progressData %}
+                                    {% if data.taskNumberInCourse == data.doneTasks %}
+                                        {% set progressClass = "badge bg-success rounded-pill p-2" %}
+                                    {% elseif data.doneTasks > 0 and data.doneTasks != data.taskNumberInCourse %}
+                                        {% set progressClass = "badge bg-primary rounded-pill p-2" %}
+                                    {% else %}
+                                        {% set progressClass = "badge bg-secondary rounded-pill p-2" %}
+                                    {% endif %}
+                                    <tr>
+                                        <th scope="row">{{ loop.index }}</th>
+                                        <td class="text-center">{{ data.title }}</td>
+                                        <td class="text-center">{{ data.taskNumberInCourse }}</td>
+                                        <td class="text-center">
+                                            <span class="{{ progressClass }}">{{ data.doneTasks }}</span></td>
+                                        <td class="text-center">{{ data.startDate }}</td>
+
+                                        <td class="text-center">
+                                            <div class="dropdown">
+                                                <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    Выберите действие <i class="mdi mdi-chevron-down"></i>
+                                                </button>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="">
+                                                    <a class="dropdown-item" href="{{ path('front_learn', {id: data.progressId}) }}">Начать обучение</a>
+                                                    <a class="dropdown-item text-danger" href="{{ path('reset_progress', {id: data.progressID}) }}">Сбросить прогресс</a>
+                                                </div>
+                                            </div>
+
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        {% else %}
+                            <p class="card-te">У вас пока что нет добавленных курсов. <a href="{{ path('courses_list') }}">Добавить новые курсы можно здесь</a></p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
