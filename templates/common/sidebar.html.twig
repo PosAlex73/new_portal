@@ -1,15 +1,22 @@
-
-
-
-<div class="topnav">
-    <div class="container-fluid">
-        <nav class="navbar navbar-light navbar-expand-lg topnav-menu">
-
-            <div class="collapse navbar-collapse" id="topnav-menu-content">
-                <ul class="navbar-nav">
+<header id="js-header" class="u-header u-header--static dark-header">
+    <div class="u-header__section u-header__section--dark g-bg-primary g-transition-0_3 g-py-10">
+        <nav class="js-mega-menu navbar navbar-expand-lg hs-menu-initialized hs-menu-horizontal gs-main-nav">
+            <div class="container">
+                <!-- Start Responsive Toggle Button -->
+                <button class="navbar-toggler navbar-toggler-right btn g-line-height-1 g-brd-none g-pa-0 g-pos-abs g-top-3 g-right-0" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="navBar" data-toggle="collapse" data-target="#navBar">
+                        <span class="hamburger hamburger--slider g-pt-5 g-pr-0">
+                            <span class="hamburger-box">
+                                <span class="hamburger-inner"></span>
+                            </span>
+                        </span>
+                </button>
+                <a href="index.html" class="navbar-brand">
+                    <img src="{{ asset('asets/img/logo/logo-2.png') }}" alt="Gravity">
+                </a>
+                <div class="collapse navbar-collapse align-items-center flex-sm-row" id="navBar">
                     {{ component('MainMenu') }}
-                </ul>
+                </div>
             </div>
         </nav>
     </div>
-</div>
+</header>
