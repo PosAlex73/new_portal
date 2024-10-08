@@ -36,6 +36,9 @@ class AppNew
     #[ORM\Column(length: 2048, nullable: true)]
     private ?string $image = null;
 
+    #[ORM\Column]
+    private ?int $views = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -127,6 +130,18 @@ class AppNew
     public function setImage(?string $image): static
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    public function getViews(): ?int
+    {
+        return $this->views;
+    }
+
+    public function setViews(int $views): static
+    {
+        $this->views = $views;
 
         return $this;
     }
