@@ -7,6 +7,7 @@ use App\Enums\CommonStatus;
 use App\Enums\Settings\SettingEnum;
 use App\Services\Settings\Set;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\PaginatorInterface;
 
@@ -29,17 +30,18 @@ class AppNewRepository extends ServiceEntityRepository
         parent::__construct($registry, AppNew::class);
     }
 
-    public function getForListPage(int $page = 1)
+    public function getForListPage(int $frontendPageNumber, int $offset = 0)
     {
-        $frontendNumber = $this->set->get(SettingEnum::FRONT_PAGINATION);
         $query = $this->createQueryBuilder('n')
             ->where('n.status = :status')
             ->setParameters([
                 'status' => CommonStatus::ACTIVE->value
             ])
+            ->setFirstResult($offset)
+            ->setMaxResults($frontendPageNumber)
             ->getQuery();
 
-        return $this->paginator->paginate($query, $page, $frontendNumber->getValue());
+        return new Paginator($query);
     }
 
     public function getBySearch(string $text)

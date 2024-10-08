@@ -3,15 +3,22 @@
 {% block page_title %} {{ article.title }} {% endblock %}
 
 {% block content %}
-    <div class="row">
-        <a href="{{ path('blog_list') }}" data-blog-back-button class="btn btn-secondary my-2">Назад к списку статей</a>
-        <div class="card p-2">
-            <div>
-                <h4 data-article-title class="card-title">{{ article.title }}</h4>
+    <div class="container g-my-75">
+        <article class="g-mb-0">
+            <header class="g-mb-30">
+                <h2 class="h1 g-mb-15 g-mt-minus-10">{{ article.title }}</h2>
+                <ul class="list-inline d-sm-flex g-color-gray-dark-v4 mb-0">
+                    <li class="list-inline-item">
+                        {{ article.created|format_datetime(locale="ru") }}
+                    </li>
+                    <li class="list-inline-item ml-auto">
+                        <i class="icon-eye u-line-icon-pro align-middle mr-1"></i> Просмотры: {{ article.views }}
+                    </li>
+                </ul>
+            </header>
+            <div class="g-font-size-16 g-line-height-1_8 g-mb-30">
+                {{ article.text|raw }}
             </div>
-            <div class="card-text">
-                {{ article.text }}
-            </div>
-        </div>
+        </article>
     </div>
 {% endblock %}

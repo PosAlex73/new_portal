@@ -38,6 +38,7 @@ class TestCourseCreatorService
         $newCourse->setCourseCode('test/' . $testCourseDto->getCourseName());
         $newCourse->setType(CourseTypes::FREE->value);
         $newCourse->setLang($initialCourseDto->getLang());
+        $newCourse->setNew(false);
         $this->manager->persist($newCourse);
         $this->manager->flush();
 

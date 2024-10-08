@@ -33,6 +33,12 @@ class Article
     #[ORM\Column(length: 1)]
     private ?string $status = null;
 
+    #[ORM\Column(length: 2048, nullable: true)]
+    private ?string $image = null;
+
+    #[ORM\Column]
+    private ?int $views = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -114,5 +120,29 @@ class Article
     public function getTextShort()
     {
         return substr($this->getText(), 0, 200) . '...';
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): static
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    public function getViews(): ?int
+    {
+        return $this->views;
+    }
+
+    public function setViews(int $views): static
+    {
+        $this->views = $views;
+
+        return $this;
     }
 }

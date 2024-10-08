@@ -3,39 +3,45 @@
 {% block page_title %} Статьи {% endblock %}
 
 {% block content %}
-    <div class="navigation">
-        {{ knp_pagination_render(paginator) }}
+    <div class="container mt-4">
+        {% include "front/components/pagination.html.twig"
+            with {
+            paginator: paginator,
+            previous: previous,
+            next: next,
+            front_route: 'blog_list'
+        }%}
     </div>
-    {% if paginator|length > 0 %}
-        {% for article in paginator %}
-            <div class="col-xl-12">
-                <div class="card">
-                    <div class="card-body project-box">
-                        <h4 class="mt-0"><span data-blog-title class="text-dark">{{ article.title }}</span></h4>
-                        <p class="text-muted font-13">{{ article.getTextShort() }}
-                        </p>
-
-                        <div>
-                            <a href="{{ path('blog_details', {id: article.id}) }}" data-blog-details-button class="btn btn-primary">Посмотреть статью</a>
+    <div class="container g-py-75">
+        <div class="masonry-grid row g-mb-0" style="position: relative; height: 1267.78px;">
+            <div class="masonry-grid-sizer col-sm-1"></div>
+            {% for article in paginator %}
+                <div class="masonry-grid-item col-sm-12 col-md-6 g-mb-30" style="position: absolute; left: 0%; top: 0px;">
+                    <article class="main-article">
+                        <img class="img-fluid w-100" src="{{ article.image }}" alt="Gravity">
+                        <div class="g-width-80x g-bg-secondary g-pos-rel g-z-index-1 g-pa-30 g-mt-minus-50 mx-auto">
+                            <span class="d-block g-color-gray-dark-v4 g-font-weight-600 g-font-size-12 text-uppercase mb-2">{{ article.created|format_datetime(locale="ru") }}</span>
+                            <h2 class="h5 g-color-black g-font-weight-600 mb-3">
+                                <a class="u-link-v5 g-color-black g-color-primary--hover g-cursor-pointer" href="{{ path('blog_details', {id: article.id}) }}">{{ article.title }}</a>
+                            </h2>
+                            <p class="g-color-gray-dark-v4 g-line-height-1_8">{{ article.getPresentText }}</p>
+                            <a class="g-font-size-13" href="{{ path('blog_details', {id: article.id}) }}">Посмотреть статью</a>
                         </div>
-
-                    </div>
+                    </article>
                 </div>
-
-            </div>
-        {% endfor %}
-        <div class="navigation">
-            {{ knp_pagination_render(paginator) }}
+            {% else %}
+                <p>Статей не опубликовано</p>
+            {% endfor %}
         </div>
-    {% else %}
-        <div class="row">
-            <div class="card">
-                <div class="card-body">
-                    <p class="card-text">
-                        Статьи пока что не опубликованы
-                    </p>
-                </div>
-            </div>
-        </div>
-    {% endif %}
+        {% include "front/components/pagination.html.twig"
+            with {
+            paginator: paginator,
+            previous: previous,
+            next: next,
+            front_route: 'blog_list'
+        }%}
+    </div>
 {% endblock %}
+
+
+

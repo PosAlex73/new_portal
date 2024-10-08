@@ -6,7 +6,9 @@ use App\Controller\Front\Traits\BackUrl;
 use App\Entity\AppNew;
 use App\Enums\CommonStatus;
 use App\Enums\Flash\FlashTypes;
+use App\Enums\Settings\SettingEnum;
 use App\Repository\AppNewRepository;
+use App\Services\Settings\Set;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,18 +18,22 @@ class NewsController extends AbstractController
 {
     use BackUrl;
 
-    public function __construct(protected AppNewRepository $appNewRepository)
-    {
-    }
+    public function __construct(
+        protected AppNewRepository $appNewRepository,
+        protected Set $set
+    ){}
 
     #[Route('/news', name: 'news_list')]
     public function index(Request $request): Response
     {
-        $page = $request->get('page', 1);
-        $news = $this->appNewRepository->getForListPage($page);
+        $offset = max(0, $request->get('offset', 0));
+        $frontendPageNumber = $this->set->get(SettingEnum::FRONT_PAGINATION);
+        $news = $this->appNewRepository->getForListPage($frontendPageNumber->getValue(), $offset);
 
         return $this->render('front/news/index.html.twig', [
             'paginator' => $news,
+            'previous' => $offset - $frontendPageNumber->getValue(),
+            'next' => min(count($news), $offset + $frontendPageNumber->getValue())
         ]);
     }
 

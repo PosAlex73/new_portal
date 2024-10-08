@@ -33,6 +33,9 @@ class AppNew
     #[ORM\Column(length: 1)]
     private ?string $status = null;
 
+    #[ORM\Column(length: 2048, nullable: true)]
+    private ?string $image = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -114,5 +117,17 @@ class AppNew
     public function getShortText()
     {
         return substr($this->getText(), 0, 100) . '...';
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): static
+    {
+        $this->image = $image;
+
+        return $this;
     }
 }

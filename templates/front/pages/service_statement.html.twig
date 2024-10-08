@@ -3,14 +3,19 @@
 {% block page_title %} Условия использования сервиса {% endblock %}
 
 {% block content %}
-    <div class="col">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="header-title">{{ page.title }}</h4>
-                <div>
-                    {{ page.text|raw }}
+    <section class="container g-pt-75 g-pb-30">
+        <div class="row justify-content-center g-mb-20">
+            <div class="col-lg-7">
+                <!-- Start Heading -->
+                <div class="text-center">
+                    <h2 class="h3 g-color-black text-uppercase g-mt-minus-5 mb-2">{{ page.title }}</h2>
+                    <div class="d-inline-block g-width-35 g-height-2 g-bg-primary mb-2"></div>
                 </div>
+                <!-- End Heading -->
             </div>
         </div>
-    </div>
+        <div class="row g-mb-30">
+            {{ page.text|raw }}
+        </div>
+    </section>>
 {% endblock %}

@@ -98,6 +98,8 @@ class CommonFixture extends Fixture implements FixtureGroupInterface
             $article->setText($faker->realText(2000));
             $article->setTitle($faker->realText(20));
             $article->setStatus(CommonStatus::ACTIVE->value);
+            $article->setImage($faker->imageUrl);
+            $article->setViews(0);
 
             $manager->persist($article);
             $manager->flush();
@@ -108,6 +110,7 @@ class CommonFixture extends Fixture implements FixtureGroupInterface
             $new->setStatus(CommonStatus::ACTIVE->value);
             $new->setTitle($faker->realText(20));
             $new->setText($faker->realText(2000));
+            $new->setImage($faker->imageUrl);
 
             $manager->persist($new);
             $manager->flush();

@@ -7,6 +7,7 @@ use App\Enums\CommonStatus;
 use App\Enums\Settings\SettingEnum;
 use App\Services\Settings\Set;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\PaginatorInterface;
 
@@ -29,17 +30,18 @@ class ArticleRepository extends ServiceEntityRepository
         parent::__construct($registry, Article::class);
     }
 
-    public function getForListPage(int $page)
+    public function getForListPage(int $frontendPageNumber, int $offset = 0)
     {
-        $frontendPageNumber = $this->set->get(SettingEnum::FRONT_PAGINATION);
         $query = $this->createQueryBuilder('a')
             ->where('a.status = :status')
             ->setParameters([
                 'status' => CommonStatus::ACTIVE->value
             ])
+            ->setFirstResult($offset)
+            ->setMaxResults($frontendPageNumber)
             ->getQuery();
 
-        return $this->paginator->paginate($query, $page, $frontendPageNumber->getValue());
+        return new Paginator($query);
     }
 
     public function getAnyActiveArticle()
