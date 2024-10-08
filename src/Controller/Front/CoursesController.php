@@ -98,4 +98,11 @@ class CoursesController extends AbstractController
 
         return $this->redirectToRoute('user_progress');
     }
+
+    #[Route('/courses/add-favorite/{id}', name: 'course_add_favorite')]
+    #[IsGranted('ROLE_USER')]
+    public function addCourseToFavorite(Course $course, Request $request)
+    {
+        //fixme
+    }
 }

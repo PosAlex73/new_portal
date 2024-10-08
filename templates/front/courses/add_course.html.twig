@@ -1,0 +1,18 @@
+<ul class="list-inline text-uppercase mb-0">
+    {% if app.user and hasCourse == false %}
+        <li class="list-inline-item g-mr-10">
+            <a class="btn btn-success g-font-size-12 rounded g-px-20--sm g-py-10" href="{{ path('course_add_to_user', {id: course.id}) }}">
+                <i class="fa fa-facebook g-mr-5--sm"></i> <span class="g-hidden-xs-down">Добавить курс</span>
+            </a>
+        </li>
+        <li class="list-inline-item">
+            <a class="btn btn-secondary g-font-size-12 rounded g-px-20--sm g-py-10" href="{{ path('course_add_favorite', {id: course.id}) }}">
+                <i class="fa fa-twitter g-mr-5--sm"></i> <span class="g-hidden-xs-down">Добавить в избранное</span>
+            </a>
+        </li>
+    {% elseif hasCourse %}
+        <p>У вас уже есть данный курс</p>
+    {% else %}
+        <p class="text-danger">Войдите в личный кабинет, чтобы изучить курс</p>
+    {% endif %}
+</ul>

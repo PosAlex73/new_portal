@@ -1,7 +1,10 @@
 {% if course.courseTags %}
-    <div class="mt-2">
-        {% for tag in course.courseTags %}
-            <h5><span class="badge bg-success rounded-pill float-start mt-1">{{ tag.title }}</span></h5>
-        {% endfor %}
+    <div class="g-mb-30">
+        <h6 class="g-color-gray-dark-v1">
+            <strong class="g-mr-5">Теги:</strong>
+            {% for tag in course.courseTags %}
+                <a class="u-tags-v1 g-font-size-12 g-brd-around g-brd-gray-light-v4 g-bg-primary--hover g-brd-primary--hover g-color-black-opacity-0_8 g-color-white--hover rounded g-py-6 g-px-15 g-mr-5" href="#">{{ tag.title }}</a>
+            {% endfor %}
+        </h6>
     </div>
 {% endif %}

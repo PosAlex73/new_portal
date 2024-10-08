@@ -3,90 +3,53 @@
 {% block page_title %}{{ course.title }}{% endblock %}
 
 {% block content %}
-    <div class="row">
-        <a href="{{ path('courses_list') }}" class="btn btn-secondary m-2">Назад к списку</a>
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-body task-detail">
-                    {% if app.user %}
-                        <div class="dropdown float-end">
-                            <a href="#" class="dropdown-toggle arrow-none card-drop" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="mdi mdi-dots-vertical"></i>
-                            </a>
-                                <div class="dropdown-menu dropdown-menu-end">
-                                        <a href="{{ path('bug_report', {id: course.id}) }}" class="dropdown-item">Сообщить об ошибке</a>
-                                </div>
+    <div class="container g-pt-75 g-pb-45">
+        <div class="row justify-content-center">
+            <div class="col-lg-9 g-mb-30">
+                <div class="g-pr-20--lg">
+                    <article class="g-mb-0">
+                        <header class="g-mb-30">
+                            <h2 class="h1 g-mb-15 g-mt-minus-10">{{ course.title }}</h2>
+                            <ul class="list-inline d-sm-flex g-color-gray-dark-v4 mb-0">
+                                <li class="list-inline-item">
+                                    <a class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover" href="#">{{ course.category.title }}</a>
+                                </li>
+                                <li class="list-inline-item g-mx-10">/</li>
+                                <li class="list-inline-item">
+                                    {{ course.created|format_datetime(locale="ru") }}
+                                </li>
+                                <li class="list-inline-item ml-auto">
+                                    <i class="icon-star u-line-icon-pro align-middle mr-1"></i> Добавлено в избранное: {{ course.FavoriteCourse|length }}
+                                </li>
+                            </ul>
+                            <hr class="g-brd-gray-light-v4 g-mt-25 g-mb-30">
+                            {% include "front/courses/add_course.html.twig" %}
+                        </header>
+                        <div class="g-font-size-16 g-line-height-1_8 g-mb-30">
+                            {{ course.text|raw }}
                         </div>
-                    {% endif %}
-                    <div class="d-flex mb-3">
-                        <div class="flex-grow-1">
-                            <h4 class="media-heading mt-0">{{ course.title }}</h4>
-                            <span class="badge bg-danger p-2 font-15">{{ course.category.title }}</span>
-                        </div>
-                    </div>
-
-                    <p class="text-muted">
-                        {{ course.text|raw }}
-                    </p>
-
-                    <div class="row task-dates mb-0 mt-2">
-                        <div class="col-lg-6">
-                            <h5 class="font-600 m-b-5">Дата создания</h5>
-                            <p>{{ course.getCreatedStr() }}</p>
-                        </div>
-
-                        <div class="col-lg-6">
-                            <h5 class="font-600 m-b-5">Дата обновления</h5>
-                            <p>{{ course.getUpdatedStr() }}</p>
-                        </div>
-                    </div>
-                    <div class="clearfix"></div>
-
-                    <div class="attached-files mt-3">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="text-end">
-                                    {% if app.user and hasCourse == false %}
-                                        <a href="{{ path('course_add_to_user', {id: course.id}) }}" class="btn btn-success waves-effect waves-light me-1">
-                                            Добавить курс
-                                        </a>
-                                    {% elseif hasCourse == true %}
-                                        <button type="button" class="btn btn-light waves-effect waves-light me-1">
-                                            У вас уже есть данный курс
-                                        </button>
-                                    {% else %}
-                                        <a href="{{ path('app_login') }}" class="btn btn-light waves-effect waves-light me-1">
-                                            Войти
-                                        </a>
-                                    {% endif %}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+                        <!-- Start Tags -->
+                        {% include "front/components/course_tags.html.twig" %}
+                        <!-- End Tags -->
+                        <hr class="g-brd-gray-light-v4">
+                        <!-- Start Social Shares -->
+                        {% include "front/courses/add_course.html.twig" %}
+                    </article>
                 </div>
             </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="header-title mt-0 mb-3">Задачи в курсе ({{ course.taskCount() }})</h4>
-
-                    <div>
-                        {% for task in course.tasks %}
-                            <div class="d-flex mb-3">
-                                <div class="flex-grow-1">
-                                    <h5 class="mt-0">{{ task.title }}</h5>
-                                    <p class="font-13 text-muted mb-0">
-                                        <span class="text-primary">{{ task.getTypeStr() }}</span>
-                                        <div>
-                                            {{ task.getShortText() }}
-
-                                         </div>
-                                    </p>
-                                </div>
-                            </div>
-                        {% endfor %}
+            <div class="col-lg-3 g-brd-left--lg g-brd-gray-light-v4 g-mb-30">
+                <div class="g-pl-20--lg">
+                    <div class="g-mb-20">
+                        <h3 class="h5 g-color-black g-font-weight-600 g-mb-10">Задачи в курсе:</h3>
+                        <ul class="list-unstyled g-font-size-13 mb-0">
+                            {% for task in course.tasks %}
+                                <li>
+                                    <span class="d-block u-link-v5 g-color-gray-dark-v4 rounded g-px-20 g-py-8" href="#"><i class="mr-2 fa fa-angle-right"></i> {{ task.title }}</span>
+                                </li>
+                            {% else %}
+                                <p>В данный курс не добавили задачи</p>
+                            {% endfor %}
+                        </ul>
                     </div>
                 </div>
             </div>
