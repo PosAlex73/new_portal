@@ -7,7 +7,7 @@ use App\Services\Menu\FooterMenu;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent]
-class Footer
+class TopMenu
 {
     /**
      * @var MenuElement[]
@@ -16,6 +16,6 @@ class Footer
 
     public function __construct(protected FooterMenu $footerMenuService)
     {
-        $this->footerMenu = $this->footerMenuService->getFooterMenu();
+        $this->TopMenu = $this->footerMenuService->getFooterMenu();
     }
 }

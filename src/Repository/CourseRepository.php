@@ -41,17 +41,18 @@ class CourseRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function paginate(int $page = 1)
+    public function paginate(int $frontendPageNumber, int $offset = 0)
     {
-        $frontendPageNumber = $this->set->get(SettingEnum::FRONT_PAGINATION);
         $query = $this->createQueryBuilder('c')
             ->where('c.status = :status')
             ->setParameters([
                 'status' => CourseStatuses::ACTIVE->value
             ])
+            ->setMaxResults($frontendPageNumber)
+            ->setFirstResult($offset)
             ->getQuery();
 
-        return $this->paginator->paginate($query, $page, $frontendPageNumber->getValue());
+        return new Paginator($query);
     }
 
     public function getBySearch(string $text)

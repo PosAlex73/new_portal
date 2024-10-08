@@ -7,8 +7,10 @@ use App\Entity\Course;
 use App\Entity\User;
 use App\Enums\Courses\CourseStatuses;
 use App\Enums\Flash\FlashTypes;
+use App\Enums\Settings\SettingEnum;
 use App\Repository\CourseRepository;
 use App\Repository\UserProgressRepository;
+use App\Services\Settings\Set;
 use App\Services\UserProgress\ProgressCreator;
 use App\Services\UserProgress\ProgressUserChecker;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,17 +27,21 @@ class CoursesController extends AbstractController
         protected CourseRepository $courseRepository,
         protected ProgressCreator $progressCreator,
         protected UserProgressRepository $userProgressRepository,
-        protected ProgressUserChecker $progressUserChecker
+        protected ProgressUserChecker $progressUserChecker,
+        protected Set $set
     ){}
 
     #[Route('/courses', name: 'courses_list')]
     public function index(Request $request): Response
     {
-        $page = $request->get('page', 1);
-        $courses = $this->courseRepository->paginate($page);
+        $offset = max(0, $request->get('offset', 0));
+        $frontendPageNumber = $this->set->get(SettingEnum::FRONT_PAGINATION);
+        $courses = $this->courseRepository->paginate($frontendPageNumber->getValue(), $offset);
 
         $data = [
             'paginator' => $courses,
+            'previous' => $offset - $frontendPageNumber->getValue(),
+            'next' => min(count($courses), $offset + $frontendPageNumber->getValue())
         ];
 
         /** @var User $user */

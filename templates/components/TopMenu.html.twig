@@ -1,0 +1,12 @@
+<div class="col-auto g-px-15 w-100 g-width-auto--md">
+    <ul id="dropdown-megamenu" class="d-md-block collapse list-inline g-line-height-1 g-mx-minus-4 mb-0">
+        {% for item in TopMenu %}
+            <li class="d-block d-md-inline-block g-mx-4">
+                <a href="{{ item.route }}" class="g-color-white g-color-gray-light-v1--hover g-text-underline--none--hover">{{ item.title }}</a>
+            </li>
+            {% if loop.last != true %}
+                <li class="d-block d-md-inline-block g-mx-4">|</li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+</div>
