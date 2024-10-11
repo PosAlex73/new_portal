@@ -10,7 +10,7 @@
                             <a href="{{ path('profile') }}" class="g-color-white g-color-gray-light-v1--hover g-text-underline--none--hover">Личный кабинет</a>
                         </li>
                         <li class="list-inline-item g-mx-4 g-mt-10">
-                            <a href="{{ path('notifications') }}" class="g-color-white g-color-gray-light-v1--hover g-text-underline--none--hover">Уведомления</a>
+                            {% include "common/notifications_button.html.twig" %}
                         </li>
                     {% else %}
                         <li class="list-inline-item g-mx-4 g-mt-10">
@@ -28,7 +28,11 @@
                                 <i class="fa fa-search"></i>
                             </a>
                             <!-- Start Search Form -->
-                            <form method="post" id="searchform-6" class="u-searchform-v1 g-bg-black g-box-shadow-none g-pa-10 g-mt-10 u-dropdown--css-animation u-dropdown--hidden" style="animation-duration: 300ms; right: -15px;">
+                            <form method="post"
+                                  id="searchform-6"
+                                  class="u-searchform-v1 g-bg-black g-box-shadow-none g-pa-10 g-mt-10 u-dropdown--css-animation u-dropdown--hidden"
+                                  style="animation-duration: 300ms; right: -15px;"
+                            >
                                 <div class="input-group g-brd-primary--focus">
                                     <input class="form-control rounded-0 u-form-control g-brd-white" type="search" placeholder="Enter your keyword ...">
                                     <div class="input-group-addon p-0">
