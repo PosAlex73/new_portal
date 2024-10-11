@@ -111,6 +111,7 @@ class CommonFixture extends Fixture implements FixtureGroupInterface
             $new->setTitle($faker->realText(20));
             $new->setText($faker->realText(2000));
             $new->setImage($faker->imageUrl);
+            $new->setViews(0);
 
             $manager->persist($new);
             $manager->flush();
