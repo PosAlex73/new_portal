@@ -30,7 +30,12 @@ class SettingsCreator
                 SettingEnum::MAX_REPORTS->value => [
                     'value' => 5,
                     'type' => SettingTypes::Number->value
+                ],
+                SettingEnum::GITHUB_LINK->value => [
+                    'value' => '',
+                    'type' => SettingTypes::Text->value
                 ]
+
             ],
             SettingTabs::COMMON->value => [
                 SettingEnum::PAGE_TITLE->value => [

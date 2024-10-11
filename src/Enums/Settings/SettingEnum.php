@@ -11,6 +11,7 @@ enum SettingEnum: string
     case ADMIN_PAGINATION = 'admin_pagination';
     case FRONT_PAGINATION = 'front_pagination';
     case MAX_REPORTS = 'max_reposts';
+    case GITHUB_LINK = 'github_link';
 
     //registration types
     case REGISTRATION_VK = 'registration_vk';
