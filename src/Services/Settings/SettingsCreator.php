@@ -34,6 +34,18 @@ class SettingsCreator
                 SettingEnum::GITHUB_LINK->value => [
                     'value' => '',
                     'type' => SettingTypes::Text->value
+                ],
+                SettingEnum::PROJECT_SHORT_DESCRIPTION->value => [
+                    'value' => 'Этот проект находится в стадии бета-тестирования. Возможны ошибки.',
+                    'type' => SettingTypes::Text->value
+                ],
+                SettingEnum::ADMIN_PUBLIC_EMAIL->value => [
+                    'value' => 'admin@admin.ru',
+                    'type' => SettingTypes::Text->value
+                ],
+                SettingEnum::FRONT_SITE->value => [
+                    'value' => 'localhost',
+                    'type' => SettingTypes::Text->value
                 ]
 
             ],

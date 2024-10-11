@@ -6,8 +6,7 @@
                 <a class="d-block g-mb-25" href="{{ path("front_index") }}">
                     <img src="{{ asset('assets/img/logo/logo-2.png') }}" class="img-fluid" alt="Gravity">
                 </a>
-                <p>Gravity is an incredibly beautiful and fully responsive Bootstrap Template for any type of professionals.</p>
-                <p class="g-mb-0">These professionally designed demos below are built to give you a boosted start for your project. Build Your websites like a lego.</p>
+                <p>{{ set.getShortProjectDescription }}</p>
             </div>
             <!-- End Content Column #01 -->
             <!-- Start Content Column #02 -->
@@ -81,43 +80,21 @@
             <!-- Start Content Column #04 -->
             <div class="col-lg-3 col-md-6 col-sm-6 col-12 g-mb-25 g-mb-0--lg">
                 <div class="u-heading-v3-1 g-brd-white-opacity-0_3 g-mb-25">
-                    <h2 class="u-heading-v3__title h6 text-uppercase g-brd-white">Our Contacts</h2>
+                    <h2 class="u-heading-v3__title h6 text-uppercase g-brd-white">Наши контакты</h2>
                 </div>
                 <address class="g-footer-map-bg g-bg-no-repeat g-font-size-12 mb-0">
-                    <!-- Start Location -->
-                    <div class="d-flex g-mb-25">
-                        <div class="g-mr-10">
-                              <span class="u-icon-v3 u-icon-size--xs g-bg-white-opacity-0_1 g-color-white-opacity-0_6">
-                                <i class="fa fa-map-marker"></i>
-                              </span>
-                        </div>
-                        <p class="mb-0">123 Lincoln Ave, Suite 555,<br>San Francisco, CA 98765</p>
-                    </div>
-                    <!-- End Location -->
-                    <!-- Start Phone -->
-                    <div class="d-flex g-mb-25">
-                        <div class="g-mr-10">
-                              <span class="u-icon-v3 u-icon-size--xs g-bg-white-opacity-0_1 g-color-white-opacity-0_6">
-                                <i class="fa fa-phone"></i>
-                              </span>
-                        </div>
-                        <p class="mb-0">+1 555 555 5555<br>+1 777 777 7777</p>
-                    </div>
-                    <!-- End Phone -->
-                    <!-- Start E-Mail and Website -->
                     <div class="d-flex g-mb-0">
                         <div class="g-mr-10">
                               <span class="u-icon-v3 u-icon-size--xs g-bg-white-opacity-0_1 g-color-white-opacity-0_6">
-                                <i class="fa fa-globe"></i>
+                                <i class="fa fa-envelope"></i>
                               </span>
                         </div>
                         <p class="mb-0">
-                            <a class="g-color-white-opacity-0_8 g-color-white--hover" href="mailto:info@yoursite.com">info@yoursite.com</a>
+                            <a class="g-color-white-opacity-0_8 g-color-white--hover" href="mailto:{{ set.getAdminPublicEmail }}">{{ set.getAdminPublicEmail }}</a>
                             <br>
-                            <a class="g-color-white-opacity-0_8 g-color-white--hover" href="#">www.yoursite.com</a>
+                            <a class="g-color-white-opacity-0_8 g-color-white--hover" href="#">{{ set.getFrontSite }}</a>
                         </p>
                     </div>
-                    <!-- End E-Mail and Website -->
                 </address>
             </div>
             <!-- End Content Column #04 -->
@@ -137,7 +114,7 @@
             <div class="col-md-4 align-self-center">
                 <ul class="list-inline text-center text-md-right mb-0">
                     <li class="list-inline-item g-mx-10" data-toggle="tooltip" data-placement="top" title="Github">
-                        <a href="" class="g-color-white-opacity-0_5 g-color-white--hover">
+                        <a href="{{ set.getGithubLink }}" class="g-color-white-opacity-0_5 g-color-white--hover">
                             <i class="fa fa-github"></i>
                         </a>
                     </li>

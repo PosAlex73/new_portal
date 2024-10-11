@@ -26,4 +26,24 @@ class Set
     {
         return $this->settings[$settingEnum->value];
     }
+
+    public function getGithubLink(): string
+    {
+        return $this->get(SettingEnum::GITHUB_LINK)->getValue();
+    }
+
+    public function getShortProjectDescription(): string
+    {
+        return $this->get(SettingEnum::PROJECT_SHORT_DESCRIPTION)->getValue();
+    }
+
+    public function getAdminPublicEmail(): string
+    {
+        return $this->get(SettingEnum::ADMIN_PUBLIC_EMAIL)->getValue();
+    }
+
+    public function getFrontSite(): string
+    {
+        return $this->get(SettingEnum::FRONT_SITE)->getValue();
+    }
 }
