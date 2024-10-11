@@ -56,16 +56,8 @@
                                             <td class="text-center">{{ data.startDate }}</td>
 
                                             <td class="text-center">
-                                                <div class="dropdown">
-                                                    <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        Выберите действие <i class="mdi mdi-chevron-down"></i>
-                                                    </button>
-                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="">
-                                                        <a class="dropdown-item" href="{{ path('front_learn', {id: data.progressId}) }}">Начать обучение</a>
-                                                        <a class="dropdown-item text-danger" href="{{ path('reset_progress', {id: data.progressID}) }}">Сбросить прогресс</a>
-                                                    </div>
-                                                </div>
-
+                                                <a href="{{ path('front_learn', {id: data.progressId}) }}" class="btn btn-md u-btn-outline-darkpurple g-mr-10 g-mb-15">Начать обучение</a>
+                                                <a href="{{ path('reset_progress', {id: data.progressID}) }}" class="btn btn-md u-btn-outline-red g-mr-10 g-mb-15">Сбросить прогресс</a>
                                             </td>
                                         </tr>
                                     {% endfor %}
