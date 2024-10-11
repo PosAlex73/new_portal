@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Article;
+use App\Enums\Blog\BlogStatuses;
 use App\Enums\CommonStatus;
 use App\Enums\Settings\SettingEnum;
 use App\Services\Settings\Set;
@@ -63,6 +64,19 @@ class ArticleRepository extends ServiceEntityRepository
             ->where($qb->expr()->like('c.title', ':text'))
             ->orWhere($qb->expr()->like('c.text', ':text'))
             ->setParameter('text', "%$text%")
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getPopularArticles(int $number = 5)
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.status = :status')
+            ->orderBy('a.views')
+            ->setParameters([
+                'status' => BlogStatuses::ACTIVE->value
+            ])
+            ->setMaxResults($number)
             ->getQuery()
             ->getResult();
     }

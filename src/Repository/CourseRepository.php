@@ -66,4 +66,18 @@ class CourseRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function getPopularCourses(int $number = 5)
+    {
+        return $this
+            ->createQueryBuilder('c')
+            ->where('c.status = :status')
+            ->setParameters([
+                'status' => CourseStatuses::ACTIVE->value
+            ])
+            ->orderBy('c.position')
+            ->setMaxResults($number)
+            ->getQuery()
+            ->getResult();
+    }
 }
