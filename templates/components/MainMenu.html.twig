@@ -1,7 +1,16 @@
 <ul class="navbar-nav text-uppercase gs-main-nav-list g-font-weight-600 ml-auto">
     {% for element in mainMenu %}
         <li class="nav-item hs-has-sub-menu g-mx-15--lg" data-animation-in="fadeIn" data-animation-out="fadeOut">
-            <a id="nav-link--home" class="nav-link g-py-7 g-px-0" href="{{ element.route }}" aria-haspopup="true" aria-expanded="false" aria-controls="nav-submenu--home">{{ element.title }}</a>
+            <a id="nav-link--home"
+               class="nav-link g-py-7 g-px-0"
+               href="{{ element.route }}"
+               aria-haspopup="true"
+               aria-expanded="false"
+               aria-controls="nav-submenu--home"
+            >
+                <i class="{{ element.icon }}"></i>
+                {{ element.title }}
+            </a>
         </li>
     {% endfor %}
 </ul>
