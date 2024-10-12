@@ -5,6 +5,9 @@
         {% include "common/topbar.html.twig" %}
 
         {% include "common/sidebar.html.twig" %}
+        <div class="container mt-2">
+            {% include 'common/flash.html.twig' %}
+        </div>
         {% block content %}
         {% endblock %}
         <hr class="g-mx-0 g-my-0">
