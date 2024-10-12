@@ -10,6 +10,7 @@ use App\Enums\Flash\FlashTypes;
 use App\Enums\System\FrontRouteNames;
 use App\Enums\Task\TaskTypes;
 use App\Repository\UserProgressRepository;
+use App\Services\Menu\BreadCrumbsBuilder;
 use App\Services\Practice\CodeClient;
 use App\Services\Practice\CodeClientService;
 use App\Services\UserProgress\ProgressCreator;
@@ -28,10 +29,9 @@ class LearnController extends AbstractController
         protected TaskDoneChecker $taskDoneChecker,
         protected TemplateGetter $templateGetter,
         protected ProgressCreator $progressCreator,
-        protected CodeClientService $codeClientService
-    )
-    {
-    }
+        protected CodeClientService $codeClientService,
+        protected BreadCrumbsBuilder $breadCrumbsBuilder
+    ){}
 
     #[Route('/profile/learn/{id}', name: 'front_learn')]
     #[IsGranted('ROLE_USER')]
@@ -42,6 +42,11 @@ class LearnController extends AbstractController
         /** @var Course $course */
         $course = $userProgress->getCourse();
         $taskData = $userProgress->getTasksArray();
+
+        $this->initBreadCrumbs();
+        $this->breadCrumbsBuilder->addBreadCrumbs($course->getTitle(),
+            $this->generateUrl('front_learn', ['id' => $userProgress->getId()])
+        );
 
         return $this->render('front/learn/index.html.twig', [
             'userProgress' => $userProgress,
@@ -60,6 +65,11 @@ class LearnController extends AbstractController
         if ($task->getType() === TaskTypes::PRACTICE->value) {
             $checkerIsAlive = $this->codeClientService->isCheckerAlive();
         }
+
+        $this->initBreadCrumbs();
+        $this->breadCrumbsBuilder->addBreadCrumbs(
+            $task->getTitle(), $this->generateUrl('learn_task', ['id' => $task->getId()])
+        );
 
         return $this->render('front/learn/learn.html.twig', [
             'task' => $task,
@@ -92,5 +102,10 @@ class LearnController extends AbstractController
         return $this->redirectToRoute('learn_task', [
             'id' => $task->getId()
         ]);
+    }
+
+    private function initBreadCrumbs()
+    {
+        $this->breadCrumbsBuilder->addIndexRoute();
     }
 }

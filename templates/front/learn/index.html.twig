@@ -3,6 +3,7 @@
 {% block page_title %}Обучение{% endblock %}
 
 {% block content %}
+
     <div class="container g-my-75">
         <article class="g-mb-0">
             <ul class="nav nav-pills navtab-bg nav-justified">
@@ -21,8 +22,12 @@
                 <div class="tab-pane active" id="general">
                     <h3 class="g-my-30">{{ course.title }}</h3>
                     <p>{{ course.text|raw }}</p>
+                    <hr>
+                    <div>
+                        <a href="{{ path("bug_report", {id: course.id}) }}" class="btn btn-danger">Сообщить об ошибке</a>
+                    </div>
                     {% if course.courseLinks %}
-                        <p></p>
+                        <hr>
                         {% for link in course.courseLinks %}
                             <h5>Полезные ссылки</h5>
                             <div class="border border-secondary p-2 rounded-3">

@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Course;
+use App\Entity\User;
+use App\Entity\UserProgress;
 use App\Enums\Courses\CourseStatuses;
 use App\Enums\Settings\SettingEnum;
 use App\Services\Settings\Set;

@@ -6,10 +6,13 @@ use App\Controller\Front\Traits\BackUrl;
 use App\Entity\Course;
 use App\Entity\CourseBugReport;
 use App\Entity\User;
+use App\Entity\UserProgress;
 use App\Enums\Flash\FlashTypes;
 use App\Form\BugCourseReportType;
 use App\Repository\CourseBugReportRepository;
+use App\Repository\UserProgressRepository;
 use App\Services\Courses\BugReportService;
+use App\Services\Menu\BreadCrumbsBuilder;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,7 +25,9 @@ class BugReportController extends AbstractController
 
     public function __construct(
         protected BugReportService $bugReportService,
-        protected CourseBugReportRepository $courseBugReportRepository
+        protected CourseBugReportRepository $courseBugReportRepository,
+        protected BreadCrumbsBuilder $breadCrumbsBuilder,
+        protected UserProgressRepository $userProgressRepository
     ){}
 
     #[Route('/report/{id}', name: 'bug_report', methods: ['GET', 'POST'])]
@@ -31,11 +36,11 @@ class BugReportController extends AbstractController
     {
         $form = $this->createForm(BugCourseReportType::class);
         $form->handleRequest($request);
+        $user = $this->getUser();
 
         if ($form->isSubmitted() && $form->isValid()) {
 
             /** @var User $user */
-            $user = $this->getUser();
             if ($this->courseBugReportRepository->checkUserCreatedManyReports($user)) {
                 $this->addFlash(
                     FlashTypes::ERROR->value,
@@ -50,10 +55,29 @@ class BugReportController extends AbstractController
                 $this->addFlash(FlashTypes::NOTICE->value, 'Отчет об ошибке успешно отправлен!');
             }
 
-            return $this->redirectToRoute('course_details', [
-                'id' => $course->getId()
+            /** @var UserProgress $userProgress */
+            $userProgress = $this->userProgressRepository->getByUserProgress(
+                $user->getId(),
+                $course->getId(),
+                true
+            );
+
+            return $this->redirectToRoute('front_learn', [
+                'id' => $userProgress->getId()
             ]);
         } else {
+
+            $userProgress = $this->userProgressRepository->getByUserProgress(
+                $user->getId(),
+                $course->getId(),
+                true
+            );
+
+            $this->initBreadCrumbs();
+            $this->breadCrumbsBuilder->addBreadCrumbs(
+                $course->getTitle(), $this->generateUrl('front_learn', ['id' => $userProgress->getId()])
+            );
+
             return $this->render(
                 'front/bug_report/index.html.twig',
                 [
@@ -62,6 +86,10 @@ class BugReportController extends AbstractController
                 ]
             );
         }
+    }
 
+    private function initBreadCrumbs()
+    {
+        $this->breadCrumbsBuilder->addIndexRoute();
     }
 }
