@@ -10,6 +10,7 @@ use App\Enums\Flash\FlashTypes;
 use App\Enums\Settings\SettingEnum;
 use App\Repository\CourseRepository;
 use App\Repository\UserProgressRepository;
+use App\Services\Menu\BreadCrumbsBuilder;
 use App\Services\Settings\Set;
 use App\Services\UserProgress\ProgressCreator;
 use App\Services\UserProgress\ProgressUserChecker;
@@ -28,12 +29,14 @@ class CoursesController extends AbstractController
         protected ProgressCreator $progressCreator,
         protected UserProgressRepository $userProgressRepository,
         protected ProgressUserChecker $progressUserChecker,
-        protected Set $set
+        protected Set $set,
+        protected BreadCrumbsBuilder $breadCrumbsBuilder
     ){}
 
     #[Route('/courses', name: 'courses_list')]
     public function index(Request $request): Response
     {
+        $this->initBreadCrumbs();
         $offset = max(0, $request->get('offset', 0));
         $frontendPageNumber = $this->set->get(SettingEnum::FRONT_PAGINATION);
         $courses = $this->courseRepository->paginate($frontendPageNumber->getValue(), $offset);
@@ -74,6 +77,12 @@ class CoursesController extends AbstractController
             $hasCourse = false;
         }
 
+        $this->initBreadCrumbs();
+        $this->breadCrumbsBuilder->addBreadCrumbs(
+            $course->getTitle(),
+            $this->generateUrl('course_details', ['id' => $course->getId()])
+        );
+
         return $this->render('front/courses/details.html.twig', [
             'course' => $course,
             'hasCourse' => $hasCourse
@@ -104,5 +113,11 @@ class CoursesController extends AbstractController
     public function addCourseToFavorite(Course $course, Request $request)
     {
         //fixme
+    }
+
+    private function initBreadCrumbs()
+    {
+        $this->breadCrumbsBuilder->addIndexRoute();
+        $this->breadCrumbsBuilder->addBreadCrumbs('Курсы', $this->generateUrl('courses_list'));
     }
 }

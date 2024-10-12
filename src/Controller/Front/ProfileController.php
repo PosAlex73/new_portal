@@ -9,6 +9,7 @@ use App\Enums\Flash\FlashTypes;
 use App\Form\UserFormType;
 use App\Form\UserProfileFormType;
 use App\Repository\UserProgressRepository;
+use App\Services\Menu\BreadCrumbsBuilder;
 use App\Services\UserProgress\CourseCounter;
 use App\Services\UserProgress\UserProgressResetService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -24,7 +25,8 @@ class ProfileController extends AbstractController
         protected EntityManagerInterface $entityManager,
         protected UserProgressRepository $userProgressRepository,
         protected CourseCounter $courseCounter,
-        protected UserProgressResetService $userProgressResetService
+        protected UserProgressResetService $userProgressResetService,
+        protected BreadCrumbsBuilder $breadCrumbsBuilder
     ){}
 
     use BackUrl;
@@ -36,7 +38,10 @@ class ProfileController extends AbstractController
         $user = $this->getUser();
 
         if (!is_null($user) && !$user->isVerified()) {
-            $this->addFlash(FlashTypes::ERROR->value, 'Необходимо подтвердить почтовый ящык. Письмо было отправлено на ваш почтовый ящик: ' . $user->getEmail());
+            $this->addFlash(
+                FlashTypes::ERROR->value,
+                'Необходимо подтвердить почтовый ящык. Письмо было отправлено на ваш почтовый ящик: ' . $user->getEmail()
+            );
             return $this->redirectToRoute('front_index');
         }
 
@@ -51,6 +56,7 @@ class ProfileController extends AbstractController
             $this->redirect($this->getBackUrl($request));
         }
 
+        $this->initBreadCrumbs();
         return $this->render('front/profile/index.html.twig', [
             'userForm' => $userForm,
             'user' => $user
@@ -66,6 +72,7 @@ class ProfileController extends AbstractController
         $userProgress = $user->getUserProgress();
         $calculatedData = $this->courseCounter->calculateUserProgress($userProgress);
 
+        $this->initBreadCrumbs();
         return $this->render('front/profile/user_progress.html.twig', [
             'userProgress' => $userProgress,
             'progressData' => $calculatedData
@@ -87,6 +94,7 @@ class ProfileController extends AbstractController
             $this->addFlash(FlashTypes::NOTICE->value, 'Профиль успешно обновлен!');
         }
 
+        $this->initBreadCrumbs();
         return $this->render('front/profile/user_settings.html.twig', [
             'profileForm' => $profileForm
         ]);
@@ -106,5 +114,11 @@ class ProfileController extends AbstractController
         }
 
         return $this->redirectToRoute('profile');
+    }
+
+    private function initBreadCrumbs()
+    {
+        $this->breadCrumbsBuilder->addIndexRoute();
+        $this->breadCrumbsBuilder->addBreadCrumbs('Профиль', $this->generateUrl('profile'));
     }
 }

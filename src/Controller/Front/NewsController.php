@@ -8,6 +8,7 @@ use App\Enums\CommonStatus;
 use App\Enums\Flash\FlashTypes;
 use App\Enums\Settings\SettingEnum;
 use App\Repository\AppNewRepository;
+use App\Services\Menu\BreadCrumbsBuilder;
 use App\Services\Settings\Set;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,7 +21,8 @@ class NewsController extends AbstractController
 
     public function __construct(
         protected AppNewRepository $appNewRepository,
-        protected Set $set
+        protected Set $set,
+        protected BreadCrumbsBuilder $breadCrumbsBuilder
     ){}
 
     #[Route('/news', name: 'news_list')]
@@ -29,6 +31,8 @@ class NewsController extends AbstractController
         $offset = max(0, $request->get('offset', 0));
         $frontendPageNumber = $this->set->get(SettingEnum::FRONT_PAGINATION);
         $news = $this->appNewRepository->getForListPage($frontendPageNumber->getValue(), $offset);
+
+        $this->initBreadCrumbs();
 
         return $this->render('front/news/index.html.twig', [
             'paginator' => $news,
@@ -46,8 +50,19 @@ class NewsController extends AbstractController
             return $this->redirect($this->getBackUrl($request));
         }
 
+        $this->initBreadCrumbs();
+        $this->breadCrumbsBuilder->addBreadCrumbs($appNew->getTitle(),
+            $this->generateUrl('news_details', ['id' => $appNew->getId()])
+        );
+
         return $this->render('front/news/details.html.twig', [
             'new' => $appNew
         ]);
+    }
+
+    private function initBreadCrumbs()
+    {
+        $this->breadCrumbsBuilder->addIndexRoute();
+        $this->breadCrumbsBuilder->addBreadCrumbs('Новости', $this->generateUrl('news_list'));
     }
 }

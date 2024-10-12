@@ -57,7 +57,7 @@
                                             <span class="{{ taskBg }}">
                                                 {% if task.id in taskData|keys %}
                                                     {% set taskId = task.id %}
-                                                    {{ taskData[taskId].endDate.date|date('Y-m-d H:i:s') }}
+                                                    {{ taskData[taskId].endDate.date|date(format_datetime_short) }}
                                                 {% endif %}
                                             </span>
                                     </td>
@@ -70,9 +70,4 @@
             </div>
         </article>
     </div>
-
-
-
-
-
 {% endblock %}

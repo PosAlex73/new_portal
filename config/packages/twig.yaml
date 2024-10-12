@@ -3,6 +3,9 @@ twig:
     form_themes: ['form/custom_types.html.twig']
     globals:
         set: '@App\Services\Settings\Set'
+        format_datetime_long: 'y-m-d H:i:s'
+        format_datetime_short: 'Y-m-d'
+        format_datetime_year: 'Y'
 when@test:
     twig:
         strict_variables: true

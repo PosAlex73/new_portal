@@ -8,6 +8,7 @@ use App\Entity\User;
 use App\Entity\UserProgress;
 use App\Enums\Flash\FlashTypes;
 use App\Enums\System\FrontRouteNames;
+use App\Enums\Task\TaskTypes;
 use App\Repository\UserProgressRepository;
 use App\Services\Practice\CodeClient;
 use App\Services\Practice\CodeClientService;
@@ -55,7 +56,10 @@ class LearnController extends AbstractController
     {
         $taskTemplate = $this->templateGetter->getTemplateForTask($task);
 
-        $checkerIsAlive = $this->codeClientService->isCheckerAlive();
+        $checkerIsAlive = false;
+        if ($task->getType() === TaskTypes::PRACTICE->value) {
+            $checkerIsAlive = $this->codeClientService->isCheckerAlive();
+        }
 
         return $this->render('front/learn/learn.html.twig', [
             'task' => $task,

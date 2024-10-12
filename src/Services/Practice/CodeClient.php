@@ -79,7 +79,8 @@ class CodeClient
         try {
             $response = $this->httpClient->request('GET', $this->getFullUrl() . '/check_alive',
                 [
-                    'headers' => $this->getCommonHeaders()
+                    'headers' => $this->getCommonHeaders(),
+                    'timeout' => 0.5
                 ]
             )->getContent();
 
