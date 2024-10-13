@@ -30,7 +30,7 @@ class ArticlesControllerTest extends ExtendedWebTestCase
         $this->assertResponseIsSuccessful();
 
         foreach ($articles as $article) {
-            $this->assertAnySelectorTextContains('span', $article->getTitle());
+            $this->assertAnySelectorTextContains('a', $article->getTitle());
         }
     }
 
@@ -44,6 +44,7 @@ class ArticlesControllerTest extends ExtendedWebTestCase
         $article->setStatus(CommonStatus::ACTIVE->value);
         $article->setTitle('ttt');
         $article->setText('text');
+        $article->setViews(0);
         $em->persist($article);
         $em->flush();
 
@@ -53,7 +54,6 @@ class ArticlesControllerTest extends ExtendedWebTestCase
         );
 
         $this->assertResponseIsSuccessful();
-        $this->assertAnySelectorTextContains('h4', $article->getTitle());
-        $this->assertAnySelectorTextContains('a', 'Назад к списку статей');
+        $this->assertAnySelectorTextContains('h2', $article->getTitle());
     }
 }

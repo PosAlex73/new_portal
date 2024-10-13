@@ -17,7 +17,7 @@ class IndexControllerTest extends ExtendedWebTestCase
         $client->request('GET', '/');
 
         $this->assertResponseIsSuccessful();
-        $this->assertAnySelectorTextContains('span', 'Личный кабинет');
+        $this->assertAnySelectorTextContains('a', 'Войти');
         $this->assertAnySelectorTextContains('a', 'Курсы');
         $this->assertAnySelectorTextContains('a', 'Новости');
         $this->assertAnySelectorTextContains('a', 'Статьи');

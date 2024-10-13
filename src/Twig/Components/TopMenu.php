@@ -9,6 +9,8 @@ use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 #[AsTwigComponent]
 class TopMenu
 {
+    public array $TopMenu = [];
+
     /**
      * @var MenuElement[]
      */

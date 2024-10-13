@@ -39,6 +39,7 @@ class CourseTest extends KernelTestCase
         $course->setPosition(0);
         $course->setCourseCode('php');
         $course->setLang('php');
+        $course->setNew(false);
 
         return $course;
     }

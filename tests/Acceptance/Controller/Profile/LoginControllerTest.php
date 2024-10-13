@@ -21,11 +21,6 @@ class LoginControllerTest extends ExtendedWebTestCase
         $this->assertResponseIsSuccessful();
         $this->assertSelectorExists('[type="email"]');
         $this->assertSelectorExists('[type="password"]');
-        $this->assertSelectorTextContains('button', 'Войти');
-
-//        $client->submitForm('Войти', [
-//            '[type="email"]' => 'u@u.fdfsd',
-//            '[type="password"]' => 'user',
-//        ], HttpRequest::POST->value);
+        $this->assertAnySelectorTextContains('button', 'Войти');
     }
 }

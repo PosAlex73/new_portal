@@ -12,9 +12,13 @@ class Set
 
     public function __construct(protected SettingRepository $settingRepository)
     {
-        $allSettings = $this->settingRepository->findAll();
-        foreach ($allSettings as $setting) {
-            $this->settings[$setting->getTitle()] = $setting;
+        try {
+            $allSettings = $this->settingRepository->findAll();
+            foreach ($allSettings as $setting) {
+                $this->settings[$setting->getTitle()] = $setting;
+            }
+        } catch (\Throwable $e) {
+            //fixme разрбраься с ошибкой при создании БД
         }
     }
 

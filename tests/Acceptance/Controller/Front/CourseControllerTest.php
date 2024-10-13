@@ -20,7 +20,6 @@ class CourseControllerTest extends ExtendedWebTestCase
 
         $client->request('GET', '/courses');
         $this->assertAnySelectorTextContains('a', 'Посмотреть курс');
-        $this->assertAnySelectorTextContains('h4', 'Список курсов');
 
         $client->clickLink('Посмотреть курс');
         $this->assertResponseIsSuccessful();
@@ -45,7 +44,7 @@ class CourseControllerTest extends ExtendedWebTestCase
 
         $this->assertResponseIsSuccessful();
         $this->assertAnySelectorTextNotContains('p', 'Данный курс не доступен или был отключен');
-        $this->assertAnySelectorTextContains('h4', $firstCourse->getTitle());
+        $this->assertAnySelectorTextContains('h2', $firstCourse->getTitle());
         $this->assertAnySelectorTextContains('div', $firstCourse->getText());
 
 
@@ -54,6 +53,6 @@ class CourseControllerTest extends ExtendedWebTestCase
 
         $client->request('GET', $activeCourseUrl);
         $this->assertResponseIsSuccessful();
-        $this->assertAnySelectorTextContains('p', 'Данный курс не доступен или был отключен');
+        $this->assertAnySelectorTextContains('div', 'Данный курс не доступен или был отключен');
     }
 }

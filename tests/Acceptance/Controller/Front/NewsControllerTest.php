@@ -5,6 +5,7 @@ namespace App\Tests\Acceptance\Controller\Front;
 use App\Entity\AppNew;
 use App\Enums\CommonStatus;
 use App\Enums\Http\HttpRequest;
+use App\Enums\Settings\SettingEnum;
 use App\Enums\System\FrontRouteNames;
 use App\Repository\AppNewRepository;
 use App\Tests\Acceptance\ExtendedWebTestCase;
@@ -19,8 +20,10 @@ class NewsControllerTest extends ExtendedWebTestCase
         $newsRepository = $this->getRepositoryByModel(AppNew::class);
         $urlGenerator = $this->getUrlGenerator();
 
+        $frontPageNumber = $this->getSet()->get(SettingEnum::FRONT_PAGINATION);
+
         /** @var AppNew[] $news */
-        $news = $newsRepository->getForListPage();
+        $news = $newsRepository->getForListPage($frontPageNumber->getValue());
         $client->request(
             HttpRequest::GET->value,
             $urlGenerator->generate(FrontRouteNames::NEWS_LIST->value)
@@ -28,7 +31,7 @@ class NewsControllerTest extends ExtendedWebTestCase
 
         $this->assertResponseIsSuccessful();
         foreach ($news as $new) {
-            $this->assertAnySelectorTextContains('h4', $new->getTitle());
+            $this->assertAnySelectorTextContains('h2', $new->getTitle());
         }
     }
 
@@ -40,6 +43,7 @@ class NewsControllerTest extends ExtendedWebTestCase
         $new->setTitle('test new');
         $new->setText('test test');
         $new->setStatus(CommonStatus::ACTIVE->value);
+        $new->setViews(0);
 
         $em = $this->getEntityManager();
         $em->persist($new);
@@ -52,6 +56,6 @@ class NewsControllerTest extends ExtendedWebTestCase
         );
 
         $this->assertResponseIsSuccessful();
-        $this->assertAnySelectorTextContains('h4', $new->getTitle());
+        $this->assertAnySelectorTextContains('h2', $new->getTitle());
     }
 }

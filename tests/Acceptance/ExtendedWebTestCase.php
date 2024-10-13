@@ -7,6 +7,7 @@ use App\Entity\UserProgress;
 use App\Enums\System\FrontRouteNames;
 use App\Repository\UserProgressRepository;
 use App\Repository\UserRepository;
+use App\Services\Settings\Set;
 use App\Tests\Traits\ServiceGetter;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -35,5 +36,13 @@ class ExtendedWebTestCase extends WebTestCase
         /** @var UserProgressRepository $userProgressRepository */
         $userProgressRepository = $this->getRepositoryByModel(UserProgress::class);
         return $userProgressRepository;
+    }
+
+
+    public function getSet(): Set
+    {
+        /** @var Set $set */
+        $set = $this->getContainer()->get(Set::class);
+        return $set;
     }
 }

@@ -35,7 +35,7 @@ class PageControllerTest extends ExtendedWebTestCase
             );
 
             $this->assertResponseIsSuccessful();
-            $this->assertSelectorTextContains('div', 'test test test');
+            $this->assertAnySelectorTextContains('div', 'test test test');
         }
     }
 
