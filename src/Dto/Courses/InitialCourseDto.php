@@ -10,9 +10,7 @@ class InitialCourseDto
         protected string $level,
         protected array $tasks,
         protected string $lang
-    )
-    {
-    }
+    ){}
 
     /**
      * @return string

@@ -85,6 +85,9 @@ class Course
     #[ORM\OneToOne(mappedBy: 'course', cascade: ['persist', 'remove'])]
     private ?FavoriteCourse $favoriteCourse = null;
 
+    #[ORM\ManyToOne(inversedBy: 'course')]
+    private ?CourseRating $courseRating = null;
+
     public function __construct()
     {
         $this->userProgress = new ArrayCollection();
@@ -468,6 +471,18 @@ class Course
         }
 
         $this->favoriteCourse = $favoriteCourse;
+
+        return $this;
+    }
+
+    public function getCourseRating(): ?CourseRating
+    {
+        return $this->courseRating;
+    }
+
+    public function setCourseRating(?CourseRating $courseRating): static
+    {
+        $this->courseRating = $courseRating;
 
         return $this;
     }
