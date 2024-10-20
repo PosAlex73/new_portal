@@ -29,6 +29,9 @@ class CheckUserBannedSubscriber implements EventSubscriberInterface
         }
     }
 
+    /**
+     * core event test
+     */
     public static function getSubscribedEvents(): array
     {
         return [
