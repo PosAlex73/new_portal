@@ -28,7 +28,7 @@ class ImageCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         $baseUploadDir = $this->parameterBag->get('uploads_base_dir');
-        $imagesUploadDir = $baseUploadDir . $this->parameterBag->get('uploads_images');
+        $imagesUploadDir = $this->parameterBag->get('uploads_images');
 
         return [
             IdField::new('id')->setDisabled(),
@@ -43,6 +43,9 @@ class ImageCrudController extends AbstractCrudController
                 ]),
             DateTimeField::new('created', 'Создано')->setDisabled(),
             DateTimeField::new('updated', 'Обновлено')->setDisabled(),
+//            TextField::new('url')->setVirtual(true)->formatValue(function (Image $image) {
+//                return '123';
+//            })
         ];
     }
 
