@@ -113,4 +113,9 @@ class Image
     {
         return $this->getTitle();
     }
+
+    public function getUrl()
+    {
+        return $this->path;
+    }
 }
