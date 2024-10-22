@@ -9,6 +9,7 @@ imports:
     - { resource: 'app.yaml' }
     - { resource: 'paginator.yaml' }
     - { resource: 'redis.yaml' }
+    - { resource: 'images.yaml' }
 parameters:
     course_path: '%kernel.project_dir%/data/courses/'
 services:

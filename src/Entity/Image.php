@@ -30,12 +30,6 @@ class Image
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $updated = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $extension = null;
-
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $data = null;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -97,30 +91,6 @@ class Image
     public function setUpdated(\DateTimeInterface $updated): static
     {
         $this->updated = $updated;
-
-        return $this;
-    }
-
-    public function getExtension(): ?string
-    {
-        return $this->extension;
-    }
-
-    public function setExtension(string $extension): static
-    {
-        $this->extension = $extension;
-
-        return $this;
-    }
-
-    public function getData(): ?string
-    {
-        return $this->data;
-    }
-
-    public function setData(string $data): static
-    {
-        $this->data = $data;
 
         return $this;
     }
