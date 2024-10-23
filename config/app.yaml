@@ -1,7 +1,7 @@
 parameters:
   app.admin_email: 'a@a.ru'
   app.admin_name: 'Admin Adminovich'
-  app.host: 'http://localhost'
+  app.host: '%env(APP_HOST)%'
   code_checker.url: '%env(CODE_CHECKER_URL)%'
   code_checker.port: '%env(CODE_CHECKER_PORT)%'
   
