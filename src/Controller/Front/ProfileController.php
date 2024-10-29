@@ -128,16 +128,17 @@ class ProfileController extends AbstractController
     #[IsGranted('ROLE_USER')]
     public function deleteProfile(Request $request)
     {
+        /** @var User $user */
         $user = $this->getUser();
         $result = $this->userRemover->deleteUser($user);
 
         if ($result) {
             $this->addFlash(FlashTypes::NOTICE->value, 'Пользователь успешно удален!');
 
-            $this->redirect('front_index');
+            return $this->redirectToRoute('app_logout');
         }
 
-        $this->addFlash(FlashTypes::ERROR->value, 'Данного пользователя нельзя удалитью');
+        $this->addFlash(FlashTypes::ERROR->value, 'Данного пользователя нельзя удалить.');
         return $this->redirect($this->getBackUrl($request));
     }
 }

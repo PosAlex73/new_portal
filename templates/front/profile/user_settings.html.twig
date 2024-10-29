@@ -23,6 +23,11 @@
                             {{ form(profileForm) }}
                         </div>
                     </div>
+                    <div class="mt-3">
+                        <p class="text-danger">Вы можете удалить свой профиль в любой момент.</p>
+                        <a href="{{ path('delete_profile') }}" class="btn btn-danger">Удалить профиль</a>
+                    </div>
+
                 </div>
             </div>
         </div>
