@@ -10,6 +10,7 @@ use App\Form\UserFormType;
 use App\Form\UserProfileFormType;
 use App\Repository\UserProgressRepository;
 use App\Services\Menu\BreadCrumbsBuilder;
+use App\Services\User\UserRemover;
 use App\Services\UserProgress\CourseCounter;
 use App\Services\UserProgress\UserProgressResetService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -26,7 +27,8 @@ class ProfileController extends AbstractController
         protected UserProgressRepository $userProgressRepository,
         protected CourseCounter $courseCounter,
         protected UserProgressResetService $userProgressResetService,
-        protected BreadCrumbsBuilder $breadCrumbsBuilder
+        protected BreadCrumbsBuilder $breadCrumbsBuilder,
+        private UserRemover $userRemover
     ){}
 
     use BackUrl;
@@ -120,5 +122,22 @@ class ProfileController extends AbstractController
     {
         $this->breadCrumbsBuilder->addIndexRoute();
         $this->breadCrumbsBuilder->addBreadCrumbs('Профиль', $this->generateUrl('profile'));
+    }
+
+    #[Route('/profile/delete-profile', name: 'delete_profile')]
+    #[IsGranted('ROLE_USER')]
+    public function deleteProfile(Request $request)
+    {
+        $user = $this->getUser();
+        $result = $this->userRemover->deleteUser($user);
+
+        if ($result) {
+            $this->addFlash(FlashTypes::NOTICE->value, 'Пользователь успешно удален!');
+
+            $this->redirect('front_index');
+        }
+
+        $this->addFlash(FlashTypes::ERROR->value, 'Данного пользователя нельзя удалитью');
+        return $this->redirect($this->getBackUrl($request));
     }
 }
