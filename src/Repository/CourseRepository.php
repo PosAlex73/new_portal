@@ -82,4 +82,11 @@ class CourseRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function getBatchByIds(array $courseIds)
+    {
+        $qb = $this->createQueryBuilder('c');
+        $inExp = $qb->expr()->in('c.id', $courseIds);
+        return $qb->where($inExp)->getQuery()->getResult();
+    }
 }

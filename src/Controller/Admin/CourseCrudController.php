@@ -81,6 +81,9 @@ class CourseCrudController extends AbstractCrudController
         $actions->add(Crud::PAGE_INDEX, $editCourseAction);
         $actions->add(Crud::PAGE_EDIT, $editCourseAction);
 
+        $actions->addBatchAction(Action::new('export', 'Экспортировать курсы')
+            ->linkToRoute('exportCourses'));
+
         return $actions;
     }
 
