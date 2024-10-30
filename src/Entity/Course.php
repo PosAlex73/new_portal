@@ -10,6 +10,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\MaxDepth;
 
 #[ORM\Entity(repositoryClass: CourseRepository::class)]
 #[ORM\HasLifecycleCallbacks]
@@ -38,6 +39,7 @@ class Course
     private ?\DateTimeInterface $updated = null;
 
     #[ORM\ManyToOne(inversedBy: 'courses')]
+    #[MaxDepth(1)]
     private ?Category $category = null;
 
     #[ORM\Column(length: 1)]
@@ -50,30 +52,35 @@ class Course
     private ?int $position = null;
 
     #[ORM\OneToMany(mappedBy: 'course', targetEntity: UserProgress::class)]
+    #[MaxDepth(1)]
     private Collection $userProgress;
 
     #[ORM\Column(length: 255)]
     private ?string $course_code = null;
 
     #[ORM\OneToMany(mappedBy: 'course', targetEntity: Task::class)]
+    #[MaxDepth(1)]
     private Collection $tasks;
 
     #[ORM\Column(length: 255)]
     private ?string $lang = null;
 
     #[ORM\OneToMany(mappedBy: 'course', targetEntity: CourseBugReport::class, orphanRemoval: true)]
+    #[MaxDepth(1)]
     private Collection $courseBugReports;
 
     /**
      * @var Collection<int, CourseLink>
      */
     #[ORM\ManyToMany(targetEntity: CourseLink::class, mappedBy: 'course')]
+    #[MaxDepth(1)]
     private Collection $courseLinks;
 
     /**
      * @var Collection<int, CourseTag>
      */
     #[ORM\ManyToMany(targetEntity: CourseTag::class, mappedBy: 'courses')]
+    #[MaxDepth(1)]
     private Collection $courseTags;
 
     #[ORM\Column(length: 2048, nullable: true)]
@@ -83,9 +90,11 @@ class Course
     private ?bool $isNew = null;
 
     #[ORM\OneToOne(mappedBy: 'course', cascade: ['persist', 'remove'])]
+    #[MaxDepth(1)]
     private ?FavoriteCourse $favoriteCourse = null;
 
     #[ORM\ManyToOne(inversedBy: 'course')]
+    #[MaxDepth(1)]
     private ?CourseRating $courseRating = null;
 
     public function __construct()
