@@ -6,6 +6,7 @@ use App\Controller\Front\Traits\BackUrl;
 use App\Entity\User;
 use App\Entity\UserProgress;
 use App\Enums\Flash\FlashTypes;
+use App\Event\UserDeletedEvent;
 use App\Form\UserFormType;
 use App\Form\UserProfileFormType;
 use App\Repository\UserProgressRepository;
@@ -19,6 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class ProfileController extends AbstractController
 {
@@ -28,7 +30,8 @@ class ProfileController extends AbstractController
         protected CourseCounter $courseCounter,
         protected UserProgressResetService $userProgressResetService,
         protected BreadCrumbsBuilder $breadCrumbsBuilder,
-        private UserRemover $userRemover
+        private UserRemover $userRemover,
+        private EventDispatcherInterface $eventDispatcher
     ){}
 
     use BackUrl;
@@ -130,6 +133,7 @@ class ProfileController extends AbstractController
     {
         /** @var User $user */
         $user = $this->getUser();
+        $this->eventDispatcher->dispatch((new UserDeletedEvent($user)));
         $result = $this->userRemover->deleteUser($user);
 
         if ($result) {
