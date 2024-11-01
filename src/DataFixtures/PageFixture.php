@@ -30,6 +30,25 @@ class PageFixture extends Fixture
             $manager->persist($page);
         }
 
+        $documentPages = [
+            [
+                'pageName' => 'cookie_page',
+                'title' => 'Использование cookie',
+            ],
+            [
+                'pageName' => 'personal_data',
+                'title' => 'Соглашение об использовании персональных данных'
+            ],
+            [
+                'pageName' => 'use_materials',
+                'title' => 'Соглашение об использовании материалов'
+            ],
+            [
+                'pageName' => 'offerPage',
+                'title' => 'Оферта'
+            ],
+        ];
+
         $manager->flush();
     }
 }
