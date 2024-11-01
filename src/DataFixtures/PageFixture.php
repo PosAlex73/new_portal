@@ -49,6 +49,17 @@ class PageFixture extends Fixture
             ],
         ];
 
+        foreach ($documentPages as $documentPage) {
+            $page = new Page();
+            $page->setName($documentPage['pageName']);
+            $page->setTitle($documentPage['title']);
+            $page->setText('');
+            $page->setStatus(CommonStatus::ACTIVE->value);
+            $page->setType(PageCategories::COMMON->value);
+
+            $manager->persist($page);
+        }
+
         $manager->flush();
     }
 }
