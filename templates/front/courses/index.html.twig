@@ -16,7 +16,6 @@
     <div class="container g-py-75">
         <div class="masonry-grid row g-mb-0" style="position: relative; height: 1272.97px;">
             <div class="masonry-grid-sizer col-sm-1"></div>
-            <!-- Start Blog Articles -->
             {% for course in paginator %}
                 <div class="masonry-grid-item col-sm-12 col-md-4 g-mb-30" style="position: absolute; left: 0%; top: 0px;">
                     <article class="u-shadow-v11">
@@ -54,11 +53,7 @@
             {% else %}
                 <p>Курсы пока не опубликованы</p>
             {% endfor %}
-
-
-            <!-- End Blog Articles -->
         </div>
-        <!-- Start Blog Pagination -->
         {% include "front/components/pagination.html.twig"
             with {
                 paginator: paginator,
@@ -67,6 +62,5 @@
                 front_route: 'courses_list'
             }
         %}
-        <!-- End Blog Pagination -->
     </div>
 {% endblock %}
