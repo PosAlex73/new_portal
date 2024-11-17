@@ -10,6 +10,9 @@
                             <a href="{{ path('profile') }}" class="g-color-white g-color-gray-light-v1--hover g-text-underline--none--hover">Личный кабинет</a>
                         </li>
                         <li class="list-inline-item g-mx-4 g-mt-10">
+                            <a href="{{ path('search') }}" class="g-color-white g-color-gray-light-v1--hover g-text-underline--none--hover">Поиск</a>
+                        </li>
+                        <li class="list-inline-item g-mx-4 g-mt-10">
                             <a href="{{ path('app_logout') }}" class="g-color-white g-color-gray-light-v1--hover g-text-underline--none--hover">Выйти</a>
                         </li>
                         <li class="list-inline-item g-mx-4 g-mt-10">
@@ -25,33 +28,7 @@
                         </li>
                     {% endif %}
                     <li class="list-inline-item g-mx-4 g-mt-10">
-                        <div class="g-pos-rel">
-                            <a href="{{ path('search') }}"
-                               class="g-font-size-14 g-color-white g-color-gray-light-v1--hover g-ml-5"
-                               aria-haspopup="true"
-                               aria-expanded="false"
-                               aria-controls="searchform-6"
-                               data-dropdown-target="#searchform-6"
-                               data-dropdown-type="css-animation"
-                               data-dropdown-duration="300"
-                               data-dropdown-animation-in="fadeInUp"
-                               data-dropdown-animation-out="fadeOutDown"
-                            >
-                                <i class="fa fa-search"></i>
-                            </a>
-                            <form method="post"
-                                  id="searchform-6"
-                                  class="u-searchform-v1 g-bg-black g-box-shadow-none g-pa-10 g-mt-10 u-dropdown--css-animation u-dropdown--hidden"
-                                  style="animation-duration: 300ms; right: -15px;"
-                            >
-                                <div class="input-group g-brd-primary--focus">
-                                    <input class="form-control rounded-0 u-form-control g-brd-white" type="search" placeholder="Enter your keyword ...">
-                                    <div class="input-group-addon p-0">
-                                        <button class="btn rounded-0 btn-primary btn-md g-font-size-14 g-px-18" type="submit">Поиск</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
+
                     </li>
                 </ul>
             </div>
