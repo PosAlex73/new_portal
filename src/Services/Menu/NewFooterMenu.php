@@ -57,4 +57,9 @@ class NewFooterMenu
 
         return $menu;
     }
+
+    public function getThirdColumn(): array
+    {
+
+    }
 }

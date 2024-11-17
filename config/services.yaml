@@ -12,6 +12,7 @@ imports:
     - { resource: 'images.yaml' }
 parameters:
     course_path: '%kernel.project_dir%/data/courses/'
+    page_path: '%kernel.project_dir%/data/pages/'
 services:
     # default configuration for services in *this* file
     _defaults:
