@@ -10,6 +10,9 @@
                             <a href="{{ path('profile') }}" class="g-color-white g-color-gray-light-v1--hover g-text-underline--none--hover">Личный кабинет</a>
                         </li>
                         <li class="list-inline-item g-mx-4 g-mt-10">
+                            <a href="{{ path('app_logout') }}" class="g-color-white g-color-gray-light-v1--hover g-text-underline--none--hover">Выйти</a>
+                        </li>
+                        <li class="list-inline-item g-mx-4 g-mt-10">
                             {% include "common/notifications_button.html.twig" %}
                         </li>
                     {% else %}
