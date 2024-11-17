@@ -7,9 +7,10 @@ use App\Enums\CommonStatus;
 use App\Enums\Pages\PageCategories;
 use App\Services\Menu\FooterMenuGetter;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class PageFixture extends Fixture
+class PageFixture extends Fixture implements FixtureGroupInterface
 {
     public function __construct(
         protected FooterMenuGetter $footerMenu
@@ -61,5 +62,10 @@ class PageFixture extends Fixture
         }
 
         $manager->flush();
+    }
+
+    public static function getGroups(): array
+    {
+        return ['g1', 'g3'];
     }
 }

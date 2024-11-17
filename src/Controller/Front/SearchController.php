@@ -31,12 +31,14 @@ class SearchController extends AbstractController
                 'courses' => $search['courses'],
                 'articles' => $search['articles'],
                 'news' => $search['news'],
-                'newSearch' => false
+                'newSearch' => false,
+                'searchText' => $text
             ]);
         }
 
         return $this->render('front/search/index.html.twig', [
-            'newSearch' => true
+            'newSearch' => true,
+            'searchText' => ''
         ]);
     }
 

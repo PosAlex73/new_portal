@@ -34,6 +34,6 @@ class SettingsFixture extends Fixture implements FixtureGroupInterface
 
     public static function getGroups(): array
     {
-        return ['g1'];
+        return ['g1', 'g3'];
     }
 }

@@ -6,20 +6,9 @@
 <section class="g-py-75">
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-lg-10 offset-lg-1">
-                <form method="post" action="{{ path('search') }}" class="g-brd-around g-brd-gray-light-v4 g-pa-30">
-                    <div class="input-group u-file-attach-v1 g-brd-gray-light-v2">
-                        <input class="form-control form-control-md rounded-0" type="text" name="search" placeholder="Введите запрос" required>
-                        <div class="input-group-append">
-                            <button class="btn btn-md u-btn-primary rounded-0" type="submit">Поиск</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
+            {% include 'front/components/search.html.twig' with {seatchText: searchText} %}
 
-            {% if newSearch == true %}
-
-            {% else %}
+            {% if newSearch == false %}
                 <div class="card">
                     <div class="card-body">
                         <h4 class="header-title mb-4">Результаты поиска</h4>
