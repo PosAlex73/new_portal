@@ -72,6 +72,25 @@ class PageController extends AbstractController
         ]);
     }
 
+    #[Route('juridical-documents/{jd}', name: 'juridical_documents', methods: 'GET')]
+    public function juridicalDocuments(string $jd): Response
+    {
+        $page = $this->pageRepository->getPageByName($jd);
+        $this->initBreadCrumbs();
+        $this->breadCrumbsBuilder
+            ->addBreadCrumbs($page->getTitle(), $this->generateUrl(
+                'juridical_documents', [
+            'jd' => $page->getName()
+        ]));
+
+        $content = '';
+
+        return $this->render('front/pages/juridical-document.html.twig', [
+            'page' => $page,
+            'content' => $content
+        ]);
+    }
+
     private function initBreadCrumbs()
     {
         $this->breadCrumbsBuilder->addIndexRoute();

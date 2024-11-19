@@ -10,8 +10,10 @@ imports:
     - { resource: 'paginator.yaml' }
     - { resource: 'redis.yaml' }
     - { resource: 'images.yaml' }
+    - { resource: 'macros.yaml' }
 parameters:
-    course_path: '%kernel.project_dir%/data/courses/'
+    course_test_path: '%kernel.project_dir%/data/courses_test/'
+    course_real_path: '%kernel.project_dir%/data/courses_test/'
     page_path: '%kernel.project_dir%/data/pages/'
 services:
     # default configuration for services in *this* file

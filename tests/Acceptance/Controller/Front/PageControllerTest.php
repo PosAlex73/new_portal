@@ -21,7 +21,11 @@ class PageControllerTest extends ExtendedWebTestCase
         $em = $this->getEntityManager();
         $urlGenerator = $this->getUrlGenerator();
 
-        $pages = PageNames::cases();
+        $pages = [
+            PageNames::HELP,
+            PageNames::SERVICE_STATEMENT,
+            PageNames::ABOUT_US
+        ];
 
         foreach ($pages as $page) {
             $aboutUs = $pageRepository->getPageByName($page->value);

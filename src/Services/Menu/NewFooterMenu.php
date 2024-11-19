@@ -4,9 +4,11 @@ namespace App\Services\Menu;
 
 use App\Entity\Article;
 use App\Entity\Course;
+use App\Entity\Page;
 use App\Enums\DateTimeFormatEnum;
 use App\Repository\ArticleRepository;
 use App\Repository\CourseRepository;
+use App\Repository\PageRepository;
 use App\Services\Elements\MenuElement;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -15,7 +17,8 @@ class NewFooterMenu
     public function __construct(
         protected UrlGeneratorInterface $urlGenerator,
         protected CourseRepository $courseRepository,
-        protected ArticleRepository $articleRepository
+        protected ArticleRepository $articleRepository,
+        protected PageRepository $pageRepository
     )
     {}
 
@@ -60,8 +63,17 @@ class NewFooterMenu
 
     public function getThirdColumn(): array
     {
-        return [
+        /** @var array<Page> $pages */
+        $pages = $this->pageRepository->getJuridicalPages();
+        $menu = [];
 
-        ];
+        foreach ($pages as $page) {
+            $menu[] = new MenuElement(
+                $page->getTitle(),
+                $this->urlGenerator->generate('juridical_documents', ['jd' => $page->getName()])
+            );
+        }
+
+        return $menu;
     }
 }

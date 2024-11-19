@@ -1,0 +1,22 @@
+parameters:
+    macros:
+        'CPP': 'CPP'
+        'INN': 'CPP'
+        'admin_email': ''
+        'company_address': ''
+        'company_city': ''
+        'company_email': ''
+        'company_email_support': ''
+        'company_hosting': ''
+        'company_info': ''
+        'company_long_info': ''
+        'company_long_name': ''
+        'company_phone': ''
+        'company_short_name': ''
+        'company_support_email': ''
+        'document_date': ''
+        'personal_data_link': ''
+        'private_policy_url': ''
+        'publish_date': ''
+        'support_email_address': ''
+

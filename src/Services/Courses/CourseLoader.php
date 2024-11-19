@@ -11,7 +11,7 @@ class CourseLoader
 
     public function __construct(protected ParameterBagInterface $parameterBag)
     {
-        $this->coursePath = $this->parameterBag->get('course_path');
+        $this->coursePath = $this->parameterBag->get('course_test_path');
     }
 
     public function getCourseByName(string $tech, string $courseName)

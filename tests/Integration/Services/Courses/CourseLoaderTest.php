@@ -17,7 +17,7 @@ class CourseLoaderTest extends KernelTestCase
 
         /** @var ParameterBagInterface $parameterBag */
         $parameterBag = $this->getContainer()->get(ParameterBagInterface::class);
-        $path = $parameterBag->get('course_path');
+        $path = $parameterBag->get('course_test_path');
         $this->assertNotEmpty($path);
     }
 
