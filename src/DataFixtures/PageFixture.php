@@ -6,6 +6,7 @@ use App\Entity\Page;
 use App\Enums\CommonStatus;
 use App\Enums\Pages\PageCategories;
 use App\Services\Menu\FooterMenuGetter;
+use App\Services\Pages\PageContentGetter;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -13,27 +14,32 @@ use Doctrine\Persistence\ObjectManager;
 class PageFixture extends Fixture implements FixtureGroupInterface
 {
     public function __construct(
-        protected FooterMenuGetter $footerMenu
+        private PageContentGetter $pageContentGetter
     ){}
 
     public function load(ObjectManager $manager)
     {
-        $footerMenuElements = $this->footerMenu->getFooterMenuData();
+        $documentPages = $this->getPages();
 
-        foreach ($footerMenuElements as $footerMenuElement) {
+        foreach ($documentPages as $documentPage) {
             $page = new Page();
-            $page->setName($footerMenuElement->getName());
-            $page->setTitle($footerMenuElement->getTitle());
-            $page->setText('');
+            $page->setName($documentPage['pageName']);
+            $page->setTitle($documentPage['title']);
+            $page->setText($this->pageContentGetter->getPageContent($documentPage['pageName']));
             $page->setStatus(CommonStatus::ACTIVE->value);
             $page->setType(PageCategories::COMMON->value);
 
             $manager->persist($page);
         }
 
-        $documentPages = [
+        $manager->flush();
+    }
+
+    private function getPages(): array
+    {
+        return [
             [
-                'pageName' => 'cookie_page',
+                'pageName' => 'cookie',
                 'title' => 'Использование cookie',
             ],
             [
@@ -45,23 +51,22 @@ class PageFixture extends Fixture implements FixtureGroupInterface
                 'title' => 'Соглашение об использовании материалов'
             ],
             [
-                'pageName' => 'offerPage',
+                'pageName' => 'offer',
                 'title' => 'Оферта'
             ],
+            [
+                'pageName' => 'about_us',
+                'title' => 'О нас'
+            ],
+            [
+                'pageName' => 'help',
+                'title' => 'Помощь'
+            ],
+            [
+                'pageName' => 'service_statement',
+                'title' => 'Сервисное соглашение'
+            ]
         ];
-
-        foreach ($documentPages as $documentPage) {
-            $page = new Page();
-            $page->setName($documentPage['pageName']);
-            $page->setTitle($documentPage['title']);
-            $page->setText('');
-            $page->setStatus(CommonStatus::ACTIVE->value);
-            $page->setType(PageCategories::COMMON->value);
-
-            $manager->persist($page);
-        }
-
-        $manager->flush();
     }
 
     public static function getGroups(): array

@@ -60,6 +60,8 @@ class NewFooterMenu
 
     public function getThirdColumn(): array
     {
+        return [
 
+        ];
     }
 }

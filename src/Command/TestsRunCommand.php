@@ -45,7 +45,7 @@ class TestsRunCommand extends Command
 
         system("php $projectDir/bin/console --env=test doctrine:database:create");
         system("php $projectDir/bin/console --env=test doctrine:schema:create");
-        system("yes | php $projectDir/bin/console --env=test doctrine:fixtures:load");
+        system("yes | php $projectDir/bin/console --env=test doctrine:fixtures:load --group=g1 --group=g2");
 
         system("php $projectDir/bin/phpunit");
 
